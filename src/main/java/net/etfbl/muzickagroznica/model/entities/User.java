@@ -11,6 +11,10 @@ import java.util.Set;
  */
 public class User implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String username;
 	private String password;
@@ -22,12 +26,12 @@ public class User implements java.io.Serializable {
 	private boolean active;
 	private Date registeringTime;
 	private Date activationTime;
-	private Set favorites = new HashSet(0);
-	private Set comments = new HashSet(0);
-	private Set listenings = new HashSet(0);
-	private Set roles = new HashSet(0);
-	private Set rates = new HashSet(0);
-	private Set playlists = new HashSet(0);
+	private Set<Favorite> favorites = new HashSet<Favorite>(0);
+	private Set<Comment> comments = new HashSet<Comment>(0);
+	private Set<Listening> listenings = new HashSet<Listening>(0);
+	private Set<Role> roles = new HashSet<Role>(0);
+	private Set<Rate> rates = new HashSet<Rate>(0);
+	private Set<Playlist> playlists = new HashSet<Playlist>(0);
 
 	public User() {
 	}
@@ -48,8 +52,8 @@ public class User implements java.io.Serializable {
 	public User(String username, String password, String firstName,
 			String lastName, String jmb, String email, String avatarPath,
 			boolean active, Date registeringTime, Date activationTime,
-			Set favorites, Set comments, Set listenings, Set roles, Set rates,
-			Set playlists) {
+			Set<Favorite> favorites, Set<Comment> comments, Set<Listening> listenings, Set<Role> roles, Set<Rate> rates,
+			Set<Playlist> playlists) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -156,51 +160,51 @@ public class User implements java.io.Serializable {
 		this.activationTime = activationTime;
 	}
 
-	public Set getFavorites() {
+	public Set<Favorite> getFavorites() {
 		return this.favorites;
 	}
 
-	public void setFavorites(Set favorites) {
+	public void setFavorites(Set<Favorite> favorites) {
 		this.favorites = favorites;
 	}
 
-	public Set getComments() {
+	public Set<Comment> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(Set comments) {
+	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
 
-	public Set getListenings() {
+	public Set<Listening> getListenings() {
 		return this.listenings;
 	}
 
-	public void setListenings(Set listenings) {
+	public void setListenings(Set<Listening> listenings) {
 		this.listenings = listenings;
 	}
 
-	public Set getRoles() {
+	public Set<Role> getRoles() {
 		return this.roles;
 	}
 
-	public void setRoles(Set roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 
-	public Set getRates() {
+	public Set<Rate> getRates() {
 		return this.rates;
 	}
 
-	public void setRates(Set rates) {
+	public void setRates(Set<Rate> rates) {
 		this.rates = rates;
 	}
 
-	public Set getPlaylists() {
+	public Set<Playlist> getPlaylists() {
 		return this.playlists;
 	}
 
-	public void setPlaylists(Set playlists) {
+	public void setPlaylists(Set<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 

@@ -21,11 +21,11 @@ public class MusicContent implements java.io.Serializable {
 	private String contentPath;
 	private String contentType;
 	private boolean active;
-	private Set favorites = new HashSet(0);
-	private Set listenings = new HashSet(0);
-	private Set playlists = new HashSet(0);
-	private Set rates = new HashSet(0);
-	private Set comments = new HashSet(0);
+	private Set<Favorite> favorites = new HashSet<Favorite>(0);
+	private Set<Listening> listenings = new HashSet<Listening>(0);
+	private Set<Playlist> playlists = new HashSet<Playlist>(0);
+	private Set<Rate> rates = new HashSet<Rate>(0);
+	private Set<Comment> comments = new HashSet<Comment>(0);
 
 	public MusicContent() {
 	}
@@ -46,8 +46,8 @@ public class MusicContent implements java.io.Serializable {
 
 	public MusicContent(Artist artist, Genre genre, String name,
 			Date publishTime, String lyrics, Date length, String contentPath,
-			String contentType, boolean active, Set favorites, Set listenings,
-			Set playlists, Set rates, Set comments) {
+			String contentType, boolean active, Set<Favorite> favorites, Set<Listening> listenings,
+			Set<Playlist> playlists, Set<Rate> rates, Set<Comment> comments) {
 		this.artist = artist;
 		this.genre = genre;
 		this.name = name;
@@ -144,43 +144,43 @@ public class MusicContent implements java.io.Serializable {
 		this.active = active;
 	}
 
-	public Set getFavorites() {
+	public Set<Favorite> getFavorites() {
 		return this.favorites;
 	}
 
-	public void setFavorites(Set favorites) {
+	public void setFavorites(Set<Favorite> favorites) {
 		this.favorites = favorites;
 	}
 
-	public Set getListenings() {
+	public Set<Listening> getListenings() {
 		return this.listenings;
 	}
 
-	public void setListenings(Set listenings) {
+	public void setListenings(Set<Listening> listenings) {
 		this.listenings = listenings;
 	}
 
-	public Set getPlaylists() {
+	public Set<Playlist> getPlaylists() {
 		return this.playlists;
 	}
 
-	public void setPlaylists(Set playlists) {
+	public void setPlaylists(Set<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 
-	public Set getRates() {
+	public Set<Rate> getRates() {
 		return this.rates;
 	}
 
-	public void setRates(Set rates) {
+	public void setRates(Set<Rate> rates) {
 		this.rates = rates;
 	}
 
-	public Set getComments() {
+	public Set<Comment> getComments() {
 		return this.comments;
 	}
 
-	public void setComments(Set comments) {
+	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
 

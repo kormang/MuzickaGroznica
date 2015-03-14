@@ -15,7 +15,7 @@ public class Playlist implements java.io.Serializable {
 	private User user;
 	private String title;
 	private Date creationTime;
-	private Set musicContents = new HashSet(0);
+	private Set<MusicContent> musicContents = new HashSet<MusicContent>(0);
 
 	public Playlist() {
 	}
@@ -26,7 +26,7 @@ public class Playlist implements java.io.Serializable {
 	}
 
 	public Playlist(User user, String title, Date creationTime,
-			Set musicContents) {
+			Set<MusicContent> musicContents) {
 		this.user = user;
 		this.title = title;
 		this.creationTime = creationTime;
@@ -65,11 +65,11 @@ public class Playlist implements java.io.Serializable {
 		this.creationTime = creationTime;
 	}
 
-	public Set getMusicContents() {
+	public Set<MusicContent> getMusicContents() {
 		return this.musicContents;
 	}
 
-	public void setMusicContents(Set musicContents) {
+	public void setMusicContents(Set<MusicContent> musicContents) {
 		this.musicContents = musicContents;
 	}
 

@@ -11,7 +11,7 @@ import java.util.Set;
 public class Genre implements java.io.Serializable {
 
 	private String name;
-	private Set musicContents = new HashSet(0);
+	private Set<MusicContent> musicContents = new HashSet<MusicContent>(0);
 
 	public Genre() {
 	}
@@ -20,7 +20,7 @@ public class Genre implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Genre(String name, Set musicContents) {
+	public Genre(String name, Set<MusicContent> musicContents) {
 		this.name = name;
 		this.musicContents = musicContents;
 	}
@@ -33,11 +33,11 @@ public class Genre implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Set getMusicContents() {
+	public Set<MusicContent> getMusicContents() {
 		return this.musicContents;
 	}
 
-	public void setMusicContents(Set musicContents) {
+	public void setMusicContents(Set<MusicContent> musicContents) {
 		this.musicContents = musicContents;
 	}
 
