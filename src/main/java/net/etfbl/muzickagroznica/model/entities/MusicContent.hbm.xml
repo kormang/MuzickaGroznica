@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 13, 2015 10:37:52 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="net.etfbl.muzickagroznica.model.entities.MusicContent" table="music_content" catalog="muzickagroznicadb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="artist" class="net.etfbl.muzickagroznica.model.entities.Artist" fetch="select">
+            <column name="artist_name" length="90" not-null="true" />
+        </many-to-one>
+        <many-to-one name="genre" class="net.etfbl.muzickagroznica.model.entities.Genre" fetch="select">
+            <column name="genre_name" length="90" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="100" not-null="true" />
+        </property>
+        <property name="publishTime" type="timestamp">
+            <column name="publish_time" length="19" not-null="true" />
+        </property>
+        <property name="lyrics" type="string">
+            <column name="lyrics" length="2048" not-null="true" />
+        </property>
+        <property name="length" type="time">
+            <column name="length" length="8" not-null="true" />
+        </property>
+        <property name="contentPath" type="string">
+            <column name="content_path" length="1024" not-null="true" />
+        </property>
+        <property name="contentType" type="string">
+            <column name="content_type" length="45" not-null="true" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="active" not-null="true" />
+        </property>
+        <set name="favorites" table="favorite" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="music_content_id" not-null="true" unique="true" />
+            </key>
+            <one-to-many class="net.etfbl.muzickagroznica.model.entities.Favorite" />
+        </set>
+        <set name="listenings" table="listening" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="music_content_id" not-null="true" unique="true" />
+            </key>
+            <one-to-many class="net.etfbl.muzickagroznica.model.entities.Listening" />
+        </set>
+        <set name="playlists" table="playlist_music_content" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="music_content_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="net.etfbl.muzickagroznica.model.entities.Playlist">
+                <column name="playlist_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="rates" table="rate" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="music_content_id" not-null="true" unique="true" />
+            </key>
+            <one-to-many class="net.etfbl.muzickagroznica.model.entities.Rate" />
+        </set>
+        <set name="comments" table="comment" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="music_content_id" not-null="true" unique="true" />
+            </key>
+            <one-to-many class="net.etfbl.muzickagroznica.model.entities.Comment" />
+        </set>
+    </class>
+</hibernate-mapping>
