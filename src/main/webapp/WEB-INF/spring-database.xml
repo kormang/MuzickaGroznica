@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		">
 		
-		<context:component-scan base-package="net.etfbl.sectest"/>
+		<context:component-scan base-package="net.etfbl.muzickagroznica"/>
 		
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
