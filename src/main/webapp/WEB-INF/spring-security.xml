@@ -37,7 +37,17 @@
 			authentication-success-handler-ref="authenticationSuccessHandler"
 		/>
 		
-		<logout logout-success-url="/login" logout-url="/j_spring_security_logout" />
+		
+		<form-login
+			login-page="/home"
+			default-target-url="/home"
+			authentication-failure-url="/login?failure=1"
+			username-parameter="username"
+			password-parameter="password"		
+			authentication-success-handler-ref="authenticationSuccessHandler"
+		/>
+		
+		<logout logout-success-url="/home" logout-url="/j_spring_security_logout" />
 		
 		<!--  <csrf/> -->
 		
