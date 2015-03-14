@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory name="sessionFactory">
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">student</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/muzickagroznicadb</property>
         <property name="hibernate.connection.username">student</property>
-        <property name="hibernate.default_schema">muzickagroznicadb</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/User.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Role.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Rate.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Playlist.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/MusicContent.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Listening.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Genre.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Favorite.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Comment.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Artist.hbm.xml"/>
+
     </session-factory>
 </hibernate-configuration>
