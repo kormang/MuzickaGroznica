@@ -39,7 +39,5 @@
 <c:url value="/j_spring_security_logout" var="logoutUrl" />
 <a href="${logoutUrl}">Log Out</a>
 
-<c:url value="/dosome" var="dosomeUrl" />
-<a href="${dosomeUrl }">Do some</a>
 </body>
 </html>

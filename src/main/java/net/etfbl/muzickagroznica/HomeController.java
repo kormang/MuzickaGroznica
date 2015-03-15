@@ -42,18 +42,5 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/dosome", method = RequestMethod.GET)
-	public String dosome(){
-		
-		
-		
-		TestService ts = new TestService();
-		ts.setRoleDao(roleDao);
-		ts.dosome();
-		
-		System.err.println("done some");
-		
-		return "redirect:/home";
-	}
 	
 }
