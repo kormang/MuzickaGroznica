@@ -6,13 +6,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.etfbl.muzickagroznica.model.dao.RoleDao;
 import net.etfbl.muzickagroznica.model.entities.Role;
-import net.etfbl.muzickagroznica.model.entities.User;
 
 import java.util.List;
 
+@Transactional
 public class RoleDaoImpl implements RoleDao {
 
 	@Autowired
