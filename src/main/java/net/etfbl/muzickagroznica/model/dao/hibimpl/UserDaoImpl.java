@@ -6,12 +6,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.etfbl.muzickagroznica.model.dao.UserDao;
 import net.etfbl.muzickagroznica.model.entities.User;
 
 import java.util.List;
 
+@Component
+@Transactional
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
@@ -19,10 +23,14 @@ public class UserDaoImpl implements UserDao {
 	
 	public UserDaoImpl() {
 		// TODO Auto-generated constructor stub
+		System.err.println("------>>> KONSTRUISAN DAO!!!");
 	}
 
 	@Override
 	public void persist(User user) {
+		if(sessionFactory == null){
+			System.err.println("NAPUS SE KURCA");
+		}
 		sessionFactory.getCurrentSession().persist(user);
 
 	}

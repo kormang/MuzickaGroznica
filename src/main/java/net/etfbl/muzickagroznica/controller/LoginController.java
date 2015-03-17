@@ -16,12 +16,12 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(Model model,
-			@RequestParam(value = "failure", required = false)String failure){
+			@RequestParam(value = "failure-cause", required = false)String failure){
 		
 		ModelAndView ret = new ModelAndView("login");
 		
-		if("1".equals(failure)){
-			ret.addObject("failure", true);
+		if(failure != null){
+			model.addAttribute(failure, true);
 		}
 		
 		return ret;

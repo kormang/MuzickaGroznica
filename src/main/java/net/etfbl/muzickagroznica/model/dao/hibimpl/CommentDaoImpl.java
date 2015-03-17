@@ -6,12 +6,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.etfbl.muzickagroznica.model.dao.CommentDao;
 import net.etfbl.muzickagroznica.model.entities.Comment;
 
 import java.util.List;
 
+@Component
+@Transactional
 public class CommentDaoImpl implements CommentDao {
 
 	@Autowired

@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/spring/root-context.xml</param-value>
-  </context-param>
+  
+  <!-- 
+  	Inicijalizacija beanova i komponenti ide na slideci nacin:
+  	1. root-context - za sada nista
+  	
+  	2. servlet-context - inicaijalizacija potrebna dispatcher servletu.
+  	
+  		Podesavanja lokalizacije, JSP lokacije, sufiksa, prefiksa...
+  		Skeniranje classpatha u potrazi za kontrolerima (@Controller)
+  		
+  	3. sping-database - inicijalizacija DataSource,
+  		 Hibernata (SessionFactory), TransactionManager-a,
+  		 Dao klase, UserDetailsService
+  		 
+  	4. spring-security
+  	
+  	5. filtri i ostalo iz web.xml
+
+   -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  
+  
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+	    /WEB-INF/spring/root-context.xml,
+		/WEB-INF/spring-database.xml,
+		/WEB-INF/spring-security.xml,
+		/WEB-INF/spring-service.xml
+	</param-value>
+  </context-param>
+  
+
   <servlet>
     <servlet-name>appServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -20,13 +48,8 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>
-			/WEB-INF/spring-database.xml,
-			/WEB-INF/spring-security.xml
-		</param-value>
-  </context-param>
+  
+  <!-- EncodingFilter -->
   <filter>
     <display-name>EncodingFilter</display-name>
     <filter-name>EncodingFilter</filter-name>
@@ -36,6 +59,8 @@
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <!-- Spring security filter chain -->
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -48,6 +73,8 @@
     <filter-name>springSecurityFilterChain</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <!-- NoCacheFilter -->
   <filter>
     <display-name>NoCacheFilter</display-name>
     <filter-name>NoCacheFilter</filter-name>

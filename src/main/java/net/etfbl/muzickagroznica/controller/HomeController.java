@@ -1,4 +1,4 @@
-package net.etfbl.muzickagroznica;
+package net.etfbl.muzickagroznica.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
