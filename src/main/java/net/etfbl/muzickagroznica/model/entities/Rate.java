@@ -1,6 +1,6 @@
 package net.etfbl.muzickagroznica.model.entities;
 
-// Generated Mar 13, 2015 10:37:52 PM by Hibernate Tools 4.3.1
+// Generated Mar 18, 2015 12:34:37 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 

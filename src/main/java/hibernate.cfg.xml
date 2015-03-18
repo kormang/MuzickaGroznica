@@ -17,6 +17,7 @@
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/Listening.hbm.xml"/>
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/Genre.hbm.xml"/>
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/Favorite.hbm.xml"/>
+    	<mapping resource="net/etfbl/muzickagroznica/model/entities/Event.hbm.xml"/>
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/Comment.hbm.xml"/>
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/Artist.hbm.xml"/>
 

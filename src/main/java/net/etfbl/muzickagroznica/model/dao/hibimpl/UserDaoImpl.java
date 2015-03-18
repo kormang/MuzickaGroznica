@@ -28,9 +28,6 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void persist(User user) {
-		if(sessionFactory == null){
-			System.err.println("NAPUS SE KURCA");
-		}
 		sessionFactory.getCurrentSession().persist(user);
 
 	}
