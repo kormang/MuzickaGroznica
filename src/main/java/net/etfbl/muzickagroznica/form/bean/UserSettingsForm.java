@@ -5,19 +5,13 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class UserForm {
+public class UserSettingsForm {
 
-	public UserForm() {
+	public UserSettingsForm() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@NotEmpty
-	@Pattern(regexp = "[^@#/\\\\]{6,}")
 	private String username;
-	
-	@NotEmpty
-	@Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
-	private String rawPassword;
 	
 	@NotEmpty
 	private String firstName;
@@ -32,43 +26,56 @@ public class UserForm {
 	@Email
 	private String email;
 	
+	
+	private String oldPassword;
+	
+	
+	public String getOldPassword() {
+		return oldPassword;
+	}
+	
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getRawPassword() {
-		return rawPassword;
-	}
-	public void setRawPassword(String rawPassword) {
-		this.rawPassword = rawPassword;
-	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
 	public String getLastName() {
 		return lastName;
 	}
+	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
 	public String getJmb() {
 		return jmb;
 	}
+	
 	public void setJmb(String jmb) {
 		this.jmb = jmb;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 }

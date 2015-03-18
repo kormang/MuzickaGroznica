@@ -8,7 +8,6 @@ import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.util.StandardUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,23 +21,30 @@ public class UserService {
 	@Autowired
 	RoleDao roleDao;
 	
+	@Autowired
+	PasswordEncoder encoder;
+	
 	public UserService() {
 		// TODO Auto-generated constructor stub
 		System.err.println("------>>> KONSTRUISAN SERVIS!!!");
 	}
 
 	/**
+	 * Registering new user. Caller should provide User entity with username,
+	 *  firstName, lastName, jmb, email, and other optional parameters.
+	 *  Method will hash password, set activation time to null, and registering time to now.
+	 *  
+	 *  It will also add ROLE_REGISTERED role for user.
 	 * 
-	 * @param user user with information from registraction form or something like that
-	 * @param rawPassword a raw, unencrypted password 
+	 * @param user user with information from registration form or something like that
+	 * @param rawPassword a raw, unencrypted password for user
 	 */
 	@Transactional
 	public void registerNewUser(User user, String rawPassword){
 		
 		user.setActivationTime(null);
-		user.setAvatarPath(null);
 		user.setRegisteringTime(StandardUtil.now());
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		
 		user.setPassword(encoder.encode(rawPassword));
 		
 		userDao.persist(user);
@@ -49,5 +55,54 @@ public class UserService {
 		
 		
 	}
+	
+	
+	@Transactional
+	public User updateUserData(User user, String rawOldPassword){
+
+		if (authenticateUserById(user.getId(), rawOldPassword)) {
+			return userDao.merge(user);
+		}
+		
+		return null;
+	}
+	
+	@Transactional
+	public User changeUserPassword(User user, String newRawPassword, String oldRawPassword){
+		
+		if(authenticateUserById(user.getId(), oldRawPassword)){
+			user.setPassword(encoder.encode(newRawPassword));
+			return userDao.merge(user);
+		}
+		
+		return null;
+	}
+	
+	@Transactional
+	public User activateUserAccount(int userId){
+		User dbuser = userDao.findById(userId);
+		
+		dbuser.setActivationTime(StandardUtil.now());
+		dbuser.setActive(true);
+		
+		return dbuser;
+		
+		//it will commit changes at the end of transaction		
+	}
+
+	
+	@Transactional
+	public boolean authenticateUserById(int userId, String rawPassword){
+		User dbuser = userDao.findById(userId);
+		
+		return encoder.matches(rawPassword, dbuser.getPassword());
+	}
+	
+	@Transactional
+	public User findUser(int id){
+		return userDao.findById(id);
+	}
+	
+
 	
 }

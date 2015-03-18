@@ -26,6 +26,7 @@ public class AuthenticationSuccessHandler 	extends SavedRequestAwareAuthenticati
         HttpSession session = request.getSession(true);
         
         AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        session.setAttribute("authUser", authUser);
         session.setAttribute("user", authUser.getUser());
         session.setAttribute("username", authUser.getUsername());
         

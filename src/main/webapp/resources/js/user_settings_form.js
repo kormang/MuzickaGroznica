@@ -42,7 +42,7 @@ function validateSth(input, error, error_slot, regex){
 		 return false;
 	 }
 	 
-	 repeat_password_error_slot.innerHTML = "";
+	 repeate_password_error_slot.innerHTML = "";
 	 
 	 return true;
  }

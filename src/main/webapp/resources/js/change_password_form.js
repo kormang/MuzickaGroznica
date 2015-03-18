@@ -19,11 +19,6 @@ function validateSth(input, error, error_slot, regex){
 	 
 	 return true
 }
-
- function validateUsername(){
-	 return validateSth("input_username", "username_error", "username_error_slot",/[^@#\/\\]{6,}/)
-
- }
  
  function validatePassword(){
 	 return validateSth("input_password", "password_error", "password_error_slot", /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}/)
@@ -49,10 +44,7 @@ function validateSth(input, error, error_slot, regex){
 
  function validateForm(){
 	 
-	 var ret = true;
-	 
-	 ret = ret && validateUsername();
-	 ret = ret && validatePassword();
+	 var ret = validatePassword();
 	 
 	 if(ret){
 		 ret = validateRepeatePassword();

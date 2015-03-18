@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <html>
 <head>
@@ -10,6 +11,11 @@
 </head>
 <body>
 <span style="float: right">
+	<c:url value="/user/settings" var="userSettingsUrl" />
+	<a href="${userSettingsUrl }">-&gt;X&lt;-</a>
+	|
+	&nbsp;
+	|
     <a href="?lang=sr">sr</a>
     |
     <a href="?lang=en">en</a>
@@ -52,6 +58,7 @@
 
 <spring:message code="home.test_message" />
 
+<jsp:include page="components/registration_form.jsp" />
 
 </body>
 </html>
