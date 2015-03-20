@@ -20,7 +20,7 @@
 	<c:url value="/user/settings/password" var="registerUrl"></c:url>
 	
 	
-	<form:form onsubmit="return validateForm();" action="${registerUrl }" commandName="userForm">
+	<form:form onsubmit="return validateForm();" action="${registerUrl }" commandName="userPasswordForm">
 		<table>
 		<tr>
 			<td><spring:message code="label.old_password"/></td>
@@ -44,7 +44,7 @@
 		</table>
 	</form:form>
 
-	<span style='display: none' id="password_error"><spring:message code="Pattern.userForm.rawPassword" /></span>
+	<span style='display: none' id="password_error"><spring:message code="Pattern.userPasswordForm.rawPassword" /></span>
 	<span style='display: none' id="repeat_password_error"><spring:message code="no_match.userForm.repeatPassword" /></span>
 
 </div>

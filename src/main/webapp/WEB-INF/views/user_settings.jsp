@@ -13,9 +13,14 @@
 </head>
 <body>
 	<c:url value="/user/settings/password" var="chpassUrl" />
+	<c:url value="/user/settings/avatar" var="avatarUploadUrl" />
 
-	<a href='${chpassUrl }'><spring:message code="label.change_password" /></a>
-	
+	<div>
+		<a href='${chpassUrl }'><spring:message code="label.change_password" /></a>
+	</div>
+	<div>
+		<a href='${avatarUploadUrl }'><spring:message code="avatar_upload.title" /></a>
+	</div>	
 	
 	<div>
 	<c:url value="/user/settings" var="registerUrl"></c:url>

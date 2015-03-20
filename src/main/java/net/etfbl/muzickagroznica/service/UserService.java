@@ -1,16 +1,26 @@
 package net.etfbl.muzickagroznica.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import net.etfbl.muzickagroznica.model.dao.RoleDao;
 import net.etfbl.muzickagroznica.model.dao.UserDao;
 import net.etfbl.muzickagroznica.model.entities.Role;
 import net.etfbl.muzickagroznica.model.entities.RoleId;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.util.StandardUtil;
+import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 @Service
 public class UserService {
@@ -23,6 +33,12 @@ public class UserService {
 	
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	StandardUtilsBean standardUtilsBean;
+	
+	@Autowired
+	PlatformTransactionManager transactionManager;
 	
 	public UserService() {
 		// TODO Auto-generated constructor stub
@@ -68,14 +84,16 @@ public class UserService {
 	}
 	
 	@Transactional
-	public User changeUserPassword(User user, String newRawPassword, String oldRawPassword){
+	public User changeUserPassword(int userId, String newRawPassword, String oldRawPassword){
+		User user = userDao.findById(userId);
 		
-		if(authenticateUserById(user.getId(), oldRawPassword)){
+		if(encoder.matches(oldRawPassword, user.getPassword())){
 			user.setPassword(encoder.encode(newRawPassword));
-			return userDao.merge(user);
+		} else {
+			return null;
 		}
 		
-		return null;
+		return user;
 	}
 	
 	@Transactional
@@ -103,6 +121,47 @@ public class UserService {
 		return userDao.findById(id);
 	}
 	
+	public User changeAvatarForUser(int userId, byte[] image){
+		
+		String uufilename = UUID.randomUUID().toString();
+		
+		File outputFile = new File(standardUtilsBean.getAvatarUploadDir(), uufilename);
+		
+		try {
+			FileUtils.writeByteArrayToFile(outputFile, image);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		User ret = null;
+		
+		TransactionDefinition def = new DefaultTransactionDefinition();
+		TransactionStatus txstat = null;
+		
+		
+		try {
+		
+			txstat = transactionManager.getTransaction(def);
+			
+			ret = userDao.findById(userId);
+			ret.setAvatarPath(uufilename);
+			
+			transactionManager.commit(txstat);
+			
+		} catch(Exception ex) {
+			outputFile.delete();
+			try {
+				transactionManager.rollback(txstat);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		return ret;	
+		
+	}
 
 	
 }

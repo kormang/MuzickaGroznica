@@ -1,17 +1,23 @@
 package net.etfbl.muzickagroznica.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import net.etfbl.muzickagroznica.form.bean.AvatarUploadForm;
 import net.etfbl.muzickagroznica.form.bean.UserForm;
 import net.etfbl.muzickagroznica.form.bean.UserPasswordForm;
 import net.etfbl.muzickagroznica.form.bean.UserSettingsForm;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.UserService;
+import net.etfbl.muzickagroznica.util.StandardUtil;
+import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -21,6 +27,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -32,6 +39,9 @@ public class UserController {
 	
 	@Autowired
 	MessageSource messageSource;
+	
+	@Autowired
+	StandardUtilsBean standardUtilsBean;
 	
 	
 	public UserController() {
@@ -141,6 +151,8 @@ public class UserController {
 			return "user_settings";
 		}
 		
+		session.setAttribute("user", merged);
+		
 		return "redirect:/user/settings";
 	}
 	
@@ -152,7 +164,7 @@ public class UserController {
 		//wrong name to choose, but made one day easier
 		UserPasswordForm userForm = new UserPasswordForm();
 		
-		ret.addObject("userForm", userForm);
+		ret.addObject("userPasswordForm", userForm);
 		
 		return ret;
 		
@@ -160,7 +172,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/user/settings/password", method=RequestMethod.POST)
 	public String changeUserPassword(
-			@Valid @ModelAttribute("userForm") UserPasswordForm userForm,
+			@Valid @ModelAttribute("userPasswordForm") UserPasswordForm userForm,
 			BindingResult result,
 			HttpSession session,
 			Locale local
@@ -173,17 +185,14 @@ public class UserController {
 		User user = (User) session.getAttribute("user");
 		
 		User merged = userService.changeUserPassword(
-				user,
+				user.getId(),
 				userForm.getRawPassword(),
 				userForm.getOldPassword()
 		);
 		
 		if(merged == null){
-			//update user in session
-			user = userService.findUser(user.getId());
-			session.setAttribute("user", user);
-			
-			result.addError(new FieldError("userForm", "oldPassword", messageSource.getMessage("PasswordMatch.userSettingsForm.oldPassword", null, local)));
+		
+			result.addError(new FieldError("userPasswordForm", "oldPassword", messageSource.getMessage("PasswordMatch.userSettingsForm.oldPassword", null, local)));
 			
 			//
 			try {
@@ -195,9 +204,55 @@ public class UserController {
 			return "change_password";
 		}
 		
+		//update session model
+		session.setAttribute("user", merged);
+		
 		
 		return "redirect:/user/settings/password";
 	}
 	
+	@RequestMapping(value="/user/settings/avatar", method=RequestMethod.GET)
+	public ModelAndView viewAvatar(){
+		
+		ModelAndView ret = new ModelAndView("avatar_upload");
+		
+		AvatarUploadForm avatarUploadForm = new AvatarUploadForm();
+		ret.addObject("avatarUploadForm",avatarUploadForm);
+		
+		return ret;
+	}
+	
+	@RequestMapping(value = "/user/settings/avatar", method=RequestMethod.POST)
+	public String uploadAvatar(
+			@Valid @ModelAttribute("avatarUploadForm") AvatarUploadForm avatarUploadForm,
+			BindingResult result,
+			HttpSession session
+			){
+		
+		if(result.hasErrors()){
+			return "avatar_upload";
+		}
+		
+		MultipartFile file = avatarUploadForm.getFile();
+		User user = (User) session.getAttribute("user");
+		
+		byte[] binary = null;
+		
+		try {
+			binary = file.getBytes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
+		
+		User merged = userService.changeAvatarForUser(user.getId(), binary);
+		if(merged == null){
+			return "error";
+		}
+		
+
+		return "redirect:/user/settings/avatar";
+	}
 
 }
