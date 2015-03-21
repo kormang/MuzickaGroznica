@@ -11,5 +11,6 @@ public interface GenreDao {
 	void delete(Genre genre);
 	Genre findById(int id);
 	List<Genre> findByExample(Genre genre);
+	List<Genre> findAll();
 	
 }

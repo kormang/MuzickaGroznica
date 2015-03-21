@@ -10,9 +10,15 @@
 </head>
 <body>
 
-	<c:url value='/admin/activation_requests' var="adminPanelUrl"/>
-	<a href="${adminPanelUrl }"><spring:message code='admin.activate_accounts.requests.title'/></a>
+	<c:url value='/admin/activation_requests' var="adminActivationRequestsUrl"/>
+	<a href="${adminActivationRequestsUrl}"><spring:message code='admin.activate_accounts.requests.title'/></a>
 
+	<c:url value='/admin/users' var="adminUsersUrl"/>
+	<a href="${adminUsersUrl}"><spring:message code='admin.users.title'/></a>
+	
+	<c:url value='/admin/genres' var="adminGenresUrl"/>
+	<a href="${adminGenresUrl}"><spring:message code='admin.genres.title'/></a>
+	
 
 </body>
 </html>

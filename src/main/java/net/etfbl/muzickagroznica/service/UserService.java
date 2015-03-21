@@ -169,4 +169,61 @@ public class UserService {
 		return userDao.findByActive(false);
 	}
 	
+	@Transactional
+	public List<User> findActiveUsers(){
+		return userDao.findByActive(true);
+	}
+	
+	@Transactional
+	public User addRoleToUser(int userId, String roleName){
+		User user = userDao.findById(userId);
+
+		boolean has = false;
+		
+		for(Role role : user.getRoles()){
+			if(role.getId().getRoleName().equals(roleName)){
+				has = true;
+				break;
+			}
+		}
+		
+		if(!has){
+			Role role = new Role(new RoleId(user.getId(),roleName), user);
+			user.getRoles().add(role);
+			roleDao.persist(role);
+		}
+		
+		return user;
+	}
+	
+	@Transactional
+	public User removeRoleFromUser(int userId, String roleName){
+		
+		User user = userDao.findById(userId);
+		
+		Role theone = null;
+		
+		for(Role role : user.getRoles()){
+			
+			if(role.getId().getRoleName().equals(roleName)){
+				theone = role;
+				break;
+			}
+			
+		}
+		
+		if(theone != null){
+			user.getRoles().remove(theone);
+			roleDao.delete(theone);
+		}
+		
+		return user;
+		
+	}
+	
+	@Transactional
+	public List<Role> findRolesForUser(int userId){
+		return roleDao.findByUserId(userId);
+	}
+	
 }

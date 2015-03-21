@@ -62,4 +62,13 @@ public class GenreDaoImpl implements GenreDao {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Genre> findAll() {
+		 return (List<Genre>) sessionFactory
+				 .getCurrentSession()
+				 .createQuery("SELECT g FROM Genre g")
+				 .list();
+	}
+
 }

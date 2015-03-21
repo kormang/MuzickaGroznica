@@ -1,12 +1,12 @@
 package net.etfbl.muzickagroznica.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -15,22 +15,21 @@ import net.etfbl.muzickagroznica.form.bean.AvatarUploadForm;
 import net.etfbl.muzickagroznica.form.bean.UserForm;
 import net.etfbl.muzickagroznica.form.bean.UserPasswordForm;
 import net.etfbl.muzickagroznica.form.bean.UserSettingsForm;
+import net.etfbl.muzickagroznica.model.entities.Role;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.UserService;
-import net.etfbl.muzickagroznica.util.StandardUtil;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -49,6 +48,8 @@ public class UserController {
 	
 	@Autowired
 	RequestParamsFinder paramsFinder;
+	
+	private static String[] roleNamesForChange = new String[] { "ROLE_SUPER", "ROLE_ADMIN" };
 	
 	
 	public UserController() {
@@ -290,5 +291,69 @@ public class UserController {
 		return "admin_panel";
 	}
 	
+	@RequestMapping(value="/admin/role_switch", produces="application/json; charset=UTF-8")
+	public @ResponseBody String roleSwitch(
+			@RequestParam("uid") int uid,
+			@RequestParam("role") int roleidx,
+			@RequestParam("add") boolean add, 
+			HttpServletResponse response,
+			Locale local,
+			HttpSession session
+			){
+			
+		try {
+			String roleName = roleNamesForChange[roleidx];
+			
+			if(add){
+				userService.addRoleToUser(uid, roleName);
+			} else {
+				userService.removeRoleFromUser(uid, roleName);
+			}
+			
+			
+		} catch(RuntimeException ex) {
+			ex.printStackTrace();
+			String msg = messageSource.getMessage("admin.role_switch.error", null, local);
+			return "{\"result\" : false, message: \"" + msg + "\"}";
+		}
+		
+		String msg = messageSource.getMessage("admin.role_switch.success", null, local);
+		return "{\"result\" : true, \"message\" : \"" + msg + "\"}";
+		
+	}
+	
+	@RequestMapping(value="/admin/users", method=RequestMethod.GET)
+	public String adminUsers(Map<String, Object> model){
+		
+		List<User> users = userService.findActiveUsers();
+		boolean[] superFlags = new boolean[users.size()];
+		boolean[] adminFlags = new boolean[users.size()];
+		
+		int i = 0;
+		for(User u : users){
+			
+			for(Role role : userService.findRolesForUser(u.getId())){
+				
+				if(role.getId().getRoleName().equals("ROLE_SUPER")){
+					superFlags[i] = true;
+					System.err.println("superFlags["+i+"]="+true);
+				} else if (role.getId().getRoleName().equals("ROLE_ADMIN")){
+					adminFlags[i] = true;
+					System.err.println("adminFlags["+i+"]="+true);
+				}
+			}
+			
+			i++;
+			
+		}
+		
+		
+		model.put("users", users);
+		model.put("superFlags", superFlags);
+		model.put("adminFlags", adminFlags);
+		
+		
+		return "admin_users";
+	}
 
 }

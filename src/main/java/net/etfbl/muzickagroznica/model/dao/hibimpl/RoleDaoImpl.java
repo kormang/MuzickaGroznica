@@ -66,7 +66,7 @@ public class RoleDaoImpl implements RoleDao {
 	@Override
 	public List<Role> findByUserId(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Query q = session.createQuery("FROM Role WHERE roleId.userId = :id");
+		Query q = session.createQuery("SELECT r FROM Role r WHERE r.id.userId = :id");
 		q.setParameter("id", id);
 		return (List<Role>) q.list();
 	}
