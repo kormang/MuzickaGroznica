@@ -16,11 +16,11 @@
 	<c:url value="/user/settings/avatar" var="avatarUploadUrl"></c:url>
 	
 	
-	<form:form action="${avatarUploadUrl }" commandName="avatarUploadForm" enctype="multipart/form-data">
+	<form:form action="${avatarUploadUrl }" modelAttribute="avatarUploadForm" enctype="multipart/form-data">
 		<table>
 		<tr>
 			<td><spring:message code="avatar_upload.file.label" /></td>
-			<td><input type="file" name="file" accept="image/*"/></td>
+			<td><input type="file" name="file" id="file" accept="image/*"/></td>
 			<td><form:errors path="file"/></td>
 		</tr>
 		<tr>

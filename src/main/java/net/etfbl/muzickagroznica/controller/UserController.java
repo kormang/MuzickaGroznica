@@ -2,12 +2,15 @@ package net.etfbl.muzickagroznica.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import net.etfbl.muzickagroznica.controller.utils.RequestParamsFinder;
 import net.etfbl.muzickagroznica.form.bean.AvatarUploadForm;
 import net.etfbl.muzickagroznica.form.bean.UserForm;
 import net.etfbl.muzickagroznica.form.bean.UserPasswordForm;
@@ -27,6 +30,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,6 +46,9 @@ public class UserController {
 	
 	@Autowired
 	StandardUtilsBean standardUtilsBean;
+	
+	@Autowired
+	RequestParamsFinder paramsFinder;
 	
 	
 	public UserController() {
@@ -250,9 +257,38 @@ public class UserController {
 		if(merged == null){
 			return "error";
 		}
-		
+
+		session.setAttribute("user", merged);
 
 		return "redirect:/user/settings/avatar";
 	}
+	
+	@RequestMapping(value="/admin/activation_requests", method=RequestMethod.GET)
+	public String adminViewActivationRequests(Map<String, Object> model){
+		
+		List<User> dausers = userService.findUsersWithDeactivatedAccount();
+		model.put("users", dausers);
+		
+		return "admin_activation_requests";
+	}
+	
+	@RequestMapping(value="/admin/activate_account", method=RequestMethod.POST)
+	public String adminActivateAccount(HttpServletRequest request){
+		
+		try{
+			int aid = paramsFinder.findIntParam(request, "aid");
+			userService.activateUserAccount(aid);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+				
+		return "redirect:/admin/activation_requests";
+	}
+	
+	@RequestMapping(value="/admin/panel")
+	public String adminPanel(){
+		return "admin_panel";
+	}
+	
 
 }

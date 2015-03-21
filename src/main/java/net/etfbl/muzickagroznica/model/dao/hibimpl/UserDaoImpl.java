@@ -1,10 +1,13 @@
 package net.etfbl.muzickagroznica.model.dao.hibimpl;
 
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,5 +73,17 @@ public class UserDaoImpl implements UserDao {
 		q.setParameter("username", username);
 		return (User) q.uniqueResult();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findByActive(boolean active) {
+		Criteria cr = sessionFactory.getCurrentSession().createCriteria(User.class);
+		cr.add(Restrictions.eq("active", active));
+		
+		return (List<User>) cr.list();
+
+	}
+	
+	
 
 }

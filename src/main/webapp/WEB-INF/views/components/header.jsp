@@ -5,6 +5,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div style='top:0; right:0; float: right;'>
+	<c:if test="${not empty user}">
+	
+		<c:choose>
+			<c:when test="${not empty user.avatarPath }">
+				<c:url value="/images/avatars/${user.avatarPath}" var="avatarUrl" />
+			</c:when>
+			<c:otherwise>
+				<c:url value="/images/avatars/no-face.gif" var="avatarUrl" />
+			</c:otherwise>
+		</c:choose>
+		
+		<img src="${avatarUrl }"></img>
+	
+			<c:url value="/j_spring_security_logout" var="logoutUrl" />
+			<a href="${logoutUrl}"><spring:message code="general.label.logout"/></a>
+			
+	</c:if>
 
 	<c:if test="${empty user }">
 		<form name="loginForm" action="<c:url value='/j_spring_security_check'/>" method="post">
@@ -19,11 +36,7 @@
 			</table>
 		</form>
 	</c:if>
-	<c:if test="${not empty user}">
-			<c:url value="/j_spring_security_logout" var="logoutUrl" />
-			<a href="${logoutUrl}"><spring:message code="general.label.logout"/></a>
-			
-	</c:if>
+
 	
 	<span style="float: right">
 		<c:url value="/user/settings" var="userSettingsUrl" />

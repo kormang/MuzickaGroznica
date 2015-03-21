@@ -2,6 +2,7 @@ package net.etfbl.muzickagroznica.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import net.etfbl.muzickagroznica.model.dao.RoleDao;
@@ -59,7 +60,7 @@ public class UserService {
 	public void registerNewUser(User user, String rawPassword){
 		
 		user.setActivationTime(null);
-		user.setRegisteringTime(StandardUtil.now());
+		user.setRegistrationTime(StandardUtil.now());
 		
 		user.setPassword(encoder.encode(rawPassword));
 		
@@ -163,5 +164,9 @@ public class UserService {
 		
 	}
 
+	@Transactional
+	public List<User> findUsersWithDeactivatedAccount(){
+		return userDao.findByActive(false);
+	}
 	
 }

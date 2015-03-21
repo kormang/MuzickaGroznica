@@ -27,10 +27,15 @@
 <c:if test="${not empty ROLE_SUPER }">
 	<a href="<c:url value='/super/main'/>" >Super main</a>
 </c:if>
+<c:if test="${not empty ROLE_ADMIN }">
+	<a href="<c:url value='/admin/panel' />"><spring:message code='admin.panel.title'/></a>
+</c:if>
 
 <spring:message code="home.test_message" />
 
-<jsp:include page="components/registration_form.jsp" />
+<c:if test="${empty user }">
+	<jsp:include page="components/registration_form.jsp" />
+</c:if>
 
 </body>
 </html>

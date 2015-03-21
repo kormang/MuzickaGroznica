@@ -12,5 +12,6 @@ public interface UserDao {
 	User findById(int id);
 	List<User> findByExample(User user);
 	User findByUsername(String username);
+	List<User> findByActive(boolean active);
 	
 }

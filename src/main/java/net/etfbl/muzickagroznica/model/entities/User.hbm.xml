@@ -32,8 +32,8 @@
         <property name="active" type="boolean">
             <column name="active" not-null="true" />
         </property>
-        <property name="registeringTime" type="timestamp">
-            <column name="registering_time" length="19" not-null="true" />
+        <property name="registrationTime" type="timestamp">
+            <column name="registration_time" length="19" not-null="true" />
         </property>
         <property name="activationTime" type="timestamp">
             <column name="activation_time" length="19" />

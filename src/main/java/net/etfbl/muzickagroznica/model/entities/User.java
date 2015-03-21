@@ -20,7 +20,7 @@ public class User implements java.io.Serializable {
 	private String email;
 	private String avatarPath;
 	private boolean active;
-	private Date registeringTime;
+	private Date registrationTime;
 	private Date activationTime;
 	private Set<Favorite> favorites = new HashSet<Favorite>(0);
 	private Set<Event> events = new HashSet<Event>(0);
@@ -43,7 +43,7 @@ public class User implements java.io.Serializable {
 		this.jmb = jmb;
 		this.email = email;
 		this.active = active;
-		this.registeringTime = registeringTime;
+		this.registrationTime = registeringTime;
 	}
 
 	public User(String username, String password, String firstName,
@@ -59,7 +59,7 @@ public class User implements java.io.Serializable {
 		this.email = email;
 		this.avatarPath = avatarPath;
 		this.active = active;
-		this.registeringTime = registeringTime;
+		this.registrationTime = registeringTime;
 		this.activationTime = activationTime;
 		this.favorites = favorites;
 		this.events = events;
@@ -142,12 +142,12 @@ public class User implements java.io.Serializable {
 		this.active = active;
 	}
 
-	public Date getRegisteringTime() {
-		return this.registeringTime;
+	public Date getRegistrationTime() {
+		return this.registrationTime;
 	}
 
-	public void setRegisteringTime(Date registeringTime) {
-		this.registeringTime = registeringTime;
+	public void setRegistrationTime(Date registeringTime) {
+		this.registrationTime = registeringTime;
 	}
 
 	public Date getActivationTime() {

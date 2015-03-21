@@ -15,6 +15,10 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
+	 	
+	<beans:bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -32,20 +36,10 @@
 	    </beans:bean>
 	</interceptors>
 	
-<!-- 	<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"> -->
-<!--     	<beans:property name="paramName" value="lang" /> -->
-<!-- 	</beans:bean> -->
-	
 	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
     	<beans:property name="defaultLocale" value="sr" />
 	</beans:bean>
-	
-<!-- 	<beans:bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> -->
-<!--     	<beans:property name="interceptors"> -->
-<!--         	<beans:ref bean="localeChangeInterceptor"/> -->
-<!--     	</beans:property> -->
-<!-- 	</beans:bean> -->
 		
-		<context:component-scan base-package="net.etfbl.muzickagroznica.controller"/>
+	<context:component-scan base-package="net.etfbl.muzickagroznica.controller"/>
 		
 </beans:beans>
