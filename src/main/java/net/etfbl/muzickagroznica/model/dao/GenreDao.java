@@ -9,7 +9,7 @@ public interface GenreDao {
 	void persist(Genre genre);
 	Genre merge(Genre genre);
 	void delete(Genre genre);
-	Genre findById(int id);
+	Genre findById(String id);
 	List<Genre> findByExample(Genre genre);
 	List<Genre> findAll();
 	

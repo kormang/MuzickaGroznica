@@ -14,6 +14,9 @@
         <many-to-one name="genre" class="net.etfbl.muzickagroznica.model.entities.Genre" fetch="select">
             <column name="genre_name" length="90" not-null="true" />
         </many-to-one>
+        <many-to-one name="user" class="net.etfbl.muzickagroznica.model.entities.User" fetch="select">
+            <column name="publisher_id" not-null="true" />
+        </many-to-one>
         <property name="name" type="string">
             <column name="name" length="100" not-null="true" />
         </property>
@@ -29,8 +32,8 @@
         <property name="contentPath" type="string">
             <column name="content_path" length="1024" not-null="true" />
         </property>
-        <property name="contentType" type="string">
-            <column name="content_type" length="45" not-null="true" />
+        <property name="contentType" type="java.lang.Integer">
+            <column name="content_type" not-null="true" />
         </property>
         <property name="active" type="boolean">
             <column name="active" not-null="true" />

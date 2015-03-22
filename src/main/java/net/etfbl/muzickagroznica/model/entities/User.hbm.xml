@@ -80,5 +80,11 @@
             </key>
             <one-to-many class="net.etfbl.muzickagroznica.model.entities.Playlist" />
         </set>
+        <set name="musicContents" table="music_content" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publisher_id" not-null="true" />
+            </key>
+            <one-to-many class="net.etfbl.muzickagroznica.model.entities.MusicContent" />
+        </set>
     </class>
 </hibernate-mapping>

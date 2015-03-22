@@ -19,8 +19,9 @@ public class MusicContent implements java.io.Serializable {
 	private String lyrics;
 	private Date length;
 	private String contentPath;
-	private String contentType;
+	private Integer contentType;
 	private boolean active;
+	private User user;
 	private Set<Favorite> favorites = new HashSet<Favorite>(0);
 	private Set<Listening> listenings = new HashSet<Listening>(0);
 	private Set<Playlist> playlists = new HashSet<Playlist>(0);
@@ -32,7 +33,7 @@ public class MusicContent implements java.io.Serializable {
 
 	public MusicContent(Artist artist, Genre genre, String name,
 			Date publishTime, String lyrics, Date length, String contentPath,
-			String contentType, boolean active) {
+			Integer contentType, boolean active, User user) {
 		this.artist = artist;
 		this.genre = genre;
 		this.name = name;
@@ -42,11 +43,12 @@ public class MusicContent implements java.io.Serializable {
 		this.contentPath = contentPath;
 		this.contentType = contentType;
 		this.active = active;
+		this.user = user;
 	}
 
 	public MusicContent(Artist artist, Genre genre, String name,
 			Date publishTime, String lyrics, Date length, String contentPath,
-			String contentType, boolean active, Set<Favorite> favorites, Set<Listening> listenings,
+			Integer contentType, boolean active, Set<Favorite> favorites, Set<Listening> listenings,
 			Set<Playlist> playlists, Set<Rate> rates, Set<Comment> comments) {
 		this.artist = artist;
 		this.genre = genre;
@@ -128,11 +130,11 @@ public class MusicContent implements java.io.Serializable {
 		this.contentPath = contentPath;
 	}
 
-	public String getContentType() {
+	public Integer getContentType() {
 		return this.contentType;
 	}
 
-	public void setContentType(String contentType) {
+	public void setContentType(Integer contentType) {
 		this.contentType = contentType;
 	}
 
@@ -142,6 +144,15 @@ public class MusicContent implements java.io.Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Set<Favorite> getFavorites() {
@@ -183,5 +194,6 @@ public class MusicContent implements java.io.Serializable {
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
+	
 
 }

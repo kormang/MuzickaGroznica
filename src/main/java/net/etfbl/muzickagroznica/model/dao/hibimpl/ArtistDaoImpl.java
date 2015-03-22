@@ -43,9 +43,9 @@ public class ArtistDaoImpl implements ArtistDao {
 	}
 
 	@Override
-	public Artist findById(int id) {
+	public Artist findById(String id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Query q = session.createQuery("FROM Artist WHERE id = :id");
+		Query q = session.createQuery("FROM Artist WHERE name = :id");
 		q.setParameter("id", id);
 		return (Artist) q.uniqueResult();
 	}

@@ -29,6 +29,7 @@ public class User implements java.io.Serializable {
 	private Set<Role> roles = new HashSet<Role>(0);
 	private Set<Rate> rates = new HashSet<Rate>(0);
 	private Set<Playlist> playlists = new HashSet<Playlist>(0);
+	private Set<MusicContent> musicContents = new HashSet<MusicContent>(0);
 
 	public User() {
 	}
@@ -212,6 +213,14 @@ public class User implements java.io.Serializable {
 
 	public void setPlaylists(Set<Playlist> playlists) {
 		this.playlists = playlists;
+	}
+
+	public Set<MusicContent> getMusicContents() {
+		return musicContents;
+	}
+
+	public void setMusicContents(Set<MusicContent> musicContents) {
+		this.musicContents = musicContents;
 	}
 
 }

@@ -9,7 +9,7 @@ public interface ArtistDao {
 	void persist(Artist artist);
 	Artist merge(Artist artist);
 	void delete(Artist artist);
-	Artist findById(int id);
+	Artist findById(String id);
 	List<Artist> findByExample(Artist artist);
 	
 }

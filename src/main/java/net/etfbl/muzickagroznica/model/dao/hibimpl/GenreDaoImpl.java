@@ -43,9 +43,9 @@ public class GenreDaoImpl implements GenreDao {
 	}
 
 	@Override
-	public Genre findById(int id) {
+	public Genre findById(String id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Query q = session.createQuery("FROM Genre WHERE id = :id");
+		Query q = session.createQuery("FROM Genre WHERE name = :id");
 		q.setParameter("id", id);
 		return (Genre) q.uniqueResult();
 	}
