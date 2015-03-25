@@ -39,5 +39,9 @@ public class StandardUtilsBean {
 		return new File(properties.getProperty("avatarUploadDir"));
 	}
 	
+	public File getContentUploadDir(){
+		return new File(properties.getProperty("contentUploadDir"));
+	}
+	
 	
 }

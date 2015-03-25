@@ -3,12 +3,15 @@ package net.etfbl.muzickagroznica.controller;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.etfbl.muzickagroznica.form.bean.ContentNewForm;
 import net.etfbl.muzickagroznica.model.entities.Genre;
+import net.etfbl.muzickagroznica.model.entities.MusicContent;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.ContentService;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
@@ -68,7 +71,34 @@ public class ContentController {
 	@RequestMapping(value="/content/new", method=RequestMethod.GET)
 	public String viewNewContent(Map<String, Object> model){
 		model.put("contentNewForm", new ContentNewForm());
+		putGenresInModel(model);
 		return "content_new";
+	}
+	
+	@RequestMapping(value="/super/audio_file_upload", method=RequestMethod.GET)
+	public String viewAudioFileUpload(Map<String, Object> model){
+		putGenresInModel(model);
+		return "super_audio_file_upload";
+	}
+	
+	@RequestMapping(value="/super/audio_upload_error")
+	public String viewAudioUploadError(){
+		return "super_audio_upload_error";
+	}
+	
+	private void putGenresInModel(Map<String, Object> model){
+		List<Genre> genres = contentService.findAllGenres();
+		model.put("genres", genres
+								.stream()
+								.map(new Function<Genre, String>() {
+
+									@Override
+									public String apply(Genre t) {
+										return t.getName();
+									}
+									
+								})
+								.collect(Collectors.toList()));
 	}
 
 	@RequestMapping(value="/content/new", method=RequestMethod.POST)
@@ -79,7 +109,7 @@ public class ContentController {
 		
 		User user = (User) session.getAttribute("user");
 		
-		contentService.addNewContent(
+		MusicContent mc = contentService.addNewContent(
 				contentNewForm.getName(),
 				contentNewForm.getArtist(),
 				contentNewForm.getGenre(),
@@ -89,6 +119,6 @@ public class ContentController {
 		);
 		
 		
-		return "redirect:/content/new";
+		return "redirect:/content/listen/" + mc.getContentPath();
 	}
 }

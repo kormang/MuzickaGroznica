@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -34,13 +33,8 @@ public class NoCacheFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
-
-        System.err.println("contextPath: " + httpReq.getContextPath());
-        System.err.println("requestURI: " + httpReq.getRequestURI());
-        System.err.println("requestURL: " + httpReq.getRequestURL());
-        
+       
         //if (!httpReq.getRequestURI().startsWith(httpReq.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { 
             httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             httpRes.setHeader("Pragma", "no-cache");
