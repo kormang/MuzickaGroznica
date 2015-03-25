@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -119,6 +121,41 @@ public class ContentController {
 		);
 		
 		
-		return "redirect:/content/listen/" + mc.getContentPath();
+		return "redirect:/content/listen/" + mc.getId();
 	}
+	
+	@RequestMapping(value="/content/listen/{content_id}")
+	public String listen(
+			Map<String, Object> model,
+			@PathVariable("content_id") int contentId,
+			HttpServletRequest request
+	){
+		
+		MusicContent musicContent = contentService.findMusicContentById(contentId);
+		String embeddCode;
+		
+		switch (musicContent.getContentType()) {
+		case 0:
+			String url = request.getContextPath() + "/contents/" + musicContent.getContentPath();
+			embeddCode = audioFileEmbeddTemplate.replace("<<FILE_PATH>>", url).replace("<<CONTEXT_PATH>>", request.getContextPath());
+			break;
+		case 1:
+			embeddCode = youtubeEmbeddTemplate.replace("<<VIDEO_ID>>", musicContent.getExtraInfo());
+			break;
+		case 2:
+			embeddCode = soundcloudEmbeddTemplate.replace("<<TRACK_ID>>", musicContent.getExtraInfo());
+			break;
+
+		default:
+			throw new RuntimeException("This should not happen, contentType is not in [0, 2]");
+		}
+		
+		model.put("embeddCode", embeddCode);
+		
+		return "content_listen";
+	}
+	
+	private static String audioFileEmbeddTemplate = "<div id=\"player_holder\" style=\"display: inline-block; width: 658px;\"><img id=\"eqvimg\" src=\"<<CONTEXT_PATH>>/images/audio-player-header.jpg\"></img><audio controls autoplay id=\"player\" style=\"display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%\"><source src=\"<<FILE_PATH>>\">X</audio></div>";
+ 	private static String soundcloudEmbeddTemplate = "<iframe width=\"50%\" height=\"225\" scrolling=\"no\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<<TRACK_ID>>&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true\"></iframe>";
+	private static String youtubeEmbeddTemplate = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/<<VIDEO_ID>>?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>";
 }

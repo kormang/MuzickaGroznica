@@ -207,16 +207,21 @@ public class ContentService {
 			throw new RuntimeException("Unknown content type.");
 		}
 		
+		DurationAndExtraInfo d;
+		
 		try{
 			if(contentType == 1){
-				length = findYoutubeVideoDuration(contentPath);
+				d = findYoutubeVideoDuration(contentPath);
 			}else{
-				length = findSoundcloudTrackDuration(contentPath);
+				d = findSoundcloudTrackDuration(contentPath);
 			}
 			
 		}catch(Exception ex){
 			throw new RuntimeException("Could not find content duration.", ex);
 		}
+		
+		length = d.duration;
+		String extraInfo = d.extraInfo;
 		
 		MusicContent newContent = fillNewContentWithData(
 				name,
@@ -227,7 +232,8 @@ public class ContentService {
 				publisherId,
 				length,
 				contentType,
-				StandardUtil.now()
+				StandardUtil.now(),
+				extraInfo
 		);
 		
 		musicContentDao.persist(newContent);
@@ -245,7 +251,8 @@ public class ContentService {
 			int publisherId,
 			java.util.Date length,
 			int contentType,
-			java.util.Date publishTime
+			java.util.Date publishTime,
+			String extraInfo
 			){
 		MusicContent newContent =  new MusicContent();
 		User user = userDao.findById(publisherId);
@@ -271,6 +278,7 @@ public class ContentService {
 		newContent.setPublishTime(publishTime);
 		newContent.setLength(length);
 		newContent.setLyrics(lyrics);
+		newContent.setExtraInfo(extraInfo);
 		
 		return newContent;
 		
@@ -291,22 +299,27 @@ public class ContentService {
 		}
 	}
 	
-	protected java.util.Date findSoundcloudTrackDuration(String trackUrl) throws Exception {
+	protected DurationAndExtraInfo findSoundcloudTrackDuration(String trackUrl) throws Exception {
 		String requestUrl = soundcloudApiRequestTemplate.replace("<<TRACK_URL>>", URLEncoder.encode(trackUrl, "UTF-8"));
 		
 		JSONObject jsonObj = fetchJsonObjectFromUrl(requestUrl);
 		
 		long durationMs = jsonObj.getLong("duration");
 		
+		DurationAndExtraInfo ret = new DurationAndExtraInfo();
+		
 		LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(durationMs), ZoneId.ofOffset("UTC", ZoneOffset.ofHours(0)));
-		return StandardUtil.fromLocalDateTime(ldt);
-				
+		ret.duration =  StandardUtil.fromLocalDateTime(ldt);
+		ret.extraInfo = String.valueOf(jsonObj.getLong("id"));	
 
+		return ret;
+		
 	}
 	
-	protected java.util.Date findYoutubeVideoDuration(String videoUrl) throws Exception{
+	protected DurationAndExtraInfo findYoutubeVideoDuration(String contentPath) throws Exception{
 		
-		String videoId = extractYoutubeVideoId(videoUrl);
+		
+		String videoId = extractYoutubeVideoId(contentPath);
 		
 		String requrlstr = youtubeApiv3RequestTemplate.replace("<<VIDEO_ID>>", videoId);
 		
@@ -318,7 +331,10 @@ public class ContentService {
 		
 		java.util.Date duration = parseYoutubeDurationString(durationString);
 		
-		return duration;
+		DurationAndExtraInfo ret = new DurationAndExtraInfo();
+		ret.duration = duration;
+		ret.extraInfo = videoId;
+		return ret;
 	}
 	
 	private JSONObject fetchJsonObjectFromUrl(String url) throws Exception{
@@ -371,5 +387,14 @@ public class ContentService {
 		
 		return idvalue;
 
+	}
+	
+	public MusicContent findMusicContentById(int id){
+		return musicContentDao.findById(id);
+	}
+	
+	private static class DurationAndExtraInfo {
+		public java.util.Date duration;
+		public String extraInfo;
 	}
 }

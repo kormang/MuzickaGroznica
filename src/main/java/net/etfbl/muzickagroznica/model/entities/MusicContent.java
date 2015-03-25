@@ -21,6 +21,7 @@ public class MusicContent implements java.io.Serializable {
 	private String contentPath;
 	private Integer contentType;
 	private boolean active;
+	private String extraInfo;
 	private User user;
 	private Set<Favorite> favorites = new HashSet<Favorite>(0);
 	private Set<Listening> listenings = new HashSet<Listening>(0);
@@ -145,7 +146,14 @@ public class MusicContent implements java.io.Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+
+	public String getExtraInfo() {
+		return extraInfo;
+	}
+
+	public void setExtraInfo(String extraInfo) {
+		this.extraInfo = extraInfo;
+	}
 
 	public User getUser() {
 		return user;

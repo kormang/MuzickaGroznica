@@ -55,7 +55,7 @@ public class AudioFileUploadServlet extends HttpServlet {
 		//RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/super_audio_upload_error.jsp");
 				
 		if(!isMultipart){
-			response.sendRedirect("/muzickagroznica/super/audio_upload_error");
+			response.sendRedirect(request.getContextPath() + "/super/audio_upload_error");
 			return;
 		}
 		
@@ -110,17 +110,16 @@ public class AudioFileUploadServlet extends HttpServlet {
 			
 			int publisherId =  ((User)request.getSession().getAttribute("user")).getId();
 			
-			System.err.println("GENRE: -->>>> " + genre);
 			MusicContent mc = contentService.addNewContent(name, artist, genre, lyrics, bytes, publisherId);
 			
-			response.sendRedirect("muzickagroznica/content/listen/"+mc.getContentPath());
+			response.sendRedirect(request.getContextPath() + "/content/listen/"+mc.getId());
 		} catch (FileUploadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			response.sendRedirect("/muzickagroznica/super/audio_upload_error");
+			response.sendRedirect(request.getContextPath() + "/super/audio_upload_error");
 		} catch (Exception ex){
 			ex.printStackTrace();
-			response.sendRedirect("/muzickagroznica/super/audio_upload_error");
+			response.sendRedirect(request.getContextPath() + "/super/audio_upload_error");
 		}
 		
 		

@@ -51,6 +51,7 @@ public class EncodingFilter implements Filter {
 		System.err.println(encoding);
 		HttpServletRequest httpReq = (HttpServletRequest)request;
 		
+		System.err.println("servletPath: " + httpReq.getServletPath());
         System.err.println("contextPath: " + httpReq.getContextPath());
         System.err.println("requestURI: " + httpReq.getRequestURI());
         System.err.println("requestURL: " + httpReq.getRequestURL());

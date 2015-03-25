@@ -38,6 +38,9 @@
         <property name="active" type="boolean">
             <column name="active" not-null="true" />
         </property>
+        <property name="extraInfo" type="string">
+            <column name="extra_info" length="100" not-null="false" />
+        </property>
         <set name="favorites" table="favorite" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="music_content_id" not-null="true" unique="true" />
