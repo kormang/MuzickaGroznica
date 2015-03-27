@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class ContentController {
+public class ContentController extends MuzickaGroznicaController {
 	
 	@Autowired
 	ContentService contentService;

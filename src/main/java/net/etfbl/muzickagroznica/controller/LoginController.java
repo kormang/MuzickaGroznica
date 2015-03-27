@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LoginController {
+public class LoginController extends MuzickaGroznicaController {
 
 	public LoginController() {
 		// TODO Auto-generated constructor stub

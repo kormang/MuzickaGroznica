@@ -16,20 +16,20 @@ public class Event implements java.io.Serializable {
 	private String description;
 	private Date publishTime;
 	private Date eventTime;
-	private boolean approved;
+	private int approvalStatus;
 
 	public Event() {
 	}
 
 	public Event(User user, String name, String location, String description,
-			Date publishTime, Date eventTime, boolean approved) {
+			Date publishTime, Date eventTime, int approvalStatus) {
 		this.user = user;
 		this.name = name;
 		this.location = location;
 		this.description = description;
 		this.publishTime = publishTime;
 		this.eventTime = eventTime;
-		this.approved = approved;
+		this.approvalStatus = approvalStatus;
 	}
 
 	public Integer getId() {
@@ -88,12 +88,12 @@ public class Event implements java.io.Serializable {
 		this.eventTime = eventTime;
 	}
 
-	public boolean isApproved() {
-		return this.approved;
+	public int getApprovalStatus(){
+		return this.approvalStatus;
 	}
 
-	public void setApproved(boolean approved) {
-		this.approved = approved;
+	public void setApprovalStatus(int approvalStatus) {
+		this.approvalStatus = approvalStatus;
 	}
 
 }

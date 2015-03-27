@@ -26,8 +26,8 @@
         <property name="eventTime" type="timestamp">
             <column name="event_time" length="19" not-null="true" />
         </property>
-        <property name="approved" type="boolean">
-            <column name="approved" not-null="true" />
+        <property name="approvalStatus" type="int">
+            <column name="approval_status" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>
