@@ -1,5 +1,8 @@
 package net.etfbl.muzickagroznica.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.etfbl.muzickagroznica.form.bean.ContentNewForm;
+import net.etfbl.muzickagroznica.form.bean.SearchForm;
 import net.etfbl.muzickagroznica.model.entities.Genre;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
 import net.etfbl.muzickagroznica.model.entities.User;
@@ -154,6 +158,41 @@ public class ContentController extends MuzickaGroznicaController {
 		
 		return "content_listen";
 	}
+	
+	
+	@RequestMapping(value="/content/search")
+	public String searchContent(
+			@ModelAttribute("searchForm") SearchForm searchForm,
+			Map<String, Object> model,
+			Locale local
+	){
+		if(searchForm == null){
+			searchForm = new SearchForm();
+			model.put("searchForm", searchForm);
+			return "search_results";
+		}
+		
+		List<MusicContent> searchResults = contentService.searchForMusicContent(
+					searchForm.getName(),
+					searchForm.getArtist(),
+					searchForm.getGenre()
+		);
+		
+		model.put("searchResults", searchResults);
+		ArrayList<String> formattedDates = new ArrayList<String>();
+		
+		DateFormat df = new SimpleDateFormat(messageSource.getMessage("muzickagroznica.dateTimeFormat", null, local));
+
+		for(MusicContent mc : searchResults){
+			formattedDates.add(df.format(mc.getPublishTime()));
+		}
+		
+		model.put("formattedDates", formattedDates);
+		
+		
+		return "search_results";
+	}
+	
 	
 	private static String audioFileEmbeddTemplate = "<div id=\"player_holder\" style=\"display: inline-block; width: 658px;\"><img id=\"eqvimg\" src=\"<<CONTEXT_PATH>>/images/audio-player-header.jpg\"></img><audio controls autoplay id=\"player\" style=\"display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%\"><source src=\"<<FILE_PATH>>\">X</audio></div>";
  	private static String soundcloudEmbeddTemplate = "<iframe width=\"50%\" height=\"225\" scrolling=\"no\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<<TRACK_ID>>&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true\"></iframe>";

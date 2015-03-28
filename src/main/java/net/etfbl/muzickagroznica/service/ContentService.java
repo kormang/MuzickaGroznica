@@ -33,6 +33,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -390,7 +391,28 @@ public class ContentService {
 	}
 	
 	public MusicContent findMusicContentById(int id){
-		return musicContentDao.findById(id);
+		MusicContent mc = musicContentDao.findById(id);
+		return mc.isActive() ? mc : null;
+	}
+	
+	/**
+	 * Search content in DB. All parameters can be empty or null, in which case they will be ignored
+	 * @param namePart part of music content name to be found
+	 * @param artistPart part of artist's name
+	 * @param genrePart part of genre's name
+	 * @return list of content that matches criteria
+	 */
+	public List<MusicContent> searchForMusicContent(
+			String namePart,
+			String artistPart,
+			String genrePart
+	){
+		
+		namePart = (namePart == null || namePart.isEmpty()) ? null : namePart;
+		artistPart = (artistPart == null || artistPart.isEmpty()) ? null : artistPart;
+		genrePart = (genrePart == null || genrePart.isEmpty()) ? null : genrePart;
+				
+		return musicContentDao.search(namePart, artistPart, genrePart);
 	}
 	
 	private static class DurationAndExtraInfo {

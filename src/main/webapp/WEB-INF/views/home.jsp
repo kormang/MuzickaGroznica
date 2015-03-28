@@ -36,8 +36,15 @@
 <spring:message code="home.test_message" />
 
 <c:if test="${empty user }">
-	<jsp:include page="components/registration_form.jsp" />
+	<div style="float: right;" >
+		<jsp:include page="components/registration_form.jsp" />
+	</div>
 </c:if>
+
+<div style="float: left;">
+		<jsp:include page="components/search_form.jsp" />		
+</div>
+
 
 </body>
 </html>

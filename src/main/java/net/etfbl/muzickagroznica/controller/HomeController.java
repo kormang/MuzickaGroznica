@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.etfbl.muzickagroznica.form.bean.SearchForm;
 import net.etfbl.muzickagroznica.form.bean.UserForm;
 import net.etfbl.muzickagroznica.model.dao.RoleDao;
 
@@ -42,6 +43,7 @@ public class HomeController extends MuzickaGroznicaController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("userForm", new UserForm());
+		model.addAttribute("searchForm", new SearchForm());
 		
 		return "home";
 	}

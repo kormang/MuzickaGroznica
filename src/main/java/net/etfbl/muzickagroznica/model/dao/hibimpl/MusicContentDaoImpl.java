@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.etfbl.muzickagroznica.model.dao.MusicContentDao;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -60,6 +61,54 @@ public class MusicContentDaoImpl implements MusicContentDao {
 				.add(Example.create(musiccontent)).list();
 
 		return results;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MusicContent> search(String name, String artist, String genre) {
+		Session session = sessionFactory.getCurrentSession();
+		StringBuilder queryStringBuilder = new StringBuilder("SELECT mc FROM MusicContent mc WHERE ");
+		if(name == null && artist == null && genre == null){
+			return new ArrayList<MusicContent>();
+		}
+		
+		if(name != null){
+			queryStringBuilder.append("mc.name LIKE :nameq ");
+		}
+		
+		if(artist != null){
+			if(name != null){
+				queryStringBuilder.append(" AND ");
+			}
+			
+			queryStringBuilder.append("mc.artist.name LIKE :artistq ");
+		}
+		
+		if(genre != null){
+			if(name != null || artist != null){
+				queryStringBuilder.append(" AND ");
+			}
+			
+			queryStringBuilder.append("mc.genre.name LIKE :genreq");			
+		}
+
+		String queryString = queryStringBuilder.toString();
+
+		Query query = session.createQuery(queryString);
+		
+		if(name != null){
+			query.setParameter("nameq", '%'+name+'%');
+		}
+		
+		if(artist != null){
+			query.setParameter("artistq", '%'+artist+'%');
+		}
+		
+		if(genre != null){
+			query.setParameter("genreq", '%'+genre+'%');
+		}
+		
+		return (List<MusicContent>) query.list();
 	}
 
 }

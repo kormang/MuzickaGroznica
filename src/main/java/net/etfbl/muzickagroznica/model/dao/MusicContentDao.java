@@ -11,5 +11,6 @@ public interface MusicContentDao {
 	void delete(MusicContent musiccontent);
 	MusicContent findById(int id);
 	List<MusicContent> findByExample(MusicContent musiccontent);
+	List<MusicContent> search(String name, String artist, String genre);
 	
 }
