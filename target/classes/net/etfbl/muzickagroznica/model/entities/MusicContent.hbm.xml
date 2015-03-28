@@ -26,8 +26,8 @@
         <property name="lyrics" type="string">
             <column name="lyrics" length="2048" not-null="true" />
         </property>
-        <property name="length" type="time">
-            <column name="length" length="8" not-null="true" />
+        <property name="duration" type="time">
+            <column name="duration" length="8" not-null="true" />
         </property>
         <property name="contentPath" type="string">
             <column name="content_path" length="1024" not-null="true" />
@@ -40,6 +40,12 @@
         </property>
         <property name="extraInfo" type="string">
             <column name="extra_info" length="100" not-null="false" />
+        </property>
+        <property name="artistName" type="string" insert="false" update="false">
+            <column name="artist_name" length="100" not-null="true"/>
+        </property>
+        <property name="genreName" type="string" insert="false" update="false">
+            <column name="genre_name" length="100" not-null="true" />
         </property>
         <set name="favorites" table="favorite" inverse="true" lazy="true" fetch="select">
             <key>

@@ -2,6 +2,7 @@ package net.etfbl.muzickagroznica.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,6 +22,7 @@ import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.ContentService;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -132,7 +134,8 @@ public class ContentController extends MuzickaGroznicaController {
 	public String listen(
 			Map<String, Object> model,
 			@PathVariable("content_id") int contentId,
-			HttpServletRequest request
+			HttpServletRequest request,
+			Locale local
 	){
 		
 		MusicContent musicContent = contentService.findMusicContentById(contentId);
@@ -155,6 +158,17 @@ public class ContentController extends MuzickaGroznicaController {
 		}
 		
 		model.put("embeddCode", embeddCode);
+		model.put("musicContent", musicContent);
+		
+		DateFormat df = new SimpleDateFormat(messageSource.getMessage("muzickagroznica.dateFormat", null, local));
+		
+		model.put("publishDate", df.format(musicContent.getPublishTime()));
+		model.put("duration", DurationFormatUtils.formatDurationHMS(musicContent.getDuration().getTime()));
+		model.put("name", musicContent.getName());
+		model.put("lyrics", musicContent.getLyrics());
+		model.put("genreName", musicContent.getGenreName());
+		model.put("artistName", musicContent.getArtistName());
+		
 		
 		return "content_listen";
 	}
@@ -181,7 +195,7 @@ public class ContentController extends MuzickaGroznicaController {
 		model.put("searchResults", searchResults);
 		ArrayList<String> formattedDates = new ArrayList<String>();
 		
-		DateFormat df = new SimpleDateFormat(messageSource.getMessage("muzickagroznica.dateTimeFormat", null, local));
+		DateFormat df = new SimpleDateFormat(messageSource.getMessage("muzickagroznica.dateFormat", null, local));
 
 		for(MusicContent mc : searchResults){
 			formattedDates.add(df.format(mc.getPublishTime()));

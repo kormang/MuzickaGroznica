@@ -17,12 +17,23 @@ public class MusicContent implements java.io.Serializable {
 	private String name;
 	private Date publishTime;
 	private String lyrics;
-	private Date length;
+	private Date duration;
 	private String contentPath;
 	private Integer contentType;
 	private boolean active;
 	private String extraInfo;
 	private User user;
+	private String artistName;
+	private String genreName;
+
+	public String getGenreName() {
+		return genreName;
+	}
+
+	public void setGenreName(String genreName) {
+		this.genreName = genreName;
+	}
+
 	private Set<Favorite> favorites = new HashSet<Favorite>(0);
 	private Set<Listening> listenings = new HashSet<Listening>(0);
 	private Set<Playlist> playlists = new HashSet<Playlist>(0);
@@ -33,14 +44,14 @@ public class MusicContent implements java.io.Serializable {
 	}
 
 	public MusicContent(Artist artist, Genre genre, String name,
-			Date publishTime, String lyrics, Date length, String contentPath,
+			Date publishTime, String lyrics, Date duration, String contentPath,
 			Integer contentType, boolean active, User user) {
 		this.artist = artist;
 		this.genre = genre;
 		this.name = name;
 		this.publishTime = publishTime;
 		this.lyrics = lyrics;
-		this.length = length;
+		this.duration = duration;
 		this.contentPath = contentPath;
 		this.contentType = contentType;
 		this.active = active;
@@ -48,7 +59,7 @@ public class MusicContent implements java.io.Serializable {
 	}
 
 	public MusicContent(Artist artist, Genre genre, String name,
-			Date publishTime, String lyrics, Date length, String contentPath,
+			Date publishTime, String lyrics, Date duration, String contentPath,
 			Integer contentType, boolean active, Set<Favorite> favorites, Set<Listening> listenings,
 			Set<Playlist> playlists, Set<Rate> rates, Set<Comment> comments) {
 		this.artist = artist;
@@ -56,7 +67,7 @@ public class MusicContent implements java.io.Serializable {
 		this.name = name;
 		this.publishTime = publishTime;
 		this.lyrics = lyrics;
-		this.length = length;
+		this.duration = duration;
 		this.contentPath = contentPath;
 		this.contentType = contentType;
 		this.active = active;
@@ -115,12 +126,12 @@ public class MusicContent implements java.io.Serializable {
 		this.lyrics = lyrics;
 	}
 
-	public Date getLength() {
-		return this.length;
+	public Date getDuration() {
+		return this.duration;
 	}
 
-	public void setLength(Date length) {
-		this.length = length;
+	public void setDuration(Date duration) {
+		this.duration = duration;
 	}
 
 	public String getContentPath() {
@@ -161,6 +172,14 @@ public class MusicContent implements java.io.Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public String getArtistName() {
+		return artistName;
+	}
+
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
 	}
 
 	public Set<Favorite> getFavorites() {

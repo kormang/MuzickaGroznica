@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
@@ -109,7 +110,7 @@ public class ContentService {
 			return null;
 		}
 		
-		long millisLength;
+		long millisDuration;
 		try {
 			
 			//Ad-hoc quick solution
@@ -119,11 +120,11 @@ public class ContentService {
 			try {
 				AudioFileFormat baseFileFormat = new MpegAudioFileReader().getAudioFileFormat(outputFile);
 				Map<String, Object> properties = baseFileFormat.properties();
-				millisLength = (Long) properties.get("duration");
+				millisDuration = ((Long) properties.get("duration"))/1000;
 			}catch(UnsupportedAudioFileException uafe){
 				AudioFileFormat aff = AudioSystem.getAudioFileFormat(outputFile);
 				Object o = aff.getProperty("duration");
-				millisLength = 1000 * (long) o;
+				millisDuration = ((Long) o)/1000;
 			}
 
 			
@@ -131,11 +132,7 @@ public class ContentService {
 			throw new RuntimeException("Could not get audio file duration.", ex);
 		}
 		
-		java.util.Date length = java.util.Date.from(LocalDateTime
-				.ofInstant(Instant.ofEpochMilli(millisLength), ZoneId.ofOffset("UTC", ZoneOffset.ofHours(0)))
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
-		
+		java.util.Date length = new java.util.Date(millisDuration);
 		
 		TransactionDefinition def = new DefaultTransactionDefinition();
 		TransactionStatus txstat = null;
@@ -167,7 +164,7 @@ public class ContentService {
 			newContent.setContentType(0);
 			newContent.setName(name);
 			newContent.setPublishTime(StandardUtil.now());
-			newContent.setLength(length);
+			newContent.setDuration(length);
 			newContent.setLyrics(lyrics);
 		
 			musicContentDao.persist(newContent);
@@ -277,7 +274,7 @@ public class ContentService {
 		newContent.setContentType(contentType);
 		newContent.setName(name);
 		newContent.setPublishTime(publishTime);
-		newContent.setLength(length);
+		newContent.setDuration(length);
 		newContent.setLyrics(lyrics);
 		newContent.setExtraInfo(extraInfo);
 		
@@ -309,8 +306,7 @@ public class ContentService {
 		
 		DurationAndExtraInfo ret = new DurationAndExtraInfo();
 		
-		LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(durationMs), ZoneId.ofOffset("UTC", ZoneOffset.ofHours(0)));
-		ret.duration =  StandardUtil.fromLocalDateTime(ldt);
+		ret.duration =  new java.util.Date(durationMs);
 		ret.extraInfo = String.valueOf(jsonObj.getLong("id"));	
 
 		return ret;
@@ -357,11 +353,8 @@ public class ContentService {
 	}
 		
 	protected java.util.Date parseYoutubeDurationString(String durationString){
-		// The beauty of java's date and time APIs !
-		// Well, at least new java.time package makes this "possible":
 		Duration duration = Duration.parse(durationString);
-		LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(duration.toMillis()), ZoneId.ofOffset("UTC", ZoneOffset.ofHours(0)));
-		return StandardUtil.fromLocalDateTime(ldt);
+		return new java.util.Date(duration.toMillis());
 	}
 	
 	protected String extractYoutubeVideoId(String url){
@@ -412,7 +405,17 @@ public class ContentService {
 		artistPart = (artistPart == null || artistPart.isEmpty()) ? null : artistPart;
 		genrePart = (genrePart == null || genrePart.isEmpty()) ? null : genrePart;
 				
-		return musicContentDao.search(namePart, artistPart, genrePart);
+		List<MusicContent> result = musicContentDao.search(namePart, artistPart, genrePart);
+		result.removeIf(new Predicate<MusicContent>() {
+
+			@Override
+			public boolean test(MusicContent t) {
+				return !t.isActive();
+			}
+			
+		});
+		
+		return result;
 	}
 	
 	private static class DurationAndExtraInfo {

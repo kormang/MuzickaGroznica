@@ -10,5 +10,19 @@
 
 	${embeddCode}
 
+	<div>
+		<span>${artistName}</span>
+		<span>${name}</span>
+		<span>${duration}</span>
+		<span>${genreName}</span>
+		<span>${publishDate}</span>
+		
+		<div>
+			${lyrics}
+		</div>
+	</div>
+	
+	
+
 </body>
 </html>

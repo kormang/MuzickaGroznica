@@ -17,7 +17,7 @@
 				<td><spring:message code="search_form.label.genre" /></td>
 				<td><form:input path="genre"/></td>
 				
-				<td><input type="submit" value='<spring:message code="label.submit.general" />' /></td>
+				<td><input type="submit" value='<spring:message code="search_form.label.search" />' /></td>
 			</tr>		
 		</table>
 
