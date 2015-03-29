@@ -12,8 +12,10 @@ public class Rate implements java.io.Serializable {
 	private Integer id;
 	private MusicContent musicContent;
 	private User user;
-	private int rate;
+	private Integer rate;
 	private Date ratingTime;
+	private Integer musicContentId;
+	private Integer userId;
 
 	public Rate() {
 	}
@@ -49,11 +51,11 @@ public class Rate implements java.io.Serializable {
 		this.user = user;
 	}
 
-	public int getRate() {
+	public Integer getRate() {
 		return this.rate;
 	}
 
-	public void setRate(int rate) {
+	public void setRate(Integer rate) {
 		this.rate = rate;
 	}
 
@@ -65,4 +67,19 @@ public class Rate implements java.io.Serializable {
 		this.ratingTime = ratingTime;
 	}
 
+	public Integer getMusicContentId() {
+		return musicContentId;
+	}
+
+	public void setMusicContentId(Integer musicContentId) {
+		this.musicContentId = musicContentId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 }

@@ -270,7 +270,7 @@ public class UserController extends MuzickaGroznicaController {
 		List<User> dausers = userService.findUsersWithDeactivatedAccount();
 		model.put("users", dausers);
 		
-		return "admin_activation_requests";
+		return "admin/activation_requests";
 	}
 	
 	@RequestMapping(value="/admin/activate_account", method=RequestMethod.POST)
@@ -288,7 +288,7 @@ public class UserController extends MuzickaGroznicaController {
 	
 	@RequestMapping(value="/admin/panel")
 	public String adminPanel(){
-		return "admin_panel";
+		return "admin/panel";
 	}
 	
 	@RequestMapping(value="/admin/role_switch", produces="application/json; charset=UTF-8")
@@ -353,7 +353,7 @@ public class UserController extends MuzickaGroznicaController {
 		model.put("adminFlags", adminFlags);
 		
 		
-		return "admin_users";
+		return "admin/users";
 	}
 
 }

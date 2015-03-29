@@ -16,8 +16,11 @@ import javax.validation.Valid;
 
 import net.etfbl.muzickagroznica.form.bean.ContentNewForm;
 import net.etfbl.muzickagroznica.form.bean.SearchForm;
+import net.etfbl.muzickagroznica.model.dao.RateDao;
+import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
+import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.ContentService;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
@@ -53,7 +56,7 @@ public class ContentController extends MuzickaGroznicaController {
 	public String viewGenres(Map<String, Object> model){
 		List<Genre> genres = contentService.findAllGenres();
 		model.put("genres", genres);
-		return "admin_genres";
+		return "admin/genres";
 	}
 	
 	@RequestMapping(value="/admin/add_genre", produces="application/json; charset=UTF-8")
@@ -80,18 +83,18 @@ public class ContentController extends MuzickaGroznicaController {
 	public String viewNewContent(Map<String, Object> model){
 		model.put("contentNewForm", new ContentNewForm());
 		putGenresInModel(model);
-		return "content_new";
+		return "content/new";
 	}
 	
 	@RequestMapping(value="/super/audio_file_upload", method=RequestMethod.GET)
 	public String viewAudioFileUpload(Map<String, Object> model){
 		putGenresInModel(model);
-		return "super_audio_file_upload";
+		return "super/audio_file_upload";
 	}
 	
 	@RequestMapping(value="/super/audio_upload_error")
 	public String viewAudioUploadError(){
-		return "super_audio_upload_error";
+		return "super/audio_upload_error";
 	}
 	
 	private void putGenresInModel(Map<String, Object> model){
@@ -135,7 +138,8 @@ public class ContentController extends MuzickaGroznicaController {
 			Map<String, Object> model,
 			@PathVariable("content_id") int contentId,
 			HttpServletRequest request,
-			Locale local
+			Locale local,
+			HttpSession session
 	){
 		
 		MusicContent musicContent = contentService.findMusicContentById(contentId);
@@ -168,9 +172,21 @@ public class ContentController extends MuzickaGroznicaController {
 		model.put("lyrics", musicContent.getLyrics());
 		model.put("genreName", musicContent.getGenreName());
 		model.put("artistName", musicContent.getArtistName());
+		model.put("musicContentId", contentId);
 		
 		
-		return "content_listen";
+		User user = (User) session.getAttribute("user");
+		
+		Favorite favorite = contentService.findFavorite(user.getId(), contentId);
+		model.put("favorite", favorite != null);
+		
+		Rate rate = contentService.findRate(user.getId(), contentId);
+		System.err.println("rate: " + rate);
+		if(rate != null){
+			model.put("rateValue", rate.getRate());
+		}
+
+		return "content/listen";
 	}
 	
 	
@@ -183,7 +199,7 @@ public class ContentController extends MuzickaGroznicaController {
 		if(searchForm == null){
 			searchForm = new SearchForm();
 			model.put("searchForm", searchForm);
-			return "search_results";
+			return "content/search_results";
 		}
 		
 		List<MusicContent> searchResults = contentService.searchForMusicContent(
@@ -204,9 +220,48 @@ public class ContentController extends MuzickaGroznicaController {
 		model.put("formattedDates", formattedDates);
 		
 		
-		return "search_results";
+		return "content/search_results";
 	}
 	
+	@RequestMapping(value="/content/favorite", produces="application/json; charset=UTF-8")
+	public @ResponseBody String markFavorite(
+			@RequestParam("onoff") boolean onoff,
+			@RequestParam("mcid") int musicContentId,
+			HttpSession session
+	){
+		System.err.println(onoff);
+		System.err.println(musicContentId);
+		int userId = ((User)session.getAttribute("user")).getId();
+		
+		Favorite favorite;
+		boolean result;
+		
+		if(onoff){
+			favorite = contentService.addToFavorites(userId, musicContentId);
+		}else{
+			favorite = contentService.removeFromFavorites(userId, musicContentId);
+		}
+		
+		result = favorite != null;
+		boolean state = (onoff == result); 
+		
+		return "{ \"result\" : "+result+", \"state\" : "+state+"}";
+	}
+	
+	@RequestMapping(value="/content/rate", produces="application/json; charset=UTF-8")
+	public @ResponseBody String rate(
+			@RequestParam("rateval") int rateval,
+			@RequestParam("mcid") int musicContentId,
+			HttpSession session
+	){
+		User user = (User) session.getAttribute("user");
+		 
+		Rate rate = contentService.rate(user.getId(), musicContentId, rateval);
+		boolean result = rate != null;
+		int state = rateval;
+		
+		return "{ \"result\" : "+result+", \"state\" : "+state+"}";
+	}
 	
 	private static String audioFileEmbeddTemplate = "<div id=\"player_holder\" style=\"display: inline-block; width: 658px;\"><img id=\"eqvimg\" src=\"<<CONTEXT_PATH>>/images/audio-player-header.jpg\"></img><audio controls autoplay id=\"player\" style=\"display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%\"><source src=\"<<FILE_PATH>>\">X</audio></div>";
  	private static String soundcloudEmbeddTemplate = "<iframe width=\"50%\" height=\"225\" scrolling=\"no\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<<TRACK_ID>>&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true\"></iframe>";

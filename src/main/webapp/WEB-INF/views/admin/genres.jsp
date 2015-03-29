@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="admin.genres.title"/></title>
-<c:url value="/resources/js/admin_genres.js" var="jsUrl" />
+<c:url value="/resources/js/admin/genres.js" var="jsUrl" />
 <script type="text/javascript" src="${jsUrl }"></script>
 </head>
 <body>

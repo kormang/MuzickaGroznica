@@ -37,7 +37,7 @@ public class EventController extends MuzickaGroznicaController {
 	@RequestMapping(value="/super/event/new", method=RequestMethod.GET)
 	public String viewEventNew(Map<String, Object> model){
 		model.put("newEventForm",new NewEventForm());
-		return "event_new";
+		return "event/new";
 	}
 	
 	@RequestMapping(value="/super/event/new", method=RequestMethod.POST)
@@ -73,7 +73,7 @@ public class EventController extends MuzickaGroznicaController {
 		model.put("event", event);
 		model.put("event_dateAndTime", df.format(event.getEventTime()));
 		
-		return "event_view";
+		return "event/view";
 	}
 	
 	

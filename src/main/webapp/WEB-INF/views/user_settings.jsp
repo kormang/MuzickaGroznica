@@ -57,7 +57,7 @@
 			<td><form:errors path="email" cssClass="error"/></td>
 		</tr>
 		<tr>
-			<td><input value="<spring:message code='label.submit.general'/>" type="submit" /></td>
+			<td><input value="<spring:message code='label.general.submit'/>" type="submit" /></td>
 		</tr>
 		</table>
 	</form:form>

@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.arctic.css"/>" type="text/css" />
+
+ <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+
+ <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
+ <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxrating.js"/>"></script>
+
+
+ <script type="text/javascript" src="<c:url value="/resources/js/content/listen.js" />"></script>
+
+</head>
+<body>
+
+<script type="text/javascript">
+var mcid = ${musicContentId};
+var favoriteUrl = "<c:url value="/content/favorite" />";
+var rateUrl = "<c:url value="/content/rate" />";
+var rateValue = <c:choose><c:when test="${not empty rateValue}">${rateValue}</c:when><c:otherwise>null</c:otherwise></c:choose>;
+var favorite = ${favorite};
+
+$(document).ready(function () {
+	var params = {
+			"favoriteUrl" : favoriteUrl,
+			"mcid" : mcid,
+			"rateUrl" : rateUrl,
+			"rateValue" : rateValue,
+			"favorite" : favorite
+	};
+
+	initcl(params);
+});
+
+</script>
+
+	${embeddCode}
+
+	<div>
+		<div>
+			<span>
+				<input type="checkbox" id="favorite" name="favorite" <c:if test="${favorite}">checked="checked"</c:if> />
+				<spring:message code="label.general.favorite" />
+			</span>
+			<div style="display: inline;">
+				<div id="rate"></div>
+			</div>
+		</div>
+	
+		<div>
+			<span>${artistName}</span>
+			<span>${name}</span>
+			<span>${duration}</span>
+			<span>${genreName}</span>
+			<span>${publishDate}</span>
+		</div>
+		<div>
+			${lyrics}
+		</div>
+	</div>
+	
+	
+
+</body>
+</html>

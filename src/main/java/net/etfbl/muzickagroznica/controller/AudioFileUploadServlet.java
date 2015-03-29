@@ -51,8 +51,6 @@ public class AudioFileUploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		
-		//RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/super_audio_upload_error.jsp");
 				
 		if(!isMultipart){
 			response.sendRedirect(request.getContextPath() + "/super/audio_upload_error");

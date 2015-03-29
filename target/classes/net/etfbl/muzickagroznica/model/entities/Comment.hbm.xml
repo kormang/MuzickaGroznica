@@ -20,5 +20,11 @@
         <property name="commentingTime" type="timestamp">
             <column name="commenting_time" length="19" not-null="true" unique="true" />
         </property>
+                <property name="userId" type="java.lang.Integer" insert="false" update="false">
+            <column name="user_id" not-null="true" unique="true" />
+        </property>
+        <property name="musicContentId" type="java.lang.Integer" insert="false" update="false" >
+            <column name="music_content_id" not-null="true" unique="true" />
+        </property>
     </class>
 </hibernate-mapping>

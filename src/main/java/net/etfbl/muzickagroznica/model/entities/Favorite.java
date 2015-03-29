@@ -13,6 +13,8 @@ public class Favorite implements java.io.Serializable {
 	private MusicContent musicContent;
 	private User user;
 	private Date favoritingTime;
+	private Integer musicContentId;
+	private Integer userId;
 
 	public Favorite() {
 	}
@@ -55,4 +57,21 @@ public class Favorite implements java.io.Serializable {
 		this.favoritingTime = favoritingTime;
 	}
 
+	public Integer getMusicContentId() {
+		return musicContentId;
+	}
+
+	public void setMusicContentId(Integer musicContentId) {
+		this.musicContentId = musicContentId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	
 }

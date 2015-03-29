@@ -11,13 +11,13 @@
 				<td><spring:message code="search_form.label.name" /></td>
 				<td><form:input path="name"/></td>
 				
-				<td><spring:message code="search_form.label.artist" /></td>
+				<td><spring:message code="label.general.artist" /></td>
 				<td><form:input path="artist"/></td>
 				
-				<td><spring:message code="search_form.label.genre" /></td>
+				<td><spring:message code="label.general.genre" /></td>
 				<td><form:input path="genre"/></td>
 				
-				<td><input type="submit" value='<spring:message code="search_form.label.search" />' /></td>
+				<td><input type="submit" value='<spring:message code="label.general.search" />' /></td>
 			</tr>		
 		</table>
 

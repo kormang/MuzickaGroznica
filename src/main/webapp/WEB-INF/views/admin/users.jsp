@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="admin.users.title" /></title>
 
-<c:url value="/resources/js/admin_users.js" var="jsUrl" />
+<c:url value="/resources/js/admin/users.js" var="jsUrl" />
 <script type="text/javascript" src="${jsUrl }"></script>
 
 </head>

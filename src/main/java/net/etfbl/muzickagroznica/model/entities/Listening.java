@@ -13,6 +13,8 @@ public class Listening implements java.io.Serializable {
 	private MusicContent musicContent;
 	private User user;
 	private Date listeningTime;
+	private Integer musicContentId;
+	private Integer userId;
 
 	public Listening() {
 	}
@@ -53,6 +55,22 @@ public class Listening implements java.io.Serializable {
 
 	public void setListeningTime(Date listeningTime) {
 		this.listeningTime = listeningTime;
+	}
+	
+	public Integer getMusicContentId() {
+		return musicContentId;
+	}
+
+	public void setMusicContentId(Integer musicContentId) {
+		this.musicContentId = musicContentId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }

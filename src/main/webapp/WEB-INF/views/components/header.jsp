@@ -19,7 +19,7 @@
 		<img src="${avatarUrl }"></img>
 	
 			<c:url value="/j_spring_security_logout" var="logoutUrl" />
-			<a href="${logoutUrl}"><spring:message code="general.label.logout"/></a>
+			<a href="${logoutUrl}"><spring:message code="label.general.logout"/></a>
 			
 	</c:if>
 
@@ -31,7 +31,7 @@
 					<td> <input type="text" name="username" /></td>
 					<td>Лозинка: </td>
 					<td> <input type="password" name="password" /> </td>
-					<td> <input type="submit" name="command" value="Улогуј се" /></td>
+					<td> <input type="submit" name="command" value="<spring:message code="label.general.login"/>" /></td>
 				</tr>
 			</table>
 		</form>

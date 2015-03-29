@@ -1,12 +1,16 @@
 package net.etfbl.muzickagroznica.service;
 
 import net.etfbl.muzickagroznica.model.dao.ArtistDao;
+import net.etfbl.muzickagroznica.model.dao.FavoriteDao;
 import net.etfbl.muzickagroznica.model.dao.GenreDao;
 import net.etfbl.muzickagroznica.model.dao.MusicContentDao;
+import net.etfbl.muzickagroznica.model.dao.RateDao;
 import net.etfbl.muzickagroznica.model.dao.UserDao;
 import net.etfbl.muzickagroznica.model.entities.Artist;
+import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
+import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.util.StandardUtil;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
@@ -29,11 +33,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -59,6 +58,12 @@ public class ContentService {
 	
 	@Autowired
 	ArtistDao artistDao;
+	
+	@Autowired
+	FavoriteDao favoriteDao;
+	
+	@Autowired
+	RateDao rateDao;
 	
 	@Autowired
 	StandardUtilsBean standardUtilsBean;
@@ -417,6 +422,108 @@ public class ContentService {
 		
 		return result;
 	}
+	
+	@Transactional
+	public Favorite removeFromFavorites(int userId, int musicContentId){
+		Favorite favorite = findFavorite(userId, musicContentId);
+		
+		if(favorite == null){
+			return favorite;
+		}
+		
+		favoriteDao.delete(favorite);
+		
+		return favorite;
+		
+	}
+	
+	
+	@Transactional
+	public Favorite addToFavorites(int userId, int musicContentId){
+		
+		User user = userDao.findById(userId);
+		MusicContent mc = musicContentDao.findById(musicContentId);
+		
+		if(!mc.isActive()){
+			return null;
+		}
+		
+		Favorite favorite = new Favorite();
+		favorite.setFavoritingTime(StandardUtil.now());
+		favorite.setMusicContent(mc);
+		favorite.setUser(user);
+
+		user.getFavorites().add(favorite);
+		mc.getFavorites().add(favorite);
+		
+		favoriteDao.persist(favorite);
+		
+		return favorite;
+		
+	}
+	
+	@Transactional
+	public Favorite findFavorite(int userId, int musicContentId){
+		Favorite favorite = new Favorite();
+		favorite.setMusicContentId(musicContentId);
+		favorite.setUserId(userId);
+		List<Favorite> favorites = favoriteDao.findByExample(favorite);
+		
+		if(favorites.size() == 0){
+			return null;
+		}else{
+			return favorites.get(0);
+		}
+	}
+	
+	@Transactional
+	public Rate findRate(int userId, int musicContentId){
+		Rate rate = new Rate();
+		rate.setMusicContentId(musicContentId);
+		rate.setUserId(userId);
+		
+		List<Rate> rates = rateDao.findByExample(rate);
+		
+		if(rates.size() == 0){
+			return null;
+		} else {
+			return rates.get(0);
+		}
+		
+	}
+	
+	@Transactional
+	public Rate rate(int userId, int musicContentId, int value){
+		Rate rate = findRate(userId, musicContentId);
+		if(rate == null){
+			return rateNew(userId, musicContentId, value);
+		}else{
+			return changeExistingRate(rate, value);
+		}
+	}
+	
+	@Transactional
+	private Rate rateNew(int userId, int musicContentId, int value){
+		User user = userDao.findById(userId);
+		MusicContent mc = musicContentDao.findById(musicContentId);
+		Rate rate = new Rate();
+		rate.setMusicContent(mc);
+		rate.setUser(user);
+		rate.setRatingTime(StandardUtil.now());
+		rate.setRate(value);
+		
+		rateDao.persist(rate);
+		
+		return rate;
+	}
+	
+	@Transactional
+	private Rate changeExistingRate(Rate rate, int value){
+		rate.setRate(value);
+		rate.setRatingTime(StandardUtil.now());
+		return rate;
+	}
+	
 	
 	private static class DurationAndExtraInfo {
 		public java.util.Date duration;

@@ -14,6 +14,9 @@ public class Comment implements java.io.Serializable {
 	private User user;
 	private String commentText;
 	private Date commentingTime;
+	private Integer musicContentId;
+	private Integer userId;
+	
 
 	public Comment() {
 	}
@@ -64,6 +67,22 @@ public class Comment implements java.io.Serializable {
 
 	public void setCommentingTime(Date commentingTime) {
 		this.commentingTime = commentingTime;
+	}
+	
+	public Integer getMusicContentId() {
+		return musicContentId;
+	}
+
+	public void setMusicContentId(Integer musicContentId) {
+		this.musicContentId = musicContentId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }

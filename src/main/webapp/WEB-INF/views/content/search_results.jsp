@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<jsp:include page="components/search_form.jsp" />
+	<jsp:include page="/WEB-INF/views/components/search_form.jsp" />
 <table>
 <c:choose>
 
