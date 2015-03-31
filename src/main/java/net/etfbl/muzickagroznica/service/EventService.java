@@ -1,10 +1,12 @@
 package net.etfbl.muzickagroznica.service;
 
-import org.hibernate.SessionFactory;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.etfbl.muzickagroznica.gateway.EmailGateway;
 import net.etfbl.muzickagroznica.model.dao.EventDao;
 import net.etfbl.muzickagroznica.model.dao.UserDao;
 import net.etfbl.muzickagroznica.model.entities.Event;
@@ -21,7 +23,7 @@ public class EventService {
 	UserDao userDao;
 	
 	@Autowired
-	SessionFactory sf;
+	EmailGateway emailGateway;
 	
 	public EventService() {
 		// TODO Auto-generated constructor stub
@@ -60,4 +62,44 @@ public class EventService {
 		return eventDao.findById(eventId);
 	}
 	
+	@Transactional
+	public List<Event> findEventsPendingApproval(){
+		Event pattern = new Event();
+		pattern.setApprovalStatus(0);
+		List<Event> results = eventDao.findByExample(pattern);
+		return results;
+	}
+	
+	/**
+	 * 
+	 * @param eventId id of event to approve/disapprove
+	 * @param approve if true event will be approved, otherwise it will be disapproved
+	 * @return event
+	 */
+	@Transactional
+	public Event approveEvent(int eventId, boolean approve){
+		Event event = eventDao.findById(eventId);
+		
+		if(event == null){
+			return null;
+		}
+		
+		int approvalStatus = -1;
+		if(approve){
+			approvalStatus += 2;
+		}
+		
+		event.setApprovalStatus(approvalStatus);
+		
+		event =  eventDao.merge(event);
+		
+		List<User> users = userDao.findByActive(true);
+		String subject = event.getName();
+		String text = event.getDescription() + "\r\n" + "/event/view/" + event.getId();
+		
+		emailGateway.sendEmailsToUsers(users, subject, text);
+		
+		return event;
+
+	}
 }

@@ -16,6 +16,7 @@
 		<!-- Service beans use password encoder, we should provide one here -->
 		<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		</beans:bean>
+		
 
 	<context:component-scan base-package="net.etfbl.muzickagroznica.service" />
 

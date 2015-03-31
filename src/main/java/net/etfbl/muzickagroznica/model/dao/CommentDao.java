@@ -11,5 +11,6 @@ public interface CommentDao {
 	void delete(Comment comment);
 	Comment findById(int id);
 	List<Comment> findByExample(Comment comment);
+	List<Comment> findForMusicContent(Integer musicContentId);
 	
 }

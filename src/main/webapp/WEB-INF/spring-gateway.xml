@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		">
+
+
+
+
+	<!-- <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="localhost" />
+        <property name="port" value="587" />
+        <property name="username" value="youremail" />
+        <property name="password" value="yourpassword" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean> -->
+ 
+ 	<!-- <context:component-scan base-package="net.etfbl.muzickagroznica.gateway" /> -->
+ 	
+ 	<beans:bean id="emailGateway" class="net.etfbl.muzickagroznica.gateway.EmailGateway">
+ 		<beans:property name="defaultFrom" value="no-replay@muzickagroznica.net"></beans:property>
+ 		<beans:property name="hostname" value="localhost"></beans:property>
+ 	</beans:bean>
+ 
+ </beans:beans>

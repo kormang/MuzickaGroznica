@@ -1,12 +1,14 @@
 package net.etfbl.muzickagroznica.service;
 
 import net.etfbl.muzickagroznica.model.dao.ArtistDao;
+import net.etfbl.muzickagroznica.model.dao.CommentDao;
 import net.etfbl.muzickagroznica.model.dao.FavoriteDao;
 import net.etfbl.muzickagroznica.model.dao.GenreDao;
 import net.etfbl.muzickagroznica.model.dao.MusicContentDao;
 import net.etfbl.muzickagroznica.model.dao.RateDao;
 import net.etfbl.muzickagroznica.model.dao.UserDao;
 import net.etfbl.muzickagroznica.model.entities.Artist;
+import net.etfbl.muzickagroznica.model.entities.Comment;
 import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
@@ -64,6 +66,9 @@ public class ContentService {
 	
 	@Autowired
 	RateDao rateDao;
+	
+	@Autowired
+	CommentDao commentDao;
 	
 	@Autowired
 	StandardUtilsBean standardUtilsBean;
@@ -524,6 +529,33 @@ public class ContentService {
 		return rate;
 	}
 	
+	@Transactional
+	public Comment addComment(int userId, int musicContentId, String commentText){
+		User user = userDao.findById(userId);
+		MusicContent mc = musicContentDao.findById(musicContentId);
+		Comment comment = new Comment();
+		comment.setCommentingTime(StandardUtil.now());
+		comment.setCommentText(commentText);
+		comment.setMusicContent(mc);
+		comment.setUser(user);
+		commentDao.persist(comment);
+		return comment;
+	}
+	
+	@Transactional
+	public List<Comment> listComments(int musicContentId){
+		return commentDao.findForMusicContent(musicContentId);
+	}
+	
+	@Transactional
+	public boolean deleteComment(int commentId){
+		Comment comment = commentDao.findById(commentId);
+		if(comment == null){
+			return false;
+		}
+		commentDao.delete(comment);
+		return true;
+	}
 	
 	private static class DurationAndExtraInfo {
 		public java.util.Date duration;

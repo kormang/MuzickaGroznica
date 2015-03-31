@@ -62,4 +62,13 @@ public class CommentDaoImpl implements CommentDao {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comment> findForMusicContent(Integer musicContentId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("SELECT c FROM Comment c WHERE c.musicContentId = :mcid ORDER BY c.commentingTime DESC ");
+		query.setParameter("mcid", musicContentId);
+		return (List<Comment>) query.list();
+	}
+
 }

@@ -16,13 +16,13 @@ public class Event implements java.io.Serializable {
 	private String description;
 	private Date publishTime;
 	private Date eventTime;
-	private int approvalStatus;
+	private Integer approvalStatus;
 
 	public Event() {
 	}
 
 	public Event(User user, String name, String location, String description,
-			Date publishTime, Date eventTime, int approvalStatus) {
+			Date publishTime, Date eventTime, Integer approvalStatus) {
 		this.user = user;
 		this.name = name;
 		this.location = location;
@@ -88,11 +88,11 @@ public class Event implements java.io.Serializable {
 		this.eventTime = eventTime;
 	}
 
-	public int getApprovalStatus(){
+	public Integer getApprovalStatus(){
 		return this.approvalStatus;
 	}
 
-	public void setApprovalStatus(int approvalStatus) {
+	public void setApprovalStatus(Integer approvalStatus) {
 		this.approvalStatus = approvalStatus;
 	}
 

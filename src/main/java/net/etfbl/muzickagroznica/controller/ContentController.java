@@ -17,14 +17,17 @@ import javax.validation.Valid;
 import net.etfbl.muzickagroznica.form.bean.ContentNewForm;
 import net.etfbl.muzickagroznica.form.bean.SearchForm;
 import net.etfbl.muzickagroznica.model.dao.RateDao;
+import net.etfbl.muzickagroznica.model.entities.Comment;
 import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
 import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
+import net.etfbl.muzickagroznica.security.AuthUser;
 import net.etfbl.muzickagroznica.service.ContentService;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -261,6 +264,48 @@ public class ContentController extends MuzickaGroznicaController {
 		int state = rateval;
 		
 		return "{ \"result\" : "+result+", \"state\" : "+state+"}";
+	}
+	
+	@RequestMapping(value="/content/add_comment", produces="application/json; charset=UTF-8")
+	public @ResponseBody String addComment(
+			@RequestParam("mcid") int musicContentId,
+			@RequestParam("commtext") String commentText,
+			HttpSession session
+	){
+		boolean result = true;
+		User user = (User)session.getAttribute("user");
+		
+		commentText = StringEscapeUtils.escapeHtml4(commentText);
+		
+		contentService.addComment(user.getId(), musicContentId, commentText);
+		
+		return "{ \"result\" : "+result+"}";
+	}
+	
+	@RequestMapping(value="/content/comments")
+	public String loadComments(
+			@RequestParam("mcid") int musicContentId,
+			Map<String, Object> model
+	){
+	
+		List<Comment> comments = contentService.listComments(musicContentId);
+		model.put("comments", comments);
+		
+		return "content/comments";
+	}
+	
+	
+	@RequestMapping(value="/content/delete_comment", produces="application/json; charset: UTF-8")
+	public @ResponseBody String deleteComment(
+		@RequestParam("commid") int commentId,
+		HttpSession session
+	){
+		boolean result = false;
+		
+		if(session.getAttribute("ROLE_ADMIN") != null){
+			result = contentService.deleteComment(commentId);
+		}
+		return "{ \"result\" : "+result+"}";
 	}
 	
 	private static String audioFileEmbeddTemplate = "<div id=\"player_holder\" style=\"display: inline-block; width: 658px;\"><img id=\"eqvimg\" src=\"<<CONTEXT_PATH>>/images/audio-player-header.jpg\"></img><audio controls autoplay id=\"player\" style=\"display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%\"><source src=\"<<FILE_PATH>>\">X</audio></div>";

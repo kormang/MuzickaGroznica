@@ -22,11 +22,16 @@
 <body>
 
 <script type="text/javascript">
+
 var mcid = ${musicContentId};
 var favoriteUrl = "<c:url value="/content/favorite" />";
 var rateUrl = "<c:url value="/content/rate" />";
 var rateValue = <c:choose><c:when test="${not empty rateValue}">${rateValue}</c:when><c:otherwise>null</c:otherwise></c:choose>;
 var favorite = ${favorite};
+var addCommentUrl = "<c:url value="/content/add_comment" />";
+var commentTemplate = '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;">${user.username}</span><div>{{COMMENT_TEXT}}</div></div>';
+var commentsUrl  = "<c:url value="/content/comments" />";
+var deleteCommentUrl = "<c:url value="/content/delete_comment"/>";
 
 $(document).ready(function () {
 	var params = {
@@ -34,12 +39,15 @@ $(document).ready(function () {
 			"mcid" : mcid,
 			"rateUrl" : rateUrl,
 			"rateValue" : rateValue,
-			"favorite" : favorite
+			"favorite" : favorite,
+			"addCommentUrl" : addCommentUrl,
+			"commentTemplate": commentTemplate,
+			"commentsUrl": commentsUrl,
+			"deleteCommentUrl": deleteCommentUrl
 	};
 
 	initcl(params);
 });
-
 </script>
 
 	${embeddCode}
@@ -67,7 +75,14 @@ $(document).ready(function () {
 		</div>
 	</div>
 	
+	<div id="comment">
+		<textarea id="commentarea" maxlength="254" rows="4" cols="50" ></textarea>
+		<a id="addcomment" href="/"><spring:message code="content.listen.comment"/></a>
+	</div>
 	
+	<div id="commentlist">
+		
+	</div>
 
 </body>
 </html>

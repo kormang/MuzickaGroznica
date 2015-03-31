@@ -19,13 +19,12 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 <c:if test="${not empty user }">
-	Hello ${user.username }
+	Здраво ${user.firstName }
 	<a href="<c:url value='/content/new'/>" ><spring:message code="content.new.title" /></a>
 </c:if>
 
 
 <c:if test="${not empty ROLE_SUPER }">
-	<a href="<c:url value='/super/main'/>" >Super main</a>
 	<a href="<c:url value='/super/event/new'/>" ><spring:message code="event.new.title" /></a>
 </c:if>
 <c:if test="${not empty ROLE_ADMIN }">

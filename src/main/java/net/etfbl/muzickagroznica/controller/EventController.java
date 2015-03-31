@@ -2,6 +2,7 @@ package net.etfbl.muzickagroznica.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class EventController extends MuzickaGroznicaController {
@@ -76,5 +79,23 @@ public class EventController extends MuzickaGroznicaController {
 		return "event/view";
 	}
 	
+	@RequestMapping(value="/admin/pending_events")
+	public String viewEventsPendingApproval(Map<String, Object> model){
+		
+		List<Event> events = eventService.findEventsPendingApproval();
+		model.put("events", events);
+		
+		return "admin/pending_events";
+	}
 	
+	@RequestMapping(value="/admin/event_approval", produces="application/json; charset=UTF-8")
+	public @ResponseBody String eventApproval(
+			@RequestParam("eid") int eid,
+			@RequestParam("approve") boolean approve
+	){
+		Event event = eventService.approveEvent(eid, approve);
+		boolean result = event != null;
+		
+		return "{\"result\":" +result + "}";
+	}
 }
