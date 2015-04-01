@@ -189,6 +189,8 @@ public class ContentController extends MuzickaGroznicaController {
 			model.put("rateValue", rate.getRate());
 		}
 
+		contentService.recordListening(user.getId(), contentId);
+		
 		return "content/listen";
 	}
 	

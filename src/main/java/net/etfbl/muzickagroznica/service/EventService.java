@@ -80,7 +80,7 @@ public class EventService {
 	public Event approveEvent(int eventId, boolean approve){
 		Event event = eventDao.findById(eventId);
 		
-		if(event == null){
+		if(event == null || event.getApprovalStatus() != 0){
 			return null;
 		}
 		
@@ -95,7 +95,16 @@ public class EventService {
 		
 		List<User> users = userDao.findByActive(true);
 		String subject = event.getName();
-		String text = event.getDescription() + "\r\n" + "/event/view/" + event.getId();
+		StringBuilder textBuilder = new StringBuilder(event.getName());
+		textBuilder.append("\n\r");
+		textBuilder.append(event.getLocation());
+		textBuilder.append("\n\r");
+		textBuilder.append(event.getEventTime());
+		textBuilder.append("\n\r");
+		textBuilder.append(event.getDescription());
+		textBuilder.append("\n\r");
+		String text = textBuilder.toString();
+		
 		
 		emailGateway.sendEmailsToUsers(users, subject, text);
 		

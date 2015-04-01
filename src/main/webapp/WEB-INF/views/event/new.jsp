@@ -74,7 +74,7 @@
  	
  	<tr>
 	 	<td>
-	 		<input type="submit"  value="<spring:message code="label.submit.general"/>"/>
+	 		<input type="submit"  value="<spring:message code="label.general.submit"/>"/>
 	 	</td>
  	</tr>
  	</table>

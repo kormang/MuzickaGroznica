@@ -31,8 +31,18 @@
  	<!-- <context:component-scan base-package="net.etfbl.muzickagroznica.gateway" /> -->
  	
  	<beans:bean id="emailGateway" class="net.etfbl.muzickagroznica.gateway.EmailGateway">
- 		<beans:property name="defaultFrom" value="no-replay@muzickagroznica.net"></beans:property>
- 		<beans:property name="hostname" value="localhost"></beans:property>
+ 		<beans:property name="userEmail" value="komarx6@gmail.com"></beans:property>
+ 		<beans:property name="password" value="3Xtr3m3FortranPL"></beans:property>
+ 		<beans:property name="defualtFrom" value="no-replay@muzickagroznica.com"></beans:property>
+		<beans:property name="properties">
+			<beans:props>
+				<beans:prop key="mail.smtp.host">smtp.gmail.com</beans:prop>
+				<beans:prop key="mail.smtp.port">587</beans:prop>
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<beans:prop key="mail.smtps.host">smtp.gmail.com</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+			</beans:props>
+		</beans:property>
  	</beans:bean>
  
  </beans:beans>

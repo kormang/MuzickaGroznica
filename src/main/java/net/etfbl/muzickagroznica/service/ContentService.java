@@ -4,6 +4,7 @@ import net.etfbl.muzickagroznica.model.dao.ArtistDao;
 import net.etfbl.muzickagroznica.model.dao.CommentDao;
 import net.etfbl.muzickagroznica.model.dao.FavoriteDao;
 import net.etfbl.muzickagroznica.model.dao.GenreDao;
+import net.etfbl.muzickagroznica.model.dao.ListeningDao;
 import net.etfbl.muzickagroznica.model.dao.MusicContentDao;
 import net.etfbl.muzickagroznica.model.dao.RateDao;
 import net.etfbl.muzickagroznica.model.dao.UserDao;
@@ -11,6 +12,7 @@ import net.etfbl.muzickagroznica.model.entities.Artist;
 import net.etfbl.muzickagroznica.model.entities.Comment;
 import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
+import net.etfbl.muzickagroznica.model.entities.Listening;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
 import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
@@ -69,6 +71,9 @@ public class ContentService {
 	
 	@Autowired
 	CommentDao commentDao;
+	
+	@Autowired
+	ListeningDao listeningDao;
 	
 	@Autowired
 	StandardUtilsBean standardUtilsBean;
@@ -555,6 +560,29 @@ public class ContentService {
 		}
 		commentDao.delete(comment);
 		return true;
+	}
+	
+	@Transactional
+	public Listening recordListening(int userId, int musicContentId){
+		Listening listening = new Listening();
+		MusicContent musicContent = musicContentDao.findById(musicContentId);
+		if(musicContent == null){
+			return null;
+		}
+		
+		User user = userDao.findById(userId);
+		if(user == null){
+			return null;
+		}
+		
+		listening.setListeningTime(StandardUtil.now());
+		listening.setMusicContent(musicContent);
+		listening.setUser(user);
+		
+		listeningDao.persist(listening);
+		
+		
+		return listening;
 	}
 	
 	private static class DurationAndExtraInfo {
