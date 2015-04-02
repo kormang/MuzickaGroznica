@@ -32,6 +32,8 @@ var addCommentUrl = "<c:url value="/content/add_comment" />";
 var commentTemplate = '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;">${user.username}</span><div>{{COMMENT_TEXT}}</div></div>';
 var commentsUrl  = "<c:url value="/content/comments" />";
 var deleteCommentUrl = "<c:url value="/content/delete_comment"/>";
+var loadPlaylistsUrl = "<c:url value="/content/playlists"/>";
+var addToPlaylistUrl = "<c:url value="/content/add_to_playlist" />";
 
 $(document).ready(function () {
 	var params = {
@@ -43,7 +45,9 @@ $(document).ready(function () {
 			"addCommentUrl" : addCommentUrl,
 			"commentTemplate": commentTemplate,
 			"commentsUrl": commentsUrl,
-			"deleteCommentUrl": deleteCommentUrl
+			"deleteCommentUrl": deleteCommentUrl,
+			"loadPlaylistsUrl": loadPlaylistsUrl,
+			"addToPlaylistUrl": addToPlaylistUrl
 	};
 
 	initcl(params);
@@ -71,6 +75,18 @@ $(document).ready(function () {
 			<span>${publishDate}</span>
 		</div>
 		<div>
+			<input type="button" id="atpl_btn" value="<spring:message code="content.listen.add_to_playlist"/>"/>
+			<div style="background-color: grey; position: absolute; top: 45%; left: 45%;" id="atpl_window">
+				<div id="playlists">
+				</div>
+				<div><input type="radio" name="playlist" value="-1" /><input type="text" id="npl_title" value="<spring:message code="content.listen.playlist.new"/>"/></div>
+				<div>
+					<input type="button" id="atpl_cancel" value="<spring:message code="label.general.cancel" />" />
+					<input type="button" id="atpl_save" value="<spring:message code="label.general.submit" />" />
+				</div>
+			</div>
+		</div>
+		<div>
 			${lyrics}
 		</div>
 	</div>
@@ -81,7 +97,6 @@ $(document).ready(function () {
 	</div>
 	
 	<div id="commentlist">
-		
 	</div>
 
 </body>

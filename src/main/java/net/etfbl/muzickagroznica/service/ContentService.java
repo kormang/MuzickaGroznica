@@ -6,6 +6,7 @@ import net.etfbl.muzickagroznica.model.dao.FavoriteDao;
 import net.etfbl.muzickagroznica.model.dao.GenreDao;
 import net.etfbl.muzickagroznica.model.dao.ListeningDao;
 import net.etfbl.muzickagroznica.model.dao.MusicContentDao;
+import net.etfbl.muzickagroznica.model.dao.PlaylistDao;
 import net.etfbl.muzickagroznica.model.dao.RateDao;
 import net.etfbl.muzickagroznica.model.dao.UserDao;
 import net.etfbl.muzickagroznica.model.entities.Artist;
@@ -14,8 +15,10 @@ import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
 import net.etfbl.muzickagroznica.model.entities.Listening;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
+import net.etfbl.muzickagroznica.model.entities.Playlist;
 import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
+import net.etfbl.muzickagroznica.service.helper.entities.PlaylistSummaryData;
 import net.etfbl.muzickagroznica.util.StandardUtil;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
@@ -37,6 +40,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -74,6 +78,9 @@ public class ContentService {
 	
 	@Autowired
 	ListeningDao listeningDao;
+	
+	@Autowired
+	PlaylistDao playlistDao;
 	
 	@Autowired
 	StandardUtilsBean standardUtilsBean;
@@ -583,6 +590,102 @@ public class ContentService {
 		
 		
 		return listening;
+	}
+	
+	/**
+	 * 
+	 * @param userId creator Id
+	 * @param title title of playlist
+	 * @param initialContentId if negative it will be ignored
+	 * @return
+	 */
+	@Transactional
+	public Playlist createPlaylist(int userId, String title, int initialContentId){
+		User user = userDao.findById(userId);
+		Playlist pl = new Playlist();
+		pl.setUser(user);
+		pl.setCreationTime(StandardUtil.now());
+		pl.setTitle(title);
+		
+		playlistDao.persist(pl);
+		
+		MusicContent mc = musicContentDao.findById(initialContentId);
+		
+		pl.getMusicContents().add(mc);
+		
+		return pl;
+	}
+	
+	@Transactional
+	public Playlist addToPlaylist(int playlistId, int musicContentId){
+		Playlist playlist = playlistDao.findById(playlistId);
+		MusicContent musicContent = musicContentDao.findById(musicContentId);
+		playlist.getMusicContents().add(musicContent);
+		
+		return playlist;
+	}
+	
+	@Transactional
+	public List<Playlist> usersPlaylists(int userId){
+		//TODO: this can be improved if I change Playlist.hbm.xml
+		Playlist playlist = new Playlist();
+		
+		playlist.setUser(userDao.findById(userId));
+		
+		return playlistDao.findByExample(playlist);
+	}
+	
+	/**
+	 * 	 * 
+	 * @param userId id of user who's playlists you want
+	 * @param musicContentId id of music content 
+	 * @return List of Playlists that belong to user with id userId,
+	 * 	and do not contain music content with id musicContentId
+	 */
+	@Transactional
+	public List<Playlist> usersPlaylists(int userId, final int musicContentId){
+		List<Playlist> ret = usersPlaylists(userId);
+		
+		ret.removeIf(new Predicate<Playlist>() {
+
+			@Override
+			public boolean test(Playlist t) {
+				for(MusicContent mc : t.getMusicContents()){
+					if(mc.getId() == musicContentId){
+						return true;
+					}
+				}
+				return false;
+			}
+			
+		});
+		
+		return ret;
+	}
+	
+	@Transactional
+	public List<PlaylistSummaryData> usersPlaylistSummaryData(int userId){
+		List<Playlist> playlists = usersPlaylists(userId);
+		List<PlaylistSummaryData> ret = new ArrayList<PlaylistSummaryData>(playlists.size());
+		for(Playlist pl : playlists){
+			PlaylistSummaryData pd = new PlaylistSummaryData();
+			pd.setCreationTime(pl.getCreationTime());
+			pd.setId(pl.getId());
+			pd.setTitle(pl.getTitle());
+			pd.setNumberOfContents(pl.getMusicContents().size());
+			ret.add(pd);
+		}
+		return ret;
+	}
+	
+	@Transactional
+	public List<MusicContent> musicContentForPlaylist(int playlistId){
+		return new ArrayList<MusicContent>(playlistDao.findById(playlistId).getMusicContents());
+	}
+	
+	@Transactional
+	public Playlist findPlaylist(int playlistId){
+		return playlistDao.findById(playlistId);
 	}
 	
 	private static class DurationAndExtraInfo {

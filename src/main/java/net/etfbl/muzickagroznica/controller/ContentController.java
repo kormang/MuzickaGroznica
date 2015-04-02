@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +22,12 @@ import net.etfbl.muzickagroznica.model.entities.Comment;
 import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
+import net.etfbl.muzickagroznica.model.entities.Playlist;
 import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.security.AuthUser;
 import net.etfbl.muzickagroznica.service.ContentService;
+import net.etfbl.muzickagroznica.service.helper.entities.PlaylistSummaryData;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -32,6 +35,7 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -309,6 +313,76 @@ public class ContentController extends MuzickaGroznicaController {
 		}
 		return "{ \"result\" : "+result+"}";
 	}
+	
+	@RequestMapping(value="/content/add_to_playlist", produces="application/json; charset=UTF-8")
+	public @ResponseBody String addToPlaylist(
+			@RequestParam("plid") int playlistId,
+			@RequestParam(value="pltitle", required=false) String newPlaylistTitle,
+			@RequestParam("mcid") int musicContentId,
+			HttpSession session
+	){
+		User user = (User)session.getAttribute("user");
+		boolean result;
+		
+		if(playlistId < 0){
+			System.err.println("TITLE: " + newPlaylistTitle);
+			result = null != contentService.createPlaylist(user.getId(), newPlaylistTitle, musicContentId);
+		} else {
+			result = null != contentService.addToPlaylist(playlistId, musicContentId);
+		}
+		
+		return "{ \"result\":"+result+"}";
+	}
+	
+	@RequestMapping(value="/content/playlists")
+	public String playlists(
+			@RequestParam(value="mcid", required=false) Integer mcid,
+			Map<String, Object> model,
+			HttpSession session
+	){
+		User user = (User)session.getAttribute("user");
+		
+		List<Playlist> playlists;
+		if(mcid == null){
+			playlists = contentService.usersPlaylists(user.getId());
+		} else {
+			playlists = contentService.usersPlaylists(user.getId(), mcid);
+		}
+		
+	
+		model.put("playlists", playlists);
+		
+		return "content/playlists";
+	}
+	
+	@RequestMapping(value="/content/view_user_playlists")
+	public String viewUserPlaylists(
+			HttpSession session,
+			Map<String, Object> model
+	){
+		User user = (User) session.getAttribute("user");
+		
+		List<PlaylistSummaryData> playlists = contentService.usersPlaylistSummaryData(user.getId());
+				
+		model.put("playlists", playlists);
+		
+		
+		return "content/view_user_playlists";
+	}
+	
+	@RequestMapping(value="/content/view_playlist_content")
+	public String viewPlaylistContent(
+			@RequestParam("plid") int plid,
+			Map<String, Object> model
+	){
+		List<MusicContent> contents = contentService.musicContentForPlaylist(plid);
+		Playlist playlist = contentService.findPlaylist(plid);
+		model.put("playlist", playlist);
+		model.put("contents", contents);
+		
+		return "content/view_playlist_content";
+	}
+	
 	
 	private static String audioFileEmbeddTemplate = "<div id=\"player_holder\" style=\"display: inline-block; width: 658px;\"><img id=\"eqvimg\" src=\"<<CONTEXT_PATH>>/images/audio-player-header.jpg\"></img><audio controls autoplay id=\"player\" style=\"display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%\"><source src=\"<<FILE_PATH>>\">X</audio></div>";
  	private static String soundcloudEmbeddTemplate = "<iframe width=\"50%\" height=\"225\" scrolling=\"no\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<<TRACK_ID>>&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true\"></iframe>";

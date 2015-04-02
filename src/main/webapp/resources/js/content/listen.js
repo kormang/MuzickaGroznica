@@ -95,5 +95,59 @@ function initcl(params){
 			return false;
 	});
 	
+	
+	
+	
+	//playlists
+	
+	$("#atpl_window").hide();
+	
+	$("#atpl_btn").click(
+			function(){
+				$("#atpl_btn").hide();
+				$("#playlists").load(
+						params.loadPlaylistsUrl,
+						{"mcid": params.mcid},
+						function(data, status){
+							if(status == "success"){
+								$("#atpl_window").show();
+							}else{
+								$("#atpl_btn").show();
+							}
+						}
+				);
+			}
+	);
+	
+	$("#atpl_cancel").click(
+			function(){
+				$("#atpl_window").hide();
+				$("#atpl_btn").show();
+			}
+	);
+	
+	$("#atpl_save").click(
+			function(){
+				reqparams = {"mcid": params.mcid};
+				var plid = $("[name=playlist]").val();
+				reqparams.plid = plid;
+				if(plid == -1){
+					reqparams.pltitle = $("#npl_title").val();
+				}
+				$.get(
+						params.addToPlaylistUrl,
+						reqparams,
+						function(data, status){
+							if(status == "success" && data.result){
+								$("#atpl_btn").show();
+								$("#atpl_window").hide();
+							}else{
+								//TODO: error report
+							}
+						}
+				);
+			}
+	);
+	
 
 }
