@@ -44,7 +44,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
@@ -627,10 +629,9 @@ public class ContentService {
 	
 	@Transactional
 	public List<Playlist> usersPlaylists(int userId){
-		//TODO: this can be improved if I change Playlist.hbm.xml
 		Playlist playlist = new Playlist();
 		
-		playlist.setUser(userDao.findById(userId));
+		playlist.setCreatorId(userId);
 		
 		return playlistDao.findByExample(playlist);
 	}
@@ -686,6 +687,38 @@ public class ContentService {
 	@Transactional
 	public Playlist findPlaylist(int playlistId){
 		return playlistDao.findById(playlistId);
+	}
+	
+	@Transactional
+	public List<MusicContent> findFavoriteMusicContentForUser(int userId){
+		User user = userDao.findById(userId);
+		List<MusicContent> contents = new ArrayList<MusicContent>(user.getFavorites().size());
+		for(Favorite fav : user.getFavorites()){
+			contents.add(fav.getMusicContent());
+		}
+		return contents;
+		
+	}
+	
+	@Transactional
+	public int calculateRatingForMusicContent(int musicContentId){
+		MusicContent mc = musicContentDao.findById(musicContentId);
+		
+		int size = mc.getRates().size();
+		if(size == 0){
+			return 0;
+		}
+		
+		int sum = 0;
+		
+		for(Rate rate : mc.getRates()){
+			sum += rate.getRate();
+		}
+		
+		return sum / size;
+		
+		
+		
 	}
 	
 	private static class DurationAndExtraInfo {

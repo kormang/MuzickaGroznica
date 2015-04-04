@@ -6,9 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><spring:message code="content.playlists" /></title>
 </head>
 <body>
+
+	<div style="font-weight: bold;">
+		<spring:message code="content.playlists" />
+	</div>
 
 <table>
 

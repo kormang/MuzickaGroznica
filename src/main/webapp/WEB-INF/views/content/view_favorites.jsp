@@ -6,12 +6,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><spring:message code="content.favorites.title" /></title>
 </head>
 <body>
 
-	<div style="font-weight: bold;" id="pl_title">${playlist.title}</div>
+	<div style="font-weight: bold;" id="pl_title"><spring:message code="content.favorites.title" /></div>
+	
 	<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
+
 
 </body>
 </html>

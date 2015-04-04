@@ -17,6 +17,9 @@
         <property name="creationTime" type="timestamp">
             <column name="creation_time" length="19" not-null="true" />
         </property>
+        <property name="creatorId" type="java.lang.Integer" insert="false" update="false">
+            <column name="creator_id" not-null="true" unique="true" />
+        </property>
         <set name="musicContents" table="playlist_music_content" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="playlist_id" not-null="true" />

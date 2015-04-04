@@ -192,7 +192,10 @@ public class ContentController extends MuzickaGroznicaController {
 		if(rate != null){
 			model.put("rateValue", rate.getRate());
 		}
-
+		
+		int totalRating = contentService.calculateRatingForMusicContent(contentId);
+		model.put("totalRating", totalRating);
+		
 		contentService.recordListening(user.getId(), contentId);
 		
 		return "content/listen";
@@ -381,6 +384,18 @@ public class ContentController extends MuzickaGroznicaController {
 		model.put("contents", contents);
 		
 		return "content/view_playlist_content";
+	}
+	
+	@RequestMapping(value="/content/favorites")
+	public String viewFavorites(HttpSession session, Map<String, Object> model){
+		
+		User user = (User) session.getAttribute("user");
+		
+		List<MusicContent> contents = contentService.findFavoriteMusicContentForUser(user.getId());
+		
+		model.put("contents", contents);
+		
+		return "content/view_favorites";
 	}
 	
 	

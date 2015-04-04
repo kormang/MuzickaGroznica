@@ -34,6 +34,7 @@ var commentsUrl  = "<c:url value="/content/comments" />";
 var deleteCommentUrl = "<c:url value="/content/delete_comment"/>";
 var loadPlaylistsUrl = "<c:url value="/content/playlists"/>";
 var addToPlaylistUrl = "<c:url value="/content/add_to_playlist" />";
+var totalRating = ${totalRating};
 
 $(document).ready(function () {
 	var params = {
@@ -47,7 +48,8 @@ $(document).ready(function () {
 			"commentsUrl": commentsUrl,
 			"deleteCommentUrl": deleteCommentUrl,
 			"loadPlaylistsUrl": loadPlaylistsUrl,
-			"addToPlaylistUrl": addToPlaylistUrl
+			"addToPlaylistUrl": addToPlaylistUrl,
+			"totalRating": totalRating
 	};
 
 	initcl(params);

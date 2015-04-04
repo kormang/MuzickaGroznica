@@ -34,9 +34,10 @@ function initcl(params){
 	//rate:
 	
 	$("#rate").jqxRating({ width: 350, height: 35, theme: 'classic'});
-	if(rateValue != null){
-			$("#rate").val(rateValue);
-	}
+//	if(rateValue != null){
+//			$("#rate").val(rateValue);
+//	}
+	$("#rate").val(params.totalRating);
 	$("#rate").bind('change', function(event){
 			$.get(
 				params.rateUrl,

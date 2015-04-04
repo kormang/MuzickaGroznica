@@ -16,6 +16,7 @@ public class Playlist implements java.io.Serializable {
 	private String title;
 	private Date creationTime;
 	private Set<MusicContent> musicContents = new HashSet<MusicContent>(0);
+	private Integer creatorId;
 
 	public Playlist() {
 	}
@@ -73,4 +74,13 @@ public class Playlist implements java.io.Serializable {
 		this.musicContents = musicContents;
 	}
 
+	public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	
 }

@@ -8,7 +8,7 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="musicContent" class="net.etfbl.muzickagroznica.model.entities.MusicContent" fetch="select">
+        <many-to-one name="musicContent" class="net.etfbl.muzickagroznica.model.entities.MusicContent" fetch="select" lazy="false">
             <column name="music_content_id" not-null="true" unique="true" />
         </many-to-one>
         <many-to-one name="user" class="net.etfbl.muzickagroznica.model.entities.User" fetch="select">
