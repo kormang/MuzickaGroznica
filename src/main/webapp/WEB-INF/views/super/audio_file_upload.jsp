@@ -42,7 +42,7 @@
 				<td><textarea name="lyrics" ></textarea></td>
 			</tr>
 			<tr>
-				<td><input value="<spring:message code="label.submit.general" />" type="submit" /></td>
+				<td><input value="<spring:message code="label.general.submit" />" type="submit" /></td>
 			</tr>
 		
 		

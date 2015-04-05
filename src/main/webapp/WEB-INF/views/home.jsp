@@ -20,6 +20,7 @@
 
 <c:if test="${not empty user }">
 	Здраво ${user.firstName }
+	<a href="<c:url value='/content/my_content'/>" ><spring:message code="content.my.title" /></a>
 	<a href="<c:url value='/content/new'/>" ><spring:message code="content.new.title" /></a>
 	<a href="<c:url value='/content/view_user_playlists'/>" ><spring:message code="content.playlists" /></a>
 	<a href="<c:url value='/content/favorites'/>" ><spring:message code="content.favorites.title" /></a>

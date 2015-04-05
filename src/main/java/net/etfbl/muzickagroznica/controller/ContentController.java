@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import net.etfbl.muzickagroznica.controller.utils.RequestParamsFinder;
+import net.etfbl.muzickagroznica.form.bean.ChangeContentInfoForm;
 import net.etfbl.muzickagroznica.form.bean.ContentNewForm;
 import net.etfbl.muzickagroznica.form.bean.SearchForm;
 import net.etfbl.muzickagroznica.model.dao.RateDao;
@@ -34,6 +36,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,6 +57,9 @@ public class ContentController extends MuzickaGroznicaController {
 	
 	@Autowired
 	StandardUtilsBean standardUtilsBean;
+	
+	@Autowired
+	RequestParamsFinder paramsFinder;
 
 	public ContentController() {
 		// TODO Auto-generated constructor stub
@@ -122,8 +128,16 @@ public class ContentController extends MuzickaGroznicaController {
 	@RequestMapping(value="/content/new", method=RequestMethod.POST)
 	public String addNewContent(
 			@Valid @ModelAttribute("contentNewForm") ContentNewForm contentNewForm,
-			HttpSession session
+			BindingResult result,
+			HttpSession session,
+			Map<String, Object> model
 			){
+		
+		
+		if(result.hasErrors()){
+			putGenresInModel(model);
+			return "content/new";
+		}
 		
 		User user = (User) session.getAttribute("user");
 		
@@ -138,6 +152,80 @@ public class ContentController extends MuzickaGroznicaController {
 		
 		
 		return "redirect:/content/listen/" + mc.getId();
+	}
+	
+	@RequestMapping(value="/content/delete")
+	public String deleteContent(
+			@RequestParam("mcid") int id
+	){
+		contentService.deleteMusicContent(id);
+		return "redirect:/content/my_content";
+	}
+	
+	@RequestMapping(value="/content/view_edit", method=RequestMethod.POST)
+	public String viewEditContentInfo(
+			HttpServletRequest request,
+			Map<String, Object> model
+	){
+		
+		try{
+			int mcid = paramsFinder.findIntParam(request, "mcid");
+			MusicContent mc = contentService.findMusicContentById(mcid);
+			ChangeContentInfoForm changeContentInfoForm = new ChangeContentInfoForm();
+			
+			changeContentInfoForm.setArtist(mc.getArtistName());
+			changeContentInfoForm.setGenre(mc.getGenreName());
+			changeContentInfoForm.setId(mc.getId());
+			changeContentInfoForm.setName(mc.getName());
+			changeContentInfoForm.setLyrics(mc.getLyrics());
+			
+			model.put("changeContentInfoForm", changeContentInfoForm);
+			putGenresInModel(model);
+			
+			return "content/edit";
+			
+		}catch(Exception ex){
+			throw new RuntimeException("Error displaying content edit form", ex);
+		}
+		
+		
+	}
+	
+	@RequestMapping(value="/content/edit", method=RequestMethod.POST)
+	public String editContentInfo(
+			@Valid @ModelAttribute("changeContentInfoForm") ChangeContentInfoForm changeContentInfoForm,
+			BindingResult result,
+			Map<String, Object> model
+	){
+		
+		if(result.hasErrors()){
+			putGenresInModel(model);
+			return "content/view_edit";
+		}
+		
+		contentService.editMusicContent(
+				changeContentInfoForm.getId(),
+				changeContentInfoForm.getName(),
+				changeContentInfoForm.getArtist(),
+				changeContentInfoForm.getGenre(),
+				changeContentInfoForm.getLyrics()
+		);
+		
+		
+		return "redirect:/content/my_content";
+	}
+	
+	@RequestMapping(value="content/my_content")
+	public String viewMyContent(
+			HttpSession session,
+			Map<String, Object> model
+	){
+		User user = (User) session.getAttribute("user");
+		List<MusicContent> contents = contentService.findMusicContentForUser(user.getId());
+	
+		model.put("contents", contents);
+		
+		return "content/my_content";
 	}
 	
 	@RequestMapping(value="/content/listen/{content_id}")

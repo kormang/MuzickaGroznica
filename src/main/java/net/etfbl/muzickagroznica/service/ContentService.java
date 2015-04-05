@@ -41,6 +41,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -110,6 +111,32 @@ public class ContentService {
 	@Transactional
 	public List<Genre> findAllGenres(){
 		return genreDao.findAll();
+	}
+	
+	@Transactional
+	public boolean deleteMusicContent(int id){
+		MusicContent mc = musicContentDao.findById(id);
+		
+		if(mc == null){
+			return false;
+		}
+		
+		mc.setActive(false);
+		
+		musicContentDao.merge(mc);
+		
+		return true;
+	}
+	
+	@Transactional
+	public MusicContent editMusicContent(int id, String name, String artist, String genre, String lyrics){
+		MusicContent mc = musicContentDao.findById(id);
+		mc.setName(name);
+		mc.setArtist(artistDao.findById(artist));
+		mc.setGenre(genreDao.findById(genre));
+		mc.setLyrics(lyrics);
+		
+		return musicContentDao.merge(mc);
 	}
 	
 	@Transactional
@@ -358,7 +385,7 @@ public class ContentService {
 		return ret;
 	}
 	
-	private JSONObject fetchJsonObjectFromUrl(String url) throws Exception{
+	protected JSONObject fetchJsonObjectFromUrl(String url) throws Exception{
 		URL reqUrl = new URL(url);
 		
 		BufferedReader reader = new BufferedReader(
@@ -430,16 +457,8 @@ public class ContentService {
 		genrePart = (genrePart == null || genrePart.isEmpty()) ? null : genrePart;
 				
 		List<MusicContent> result = musicContentDao.search(namePart, artistPart, genrePart);
-		result.removeIf(new Predicate<MusicContent>() {
-
-			@Override
-			public boolean test(MusicContent t) {
-				return !t.isActive();
-			}
-			
-		});
+		return filterActiveMusicContent(result);
 		
-		return result;
 	}
 	
 	@Transactional
@@ -681,7 +700,10 @@ public class ContentService {
 	
 	@Transactional
 	public List<MusicContent> musicContentForPlaylist(int playlistId){
-		return new ArrayList<MusicContent>(playlistDao.findById(playlistId).getMusicContents());
+		Playlist pl = playlistDao.findById(playlistId);
+		
+		return filterActiveMusicContent(pl.getMusicContents());
+		
 	}
 	
 	@Transactional
@@ -694,7 +716,9 @@ public class ContentService {
 		User user = userDao.findById(userId);
 		List<MusicContent> contents = new ArrayList<MusicContent>(user.getFavorites().size());
 		for(Favorite fav : user.getFavorites()){
-			contents.add(fav.getMusicContent());
+			if(fav.getMusicContent().isActive()){
+				contents.add(fav.getMusicContent());
+			}
 		}
 		return contents;
 		
@@ -716,9 +740,26 @@ public class ContentService {
 		}
 		
 		return sum / size;
+
+	}
+	
+	@Transactional
+	public List<MusicContent> findMusicContentForUser(int userId){
+		User user = userDao.findById(userId);
+		return filterActiveMusicContent(user.getMusicContents());
+	}
+	
+	@Transactional
+	protected List<MusicContent> filterActiveMusicContent(Collection<MusicContent> contents){
+		List<MusicContent> ret = new ArrayList<MusicContent>(contents.size());
 		
+		for(MusicContent mc : contents){
+			if(mc.isActive()){
+				ret.add(mc);
+			}
+		}
 		
-		
+		return ret;
 	}
 	
 	private static class DurationAndExtraInfo {
