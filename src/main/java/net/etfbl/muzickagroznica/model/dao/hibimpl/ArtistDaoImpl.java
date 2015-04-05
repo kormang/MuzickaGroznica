@@ -62,4 +62,14 @@ public class ArtistDaoImpl implements ArtistDao {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Artist> findAll() {
+		Query query = sessionFactory
+				.getCurrentSession()
+				.createQuery("SELECT a FROM Artist ");
+		
+		return query.list();
+	}
+
 }

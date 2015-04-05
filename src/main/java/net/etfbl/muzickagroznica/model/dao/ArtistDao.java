@@ -11,5 +11,6 @@ public interface ArtistDao {
 	void delete(Artist artist);
 	Artist findById(String id);
 	List<Artist> findByExample(Artist artist);
+	List<Artist> findAll();
 	
 }

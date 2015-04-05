@@ -10,6 +10,7 @@
 		/WEB-INF/spring-database.xml,
 		/WEB-INF/spring-security.xml,
 		/WEB-INF/spring-gateway.xml,
+		/WEB-INF/web-services.xml,
 		/WEB-INF/spring-service.xml
 	</param-value>
   </context-param>
@@ -26,7 +27,7 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>AudioFileUploadServlet</display-name>
     <servlet-name>AudioFileUploadServlet</servlet-name>
@@ -66,4 +67,5 @@
     <filter-name>NoCacheFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-</web-app>
+  
+  </web-app>

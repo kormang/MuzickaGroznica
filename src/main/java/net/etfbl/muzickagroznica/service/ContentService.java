@@ -111,7 +111,11 @@ public class ContentService {
 		Genre genre = new Genre(name);
 		genreDao.persist(genre);
 		return genre;
-		
+	}
+	
+	@Transactional
+	public void addArtist(String artist){
+
 	}
 	
 	@Transactional
@@ -203,8 +207,8 @@ public class ContentService {
 			Artist artistEntity = artistDao.findById(artist);
 			
 			if(artistEntity == null){
-				artistEntity = new Artist(artist);
-				artistDao.persist(artistEntity);
+				addArtist(artist);
+				artistEntity = artistDao.findById(artist);
 			}
 			
 			Genre genreEntity = genreDao.findById(genre);
@@ -668,7 +672,7 @@ public class ContentService {
 		result.addAll(byArtist);
 		result.addAll(random);
 					
-		return filterActiveMusicContent(result.stream().distinct().collect(Collectors.toList()));
+		return filterActiveMusicContent((List<MusicContent>)result.stream().distinct().collect(Collectors.toList()));
 	}
 	
 	/* ############ Helper methods ################ */
