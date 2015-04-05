@@ -11,5 +11,7 @@ public interface ListeningDao {
 	void delete(Listening listening);
 	Listening findById(int id);
 	List<Listening> findByExample(Listening listening);
+	List<Listening> findLastListening(int limit);
+	List<Listening> findLastListening(int limit, int userId);
 	
 }

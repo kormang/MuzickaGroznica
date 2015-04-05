@@ -13,4 +13,13 @@ public interface MusicContentDao {
 	List<MusicContent> findByExample(MusicContent musiccontent);
 	List<MusicContent> search(String name, String artist, String genre);
 	
+	/**
+	 * 
+	 * @param limit number of results to return
+	 * @param genreRestriction if not null resulting content will have this genre
+	 * @param artistRestriction if not null resulting content will have this artist
+	 * @return random picked music content
+	 */
+	List<MusicContent> random(int limit, String genreRestriction, String artistRestriction);
+	
 }

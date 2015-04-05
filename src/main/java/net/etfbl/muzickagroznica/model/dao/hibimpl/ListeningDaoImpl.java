@@ -62,4 +62,29 @@ public class ListeningDaoImpl implements ListeningDao {
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Listening> findLastListening(int limit) {
+		String queryString = "SELECT l FROM Listening l ORDER BY l.listeningTime DESC ";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(queryString);
+		query.setMaxResults(limit);
+		
+		return (List<Listening>) query.list();
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Listening> findLastListening(int limit, int userId) {
+		String queryString = "SELECT l FROM Listening l WHERE l.userId = :userId ORDER BY l.listeningTime DESC ";
+
+		Query query = sessionFactory.getCurrentSession().createQuery(queryString);
+		query.setMaxResults(limit);
+		query.setParameter("userId", userId);
+		
+		return (List<Listening>) query.list();
+		
+	}
+
 }

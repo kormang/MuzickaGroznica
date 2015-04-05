@@ -36,6 +36,14 @@
 
 <spring:message code="home.test_message" />
 
+<c:if test="${not empty user }">
+	<div style="font-weight: bold;" id="pl_title"><spring:message code="content.recommended" /></div>
+	
+	<c:forEach items="${recommended}" var="ct">
+		<div><a href="<c:url value="/content/listen/${ct.id}"/>">${ct.name}</a></div>
+	</c:forEach>
+</c:if>
+
 <c:if test="${empty user }">
 	<div style="float: right;" >
 		<jsp:include page="components/registration_form.jsp" />

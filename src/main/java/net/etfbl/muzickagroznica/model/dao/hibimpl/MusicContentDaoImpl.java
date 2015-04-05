@@ -1,10 +1,12 @@
 package net.etfbl.muzickagroznica.model.dao.hibimpl;
 
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -109,6 +111,25 @@ public class MusicContentDaoImpl implements MusicContentDao {
 		}
 		
 		return (List<MusicContent>) query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MusicContent> random(int limit, String genreRestriction, String artistRestriction) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(MusicContent.class);
+		
+		if(artistRestriction != null){
+			criteria.add(Restrictions.eq("artistName", artistRestriction));
+		}
+		
+		if(genreRestriction != null){
+			criteria.add(Restrictions.eq("genreName", genreRestriction));
+		}
+		
+		criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
+		criteria.setMaxResults(limit);
+		return criteria.list();
 	}
 
 }

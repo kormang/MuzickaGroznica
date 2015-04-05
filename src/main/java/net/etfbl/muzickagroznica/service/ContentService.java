@@ -42,8 +42,12 @@ import java.net.URLEncoder;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -94,7 +98,9 @@ public class ContentService {
 	
 	protected static String youtubeApiv3RequestTemplate = "https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=<<VIDEO_ID>>&key=AIzaSyBiXLRaheZSITODhyBeCAuzSrEtkyJ19zU";
 	protected static String soundcloudApiRequestTemplate = "https://api.soundcloud.com/resolve.json?url=<<TRACK_URL>>&client_id=95ca80e02ae6b877cf5f986b91b8abce";
-
+	protected static int numberOfRecommendedContent = 4;
+	protected static int numberOfLastListenings = 32;
+	
 	
 	public ContentService() {
 		// TODO Auto-generated constructor stub
@@ -290,149 +296,7 @@ public class ContentService {
 		return newContent;
 	}
 	
-	@Transactional
-	private MusicContent fillNewContentWithData(
-			String name,
-			String artist,
-			String genre,
-			String lyrics,
-			String contentPath,
-			int publisherId,
-			java.util.Date length,
-			int contentType,
-			java.util.Date publishTime,
-			String extraInfo
-			){
-		MusicContent newContent =  new MusicContent();
-		User user = userDao.findById(publisherId);
-		Artist artistEntity = artistDao.findById(artist);
-		
-		if(artistEntity == null){
-			artistEntity = new Artist(artist);
-			artistDao.persist(artistEntity);
-		}
-		
-		Genre genreEntity = genreDao.findById(genre);
-		if(genreEntity == null){
-			throw new RuntimeException("No such genre");
-		}
 
-		newContent.setActive(true);
-		newContent.setArtist(artistEntity);
-		newContent.setUser(user);
-		newContent.setGenre(genreEntity);
-		newContent.setContentPath(contentPath);
-		newContent.setContentType(contentType);
-		newContent.setName(name);
-		newContent.setPublishTime(publishTime);
-		newContent.setDuration(length);
-		newContent.setLyrics(lyrics);
-		newContent.setExtraInfo(extraInfo);
-		
-		return newContent;
-		
-	}
-	
-	/**
-	 * 
-	 * @param contentPath url link to content
-	 * @return 1 if it's youtube, 2 if it's soundcloud, -1 otherwise
-	 */
-	protected int findContentType(String contentPath){
-		if(contentPath.matches("http(s)?://(www\\.)?youtube\\.com/.+")){
-			return 1;
-		}else if(contentPath.matches("http(s)?://(www\\.)?soundcloud\\.com/.+")){
-			return 2;
-		}else{
-			return -1;
-		}
-	}
-	
-	protected DurationAndExtraInfo findSoundcloudTrackDuration(String trackUrl) throws Exception {
-		String requestUrl = soundcloudApiRequestTemplate.replace("<<TRACK_URL>>", URLEncoder.encode(trackUrl, "UTF-8"));
-		
-		JSONObject jsonObj = fetchJsonObjectFromUrl(requestUrl);
-		
-		long durationMs = jsonObj.getLong("duration");
-		
-		DurationAndExtraInfo ret = new DurationAndExtraInfo();
-		
-		ret.duration =  new java.util.Date(durationMs);
-		ret.extraInfo = String.valueOf(jsonObj.getLong("id"));	
-
-		return ret;
-		
-	}
-	
-	protected DurationAndExtraInfo findYoutubeVideoDuration(String contentPath) throws Exception{
-		
-		
-		String videoId = extractYoutubeVideoId(contentPath);
-		
-		String requrlstr = youtubeApiv3RequestTemplate.replace("<<VIDEO_ID>>", videoId);
-		
-		JSONObject jsonObj = fetchJsonObjectFromUrl(requrlstr);
-		String durationString =	jsonObj.getJSONArray("items")
-				.getJSONObject(0)
-				.getJSONObject("contentDetails")
-				.getString("duration");
-		
-		java.util.Date duration = parseYoutubeDurationString(durationString);
-		
-		DurationAndExtraInfo ret = new DurationAndExtraInfo();
-		ret.duration = duration;
-		ret.extraInfo = videoId;
-		return ret;
-	}
-	
-	protected JSONObject fetchJsonObjectFromUrl(String url) throws Exception{
-		URL reqUrl = new URL(url);
-		
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(reqUrl.openStream()));
-		
-		StringBuilder sb = new StringBuilder();
-		String line = null;
-		
-		while((line = reader.readLine())!=null){
-			sb.append(line);
-		}
-		
-		JSONObject jsonObj = new JSONObject(sb.toString());
-		
-		return jsonObj;
-	}
-		
-	protected java.util.Date parseYoutubeDurationString(String durationString){
-		Duration duration = Duration.parse(durationString);
-		return new java.util.Date(duration.toMillis());
-	}
-	
-	protected String extractYoutubeVideoId(String url){
-		URL urlobj = null;
-		try {
-			urlobj = new URL(url);
-		} catch (MalformedURLException e) {
-			throw new RuntimeException("Invalid URL", e);
-		}
-		
-		String query = urlobj.getQuery();
-		String[] queries = query.split("&");
-		
-		String idquery = null;
-		
-		for(String q : queries){
-			if(q.startsWith("v=")){
-				idquery = q;
-				break;
-			}
-		}
-		
-		String idvalue = idquery.split("=")[1];
-		
-		return idvalue;
-
-	}
 	
 	public MusicContent findMusicContentById(int id){
 		MusicContent mc = musicContentDao.findById(id);
@@ -540,27 +404,7 @@ public class ContentService {
 		}
 	}
 	
-	@Transactional
-	private Rate rateNew(int userId, int musicContentId, int value){
-		User user = userDao.findById(userId);
-		MusicContent mc = musicContentDao.findById(musicContentId);
-		Rate rate = new Rate();
-		rate.setMusicContent(mc);
-		rate.setUser(user);
-		rate.setRatingTime(StandardUtil.now());
-		rate.setRate(value);
-		
-		rateDao.persist(rate);
-		
-		return rate;
-	}
-	
-	@Transactional
-	private Rate changeExistingRate(Rate rate, int value){
-		rate.setRate(value);
-		rate.setRatingTime(StandardUtil.now());
-		return rate;
-	}
+
 	
 	@Transactional
 	public Comment addComment(int userId, int musicContentId, String commentText){
@@ -749,6 +593,230 @@ public class ContentService {
 		return filterActiveMusicContent(user.getMusicContents());
 	}
 	
+	
+	@Transactional
+	public List<MusicContent> findLastListenedMusicContent(int limit, boolean activeFilter){
+		return listeningToMusicContent(listeningDao.findLastListening(limit), activeFilter);
+	}
+	
+	@Transactional
+	public List<MusicContent> findLastListenedMusicContent(int limit, int userId, boolean activeFilter){
+		return listeningToMusicContent(listeningDao.findLastListening(limit, userId), activeFilter);
+	}
+	
+	public List<MusicContent> randomRecommendedMusicContent(){
+		return filterActiveMusicContent(musicContentDao.random(numberOfRecommendedContent, null, null));
+	}
+	
+	public List<MusicContent> randomRecommendedMusicContent(int limit){
+		if(limit > 0){
+			return filterActiveMusicContent(musicContentDao.random(limit, null, null));
+		}
+		return randomRecommendedMusicContent();
+	}
+	
+	@Transactional
+	public List<MusicContent> findRecomendedMusicContent(int userId){
+		List<MusicContent> listened = findLastListenedMusicContent(numberOfLastListenings, userId, false);
+		
+		if(listened.size() == 0){
+			return randomRecommendedMusicContent();
+		}
+		
+		// find most frequent artist
+		
+		String freqArtist = null;
+		HashMap<String, Integer> artistCount = new HashMap<String, Integer>();
+		
+		for(MusicContent mc : listened){
+			Integer c = artistCount.get(mc.getArtistName());
+			if(c == null){
+				c = 1;
+			} else {
+				c++;
+			}
+		
+			artistCount.put(mc.getArtistName(), c);
+		}
+		
+		freqArtist = findKeyByMaxValue(artistCount);
+		List<MusicContent> byArtist = musicContentDao.random(numberOfRecommendedContent/4, null, freqArtist);
+		
+		//find most frequent genre
+		
+		String freqGenre = null;
+		HashMap<String, Integer> genreCount = new HashMap<String, Integer>();
+		
+		for(MusicContent mc : listened){
+			Integer c = genreCount.get(mc.getGenreName());
+			if(c == null){
+				c = 1;
+			} else {
+				c++;
+			}
+		
+			genreCount.put(mc.getGenreName(), c);
+		}
+		
+		freqGenre = findKeyByMaxValue(genreCount);
+		List<MusicContent> byGenre = musicContentDao.random(numberOfRecommendedContent/4, freqGenre, null);
+		List<MusicContent> byArtistAndGenre = musicContentDao.random(numberOfRecommendedContent/4, freqGenre, freqArtist);
+		List<MusicContent> random = musicContentDao.random(numberOfRecommendedContent/4, null, null);	
+		
+		List<MusicContent> result = byGenre; //new ArrayList<MusicContent>(byArtist.size() + byArtistAndGenre.size() + byGenre.size() + random.size());
+		result.addAll(byArtistAndGenre);
+		result.addAll(byArtist);
+		result.addAll(random);
+					
+		return filterActiveMusicContent(result.stream().distinct().collect(Collectors.toList()));
+	}
+	
+	/* ############ Helper methods ################ */
+	
+	@Transactional
+	private MusicContent fillNewContentWithData(
+			String name,
+			String artist,
+			String genre,
+			String lyrics,
+			String contentPath,
+			int publisherId,
+			java.util.Date length,
+			int contentType,
+			java.util.Date publishTime,
+			String extraInfo
+			){
+		MusicContent newContent =  new MusicContent();
+		User user = userDao.findById(publisherId);
+		Artist artistEntity = artistDao.findById(artist);
+		
+		if(artistEntity == null){
+			artistEntity = new Artist(artist);
+			artistDao.persist(artistEntity);
+		}
+		
+		Genre genreEntity = genreDao.findById(genre);
+		if(genreEntity == null){
+			throw new RuntimeException("No such genre");
+		}
+
+		newContent.setActive(true);
+		newContent.setArtist(artistEntity);
+		newContent.setUser(user);
+		newContent.setGenre(genreEntity);
+		newContent.setContentPath(contentPath);
+		newContent.setContentType(contentType);
+		newContent.setName(name);
+		newContent.setPublishTime(publishTime);
+		newContent.setDuration(length);
+		newContent.setLyrics(lyrics);
+		newContent.setExtraInfo(extraInfo);
+		
+		return newContent;
+		
+	}
+	
+	/**
+	 * 
+	 * @param contentPath url link to content
+	 * @return 1 if it's youtube, 2 if it's soundcloud, -1 otherwise
+	 */
+	protected int findContentType(String contentPath){
+		if(contentPath.matches("http(s)?://(www\\.)?youtube\\.com/.+")){
+			return 1;
+		}else if(contentPath.matches("http(s)?://(www\\.)?soundcloud\\.com/.+")){
+			return 2;
+		}else{
+			return -1;
+		}
+	}
+	
+	protected DurationAndExtraInfo findSoundcloudTrackDuration(String trackUrl) throws Exception {
+		String requestUrl = soundcloudApiRequestTemplate.replace("<<TRACK_URL>>", URLEncoder.encode(trackUrl, "UTF-8"));
+		
+		JSONObject jsonObj = fetchJsonObjectFromUrl(requestUrl);
+		
+		long durationMs = jsonObj.getLong("duration");
+		
+		DurationAndExtraInfo ret = new DurationAndExtraInfo();
+		
+		ret.duration =  new java.util.Date(durationMs);
+		ret.extraInfo = String.valueOf(jsonObj.getLong("id"));	
+
+		return ret;
+		
+	}
+	
+	protected DurationAndExtraInfo findYoutubeVideoDuration(String contentPath) throws Exception{
+		
+		
+		String videoId = extractYoutubeVideoId(contentPath);
+		
+		String requrlstr = youtubeApiv3RequestTemplate.replace("<<VIDEO_ID>>", videoId);
+		
+		JSONObject jsonObj = fetchJsonObjectFromUrl(requrlstr);
+		String durationString =	jsonObj.getJSONArray("items")
+				.getJSONObject(0)
+				.getJSONObject("contentDetails")
+				.getString("duration");
+		
+		java.util.Date duration = parseYoutubeDurationString(durationString);
+		
+		DurationAndExtraInfo ret = new DurationAndExtraInfo();
+		ret.duration = duration;
+		ret.extraInfo = videoId;
+		return ret;
+	}
+	
+	protected JSONObject fetchJsonObjectFromUrl(String url) throws Exception{
+		URL reqUrl = new URL(url);
+		
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(reqUrl.openStream()));
+		
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+		
+		while((line = reader.readLine())!=null){
+			sb.append(line);
+		}
+		
+		JSONObject jsonObj = new JSONObject(sb.toString());
+		
+		return jsonObj;
+	}
+		
+	protected java.util.Date parseYoutubeDurationString(String durationString){
+		Duration duration = Duration.parse(durationString);
+		return new java.util.Date(duration.toMillis());
+	}
+	
+	protected String extractYoutubeVideoId(String url){
+		URL urlobj = null;
+		try {
+			urlobj = new URL(url);
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("Invalid URL", e);
+		}
+		
+		String query = urlobj.getQuery();
+		String[] queries = query.split("&");
+		
+		String idquery = null;
+		
+		for(String q : queries){
+			if(q.startsWith("v=")){
+				idquery = q;
+				break;
+			}
+		}
+		
+		String idvalue = idquery.split("=")[1];
+		
+		return idvalue;
+
+	}
+	
 	@Transactional
 	protected List<MusicContent> filterActiveMusicContent(Collection<MusicContent> contents){
 		List<MusicContent> ret = new ArrayList<MusicContent>(contents.size());
@@ -760,6 +828,63 @@ public class ContentService {
 		}
 		
 		return ret;
+	}
+	
+	@Transactional
+	private String findKeyByMaxValue(Map<String, Integer> map){
+		
+		Iterator<Entry<String, Integer>> it = map.entrySet().iterator();
+		Map.Entry<String, Integer> max = it.next();
+		
+		while(it.hasNext()){
+			Map.Entry<String, Integer> c = it.next();
+			if(c.getValue() > max.getValue()){
+				max = c;
+			}
+		}
+		
+		return max.getKey();
+	}
+	
+	@Transactional
+	private List<MusicContent> listeningToMusicContent(List<Listening> listenings, boolean activeFilter){
+		List<MusicContent> ret = new ArrayList<MusicContent>(listenings.size());
+		
+		if(activeFilter){
+			for(Listening l : listenings){
+				if(l.getMusicContent().isActive()){
+					ret.add(l.getMusicContent());
+				}
+			}
+		} else {
+			for(Listening l : listenings){
+				ret.add(l.getMusicContent());
+			}
+		}
+		
+		return ret;
+	}
+	
+	@Transactional
+	private Rate rateNew(int userId, int musicContentId, int value){
+		User user = userDao.findById(userId);
+		MusicContent mc = musicContentDao.findById(musicContentId);
+		Rate rate = new Rate();
+		rate.setMusicContent(mc);
+		rate.setUser(user);
+		rate.setRatingTime(StandardUtil.now());
+		rate.setRate(value);
+		
+		rateDao.persist(rate);
+		
+		return rate;
+	}
+	
+	@Transactional
+	private Rate changeExistingRate(Rate rate, int value){
+		rate.setRate(value);
+		rate.setRatingTime(StandardUtil.now());
+		return rate;
 	}
 	
 	private static class DurationAndExtraInfo {

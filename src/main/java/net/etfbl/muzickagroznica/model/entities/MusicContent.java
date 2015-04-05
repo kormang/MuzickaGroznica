@@ -77,6 +77,17 @@ public class MusicContent implements java.io.Serializable {
 		this.rates = rates;
 		this.comments = comments;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(other == this){
+			return true;
+		}
+		if(other instanceof MusicContent){
+			return ((MusicContent)other).id == this.id;
+		}
+		return false;
+	}
 
 	public Integer getId() {
 		return this.id;
