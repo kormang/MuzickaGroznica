@@ -32,6 +32,9 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import artistsws.ws.ArtistsWS;
+import artistsws.ws.ArtistsWSServiceLocator;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +42,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.rmi.RemoteException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -115,7 +119,15 @@ public class ContentService {
 	
 	@Transactional
 	public void addArtist(String artist){
-
+		ArtistsWSServiceLocator locator = new ArtistsWSServiceLocator();
+		try {
+			ArtistsWS aws = locator.getArtistsWS();
+		
+			aws.addArtist(artist);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Failed to add artist using SAOP Web service 'ArtistsWS'.", e);
+		}
 	}
 	
 	@Transactional
@@ -695,8 +707,8 @@ public class ContentService {
 		Artist artistEntity = artistDao.findById(artist);
 		
 		if(artistEntity == null){
-			artistEntity = new Artist(artist);
-			artistDao.persist(artistEntity);
+			addArtist(artist);
+			artistEntity = artistDao.findById(artist);
 		}
 		
 		Genre genreEntity = genreDao.findById(genre);

@@ -1,5 +1,9 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
+encoding//src/main/java/artistsws/ws/ArtistsWS.java=UTF-8
+encoding//src/main/java/artistsws/ws/ArtistsWSService.java=UTF-8
+encoding//src/main/java/artistsws/ws/ArtistsWSServiceLocator.java=UTF-8
+encoding//src/main/java/artistsws/ws/ArtistsWSSoapBindingStub.java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/messages.properties=UTF-8
 encoding//src/main/resources/messages_sr.properties=UTF-8
