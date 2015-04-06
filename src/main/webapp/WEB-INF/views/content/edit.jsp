@@ -5,10 +5,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.arctic.css"/>" type="text/css" />
+
+ <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
+ <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxinput.js"/>"></script>
+
+ <script type="text/javascript" src="<c:url value="/resources/js/content/neworedit.js" />"></script>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+	<script type="text/javascript">
+		var params = {
+			"availableArtistsUrl" : <c:url value="/content/available_artists" />	
+			
+		};
+	
+	
+		$(document).ready(
+			function(){
+				initnoe(params);
+			}		
+		);
+	
+	</script>
 
 	<c:url value='/content/edit' var="contentEditUrl" />
 	
@@ -22,7 +47,7 @@
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.artist" /></td>
-				<td><form:input path="artist"/></td>
+				<td><form:input id="artist" path="artist"/></td>
 				<td><form:errors path="artist" /></td>
 			</tr>
 			<tr>

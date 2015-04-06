@@ -99,6 +99,31 @@ public class ContentController extends MuzickaGroznicaController {
 		return "content/new";
 	}
 	
+	@RequestMapping(value="/content/available_artists", produces="application/json; charset=UTF-8")
+	public @ResponseBody String availableArtists(){
+		
+		String[] artists = contentService.findAllArtists();
+		
+		if(artists.length == 0){
+			return "{\"artists\" : []}";
+		}
+		
+		StringBuilder sb = new StringBuilder("{\"artists\" : [");
+		sb.append('"');
+		sb.append(artists[0]);
+		sb.append('"');
+		
+		for(int i = 1; i < artists.length; i++){
+			sb.append(", \"");
+			sb.append(artists[i]);
+			sb.append('"');
+		}
+		
+		sb.append("]}");
+		
+		return sb.toString();
+	}
+	
 	@RequestMapping(value="/super/audio_file_upload", method=RequestMethod.GET)
 	public String viewAudioFileUpload(Map<String, Object> model){
 		putGenresInModel(model);
@@ -108,6 +133,10 @@ public class ContentController extends MuzickaGroznicaController {
 	@RequestMapping(value="/super/audio_upload_error")
 	public String viewAudioUploadError(){
 		return "super/audio_upload_error";
+	}
+	
+	private void putArtistsInModel(Map<String, Object> model){
+		model.put("artists", contentService.findAllArtists());
 	}
 	
 	private void putGenresInModel(Map<String, Object> model){
@@ -181,7 +210,6 @@ public class ContentController extends MuzickaGroznicaController {
 			
 			model.put("changeContentInfoForm", changeContentInfoForm);
 			putGenresInModel(model);
-			
 			return "content/edit";
 			
 		}catch(Exception ex){

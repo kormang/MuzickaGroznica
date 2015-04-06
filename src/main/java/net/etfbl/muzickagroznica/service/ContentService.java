@@ -130,6 +130,18 @@ public class ContentService {
 		}
 	}
 	
+	public String[] findAllArtists(){
+		ArtistsWSServiceLocator locator = new ArtistsWSServiceLocator();
+		try {
+			ArtistsWS aws = locator.getArtistsWS();
+		
+			return aws.findAllArtists();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Failed to find artists using SAOP Web service 'ArtistsWS'.", e);
+		}
+	}
+	
 	@Transactional
 	public List<Genre> findAllGenres(){
 		return genreDao.findAll();
