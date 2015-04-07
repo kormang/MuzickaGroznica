@@ -20,9 +20,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<script type="text/javascript">
+<script type="text/javascript">
 		var params = {
-			"availableArtistsUrl" : <c:url value="/content/available_artists" />	
+			"availableArtistsUrl" : "<c:url value="/content/available_artists" />"	
 			
 		};
 	
