@@ -915,6 +915,11 @@ public class ContentService {
 		return rate;
 	}
 	
+	@Transactional
+	public List<MusicContent> findTopNMusicContent(int n){
+		return musicContentDao.findTopNMusicContent(n);
+	}
+	
 	private static class DurationAndExtraInfo {
 		public java.util.Date duration;
 		public String extraInfo;

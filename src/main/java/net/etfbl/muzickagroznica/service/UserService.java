@@ -69,8 +69,7 @@ public class UserService {
 		Role registered = new Role();
 		registered.setId(new RoleId(user.getId(), "ROLE_REGISTERED"));
 		roleDao.persist(registered);
-		
-		
+	
 	}
 	
 	

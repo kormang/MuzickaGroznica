@@ -130,7 +130,7 @@ function initcl(params){
 	$("#atpl_save").click(
 			function(){
 				reqparams = {"mcid": params.mcid};
-				var plid = $("[name=playlist]").val();
+				var plid = $("[name=playlist]:checked").val();
 				reqparams.plid = plid;
 				if(plid == -1){
 					reqparams.pltitle = $("#npl_title").val();

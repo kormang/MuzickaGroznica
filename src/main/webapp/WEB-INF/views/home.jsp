@@ -54,6 +54,14 @@
 		<jsp:include page="components/search_form.jsp" />		
 </div>
 
+<div id="newsfeedarea">
+	<c:forEach items="${feeds}" var="feed">
+		<div>
+			<a href="${feed.link}">${feed.title}</a>
+			<div>${feed.description.value}</div>
+		</div>
+	</c:forEach>
+</div>
 
 </body>
 </html>

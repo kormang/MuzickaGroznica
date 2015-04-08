@@ -1,5 +1,6 @@
 package net.etfbl.muzickagroznica.controller;
 
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -30,10 +31,12 @@ import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.security.AuthUser;
 import net.etfbl.muzickagroznica.service.ContentService;
 import net.etfbl.muzickagroznica.service.helper.entities.PlaylistSummaryData;
+import net.etfbl.muzickagroznica.util.StandardUtil;
 import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.jdom.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpRequest;
@@ -46,8 +49,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sun.syndication.feed.synd.SyndContent;
+import com.sun.syndication.feed.synd.SyndContentImpl;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedOutput;
+
 @Controller
 public class ContentController extends MuzickaGroznicaController {
+	
+	private static String audioFileEmbeddTemplate = "<div id=\"player_holder\" style=\"display: inline-block; width: 658px;\"><img id=\"eqvimg\" src=\"<<CONTEXT_PATH>>/images/audio-player-header.jpg\"></img><audio controls autoplay id=\"player\" style=\"display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%\"><source src=\"<<FILE_PATH>>\">X</audio></div>";
+ 	private static String soundcloudEmbeddTemplate = "<iframe width=\"50%\" height=\"225\" scrolling=\"no\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<<TRACK_ID>>&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true\"></iframe>";
+	private static String youtubeEmbeddTemplate = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/<<VIDEO_ID>>?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>";
+
 	
 	@Autowired
 	ContentService contentService;
@@ -514,8 +531,57 @@ public class ContentController extends MuzickaGroznicaController {
 		return "content/view_favorites";
 	}
 	
+	@RequestMapping(value="/content/top.rss")
+	public @ResponseBody String rssTopContent(HttpServletRequest request){
+		SyndFeed feed = new SyndFeedImpl();
+		
+		String surl = request.getRequestURL().toString();
+		String listenSUrl = surl.substring(0, surl.lastIndexOf('/') + 1) + "listen/";
+		URL url;
+		try{
+			url = new URL(surl);
+		}catch(Exception ex){
+			//shouldn't happend
+			ex.printStackTrace();
+		}
+		
+		
+		feed.setFeedType("rss_2.0");
+		feed.setTitle("muzickagroznica - top list");
+		feed.setLink(surl);
+		feed.setDescription("muzickagroznica - top list");
+		
+		List<MusicContent> tops = contentService.findTopNMusicContent(5);
+		List<SyndEntry> entries = new ArrayList<>(5);
+		
+		for(MusicContent mc : tops){
+			System.err.println(mc.getName());
+			SyndEntry entry = new SyndEntryImpl();
+			SyndContent description = new SyndContentImpl();
+			
+			
+			entry.setTitle(mc.getName() + " - " + mc.getArtistName());
+			entry.setLink(listenSUrl + mc.getId());
+			entry.setPublishedDate(StandardUtil.now());
+			
+			description.setType("text/plain");
+			description.setValue(mc.getLyrics().length() > 50 ? mc.getLyrics().substring(0, 50) : mc.getLyrics() );
+			
+			entry.setDescription(description);
+			
+			entries.add(entry);			
+		}
+		
+		feed.setEntries(entries);
+		
+		SyndFeedOutput output = new SyndFeedOutput();
+		try {
+			return output.outputString(feed, true);
+		} catch (FeedException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Failed to output feed.", e);
+		}
+		
+	}
 	
-	private static String audioFileEmbeddTemplate = "<div id=\"player_holder\" style=\"display: inline-block; width: 658px;\"><img id=\"eqvimg\" src=\"<<CONTEXT_PATH>>/images/audio-player-header.jpg\"></img><audio controls autoplay id=\"player\" style=\"display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%\"><source src=\"<<FILE_PATH>>\">X</audio></div>";
- 	private static String soundcloudEmbeddTemplate = "<iframe width=\"50%\" height=\"225\" scrolling=\"no\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<<TRACK_ID>>&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true\"></iframe>";
-	private static String youtubeEmbeddTemplate = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/<<VIDEO_ID>>?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>";
 }

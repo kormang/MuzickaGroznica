@@ -132,4 +132,18 @@ public class MusicContentDaoImpl implements MusicContentDao {
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MusicContent> findTopNMusicContent(int n) {
+		Session session = sessionFactory.getCurrentSession();
+		String queryString = 
+				"SELECT mc FROM MusicContent mc INNER JOIN mc.rates rts GROUP BY rts.musicContentId ORDER BY (AVG(rts.rate)) DESC ";
+		
+		Query query = session.createQuery(queryString);
+		query.setMaxResults(n);
+		
+		return (List<MusicContent>) query.list();
+		
+	}
+
 }
