@@ -56,7 +56,7 @@ CREATE TABLE `comment` (
   KEY `fk_comment_2_idx` (`music_content_id`),
   CONSTRAINT `fk_comment_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_comment_2` FOREIGN KEY (`music_content_id`) REFERENCES `music_content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (5,'Тест2','2015-03-31 14:52:24',6,16),(12,'Веома добра пјесма','2015-03-31 18:00:37',6,16),(14,'Стара школа','2015-03-31 18:03:10',6,15),(16,'Лош квалитет','2015-03-31 18:04:21',6,15),(17,'Сатро си са овом','2015-03-31 18:05:12',12,16);
+INSERT INTO `comment` VALUES (5,'Тест2','2015-03-31 14:52:24',6,16),(12,'Веома добра пјесма','2015-03-31 18:00:37',6,16),(14,'Стара школа','2015-03-31 18:03:10',6,15),(17,'Сатро си са овом','2015-03-31 18:05:12',12,16),(18,'вфсдвфд','2015-04-07 23:07:57',6,15);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `favorite` (
   KEY `fk_favorite_2_idx` (`music_content_id`),
   CONSTRAINT `fk_favorite_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_favorite_2` FOREIGN KEY (`music_content_id`) REFERENCES `music_content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `favorite` (
 
 LOCK TABLES `favorite` WRITE;
 /*!40000 ALTER TABLE `favorite` DISABLE KEYS */;
-INSERT INTO `favorite` VALUES (4,'2015-03-29 20:08:32',6,16),(5,'2015-04-04 13:35:16',6,17);
+INSERT INTO `favorite` VALUES (4,'2015-03-29 20:08:32',6,16),(5,'2015-04-04 13:35:16',6,17),(6,'2015-04-07 23:07:18',6,15),(7,'2015-04-10 00:02:19',12,17);
 /*!40000 ALTER TABLE `favorite` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +171,7 @@ CREATE TABLE `listening` (
   KEY `index4` (`user_id`),
   CONSTRAINT `fk_listening_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_listening_2` FOREIGN KEY (`music_content_id`) REFERENCES `music_content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +180,7 @@ CREATE TABLE `listening` (
 
 LOCK TABLES `listening` WRITE;
 /*!40000 ALTER TABLE `listening` DISABLE KEYS */;
-INSERT INTO `listening` VALUES (1,'2015-04-01 17:25:59',6,16),(3,'2015-04-01 17:52:48',6,16),(4,'2015-04-01 17:53:35',6,17),(5,'2015-04-01 17:56:10',6,17),(6,'2015-04-02 20:26:14',6,16),(7,'2015-04-02 20:26:55',6,16),(8,'2015-04-02 20:30:52',6,16),(9,'2015-04-02 20:31:06',6,16),(10,'2015-04-02 20:32:35',6,16),(11,'2015-04-02 20:37:55',6,16),(12,'2015-04-02 20:38:08',6,16),(13,'2015-04-02 20:38:51',6,16),(14,'2015-04-02 20:39:11',6,16),(15,'2015-04-02 20:40:37',6,16),(16,'2015-04-02 20:40:50',6,16),(17,'2015-04-02 20:41:35',6,16),(18,'2015-04-02 20:48:19',6,16),(19,'2015-04-02 21:01:01',6,16),(20,'2015-04-02 21:01:20',6,16),(21,'2015-04-02 21:04:09',6,16),(22,'2015-04-02 21:08:31',6,16),(23,'2015-04-02 21:08:36',6,16),(24,'2015-04-02 21:09:52',6,16),(25,'2015-04-02 21:11:33',6,16),(26,'2015-04-02 21:17:54',6,16),(27,'2015-04-02 21:19:07',6,16),(28,'2015-04-02 21:19:20',6,16),(29,'2015-04-02 21:23:17',6,17),(30,'2015-04-02 23:21:37',6,17),(31,'2015-04-02 23:38:18',6,16),(32,'2015-04-02 23:41:30',6,16),(33,'2015-04-02 23:41:56',6,15),(34,'2015-04-04 12:15:02',6,16),(35,'2015-04-04 13:17:42',6,16),(36,'2015-04-04 13:18:16',12,16),(37,'2015-04-04 13:18:39',12,16),(38,'2015-04-04 13:31:57',6,15),(39,'2015-04-04 13:35:14',6,17),(43,'2015-04-05 16:32:02',6,16),(44,'2015-04-05 16:33:50',6,17);
+INSERT INTO `listening` VALUES (1,'2015-04-01 17:25:59',6,16),(3,'2015-04-01 17:52:48',6,16),(4,'2015-04-01 17:53:35',6,17),(5,'2015-04-01 17:56:10',6,17),(6,'2015-04-02 20:26:14',6,16),(7,'2015-04-02 20:26:55',6,16),(8,'2015-04-02 20:30:52',6,16),(9,'2015-04-02 20:31:06',6,16),(10,'2015-04-02 20:32:35',6,16),(11,'2015-04-02 20:37:55',6,16),(12,'2015-04-02 20:38:08',6,16),(13,'2015-04-02 20:38:51',6,16),(14,'2015-04-02 20:39:11',6,16),(15,'2015-04-02 20:40:37',6,16),(16,'2015-04-02 20:40:50',6,16),(17,'2015-04-02 20:41:35',6,16),(18,'2015-04-02 20:48:19',6,16),(19,'2015-04-02 21:01:01',6,16),(20,'2015-04-02 21:01:20',6,16),(21,'2015-04-02 21:04:09',6,16),(22,'2015-04-02 21:08:31',6,16),(23,'2015-04-02 21:08:36',6,16),(24,'2015-04-02 21:09:52',6,16),(25,'2015-04-02 21:11:33',6,16),(26,'2015-04-02 21:17:54',6,16),(27,'2015-04-02 21:19:07',6,16),(28,'2015-04-02 21:19:20',6,16),(29,'2015-04-02 21:23:17',6,17),(30,'2015-04-02 23:21:37',6,17),(31,'2015-04-02 23:38:18',6,16),(32,'2015-04-02 23:41:30',6,16),(33,'2015-04-02 23:41:56',6,15),(34,'2015-04-04 12:15:02',6,16),(35,'2015-04-04 13:17:42',6,16),(36,'2015-04-04 13:18:16',12,16),(37,'2015-04-04 13:18:39',12,16),(38,'2015-04-04 13:31:57',6,15),(39,'2015-04-04 13:35:14',6,17),(43,'2015-04-05 16:32:02',6,16),(44,'2015-04-05 16:33:50',6,17),(45,'2015-04-07 23:06:58',6,15),(46,'2015-04-07 23:08:43',6,15),(47,'2015-04-07 23:09:21',6,16),(48,'2015-04-07 23:10:08',6,16),(49,'2015-04-07 23:10:34',6,15),(50,'2015-04-08 16:40:29',6,15),(51,'2015-04-08 16:41:25',6,16),(52,'2015-04-08 16:42:39',6,16),(53,'2015-04-08 16:42:50',6,15),(54,'2015-04-08 16:43:05',6,16),(55,'2015-04-08 16:43:37',6,15),(56,'2015-04-08 16:44:26',6,16),(57,'2015-04-08 16:46:25',6,15),(58,'2015-04-08 16:46:37',6,15),(59,'2015-04-08 16:50:39',6,16),(60,'2015-04-08 16:52:22',6,16),(61,'2015-04-08 17:21:46',6,16),(62,'2015-04-08 23:48:13',6,15),(63,'2015-04-09 15:06:08',6,15),(64,'2015-04-09 15:06:16',6,16),(65,'2015-04-09 15:29:18',6,16),(66,'2015-04-09 15:31:19',6,16),(67,'2015-04-09 15:32:12',6,16),(68,'2015-04-09 15:34:35',6,16),(69,'2015-04-09 15:35:33',6,16),(70,'2015-04-09 15:37:03',6,16),(71,'2015-04-09 15:37:23',6,16),(72,'2015-04-09 15:38:25',6,16),(73,'2015-04-09 15:39:23',6,16),(74,'2015-04-09 15:41:11',6,15),(75,'2015-04-09 15:41:26',6,15),(76,'2015-04-09 15:54:03',6,15),(77,'2015-04-10 00:02:15',12,17);
 /*!40000 ALTER TABLE `listening` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +211,7 @@ CREATE TABLE `music_content` (
   CONSTRAINT `fk_music_content_1` FOREIGN KEY (`artist_name`) REFERENCES `artist` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_music_content_2` FOREIGN KEY (`genre_name`) REFERENCES `genre` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_music_content_3` FOREIGN KEY (`publisher_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +220,7 @@ CREATE TABLE `music_content` (
 
 LOCK TABLES `music_content` WRITE;
 /*!40000 ALTER TABLE `music_content` DISABLE KEYS */;
-INSERT INTO `music_content` VALUES (15,'Рибља чорба - спотови','2015-03-28 23:08:20','спотови..............','02:50:39','https://www.youtube.com/watch?v=Km89WVJlhFU',1,'','Рибља чорба','Рок',6,'Km89WVJlhFU'),(16,'Чивилук','2015-03-28 23:09:54','асодхцаипдсуцгапуидс','01:03:40','00406440-4b70-4568-99e0-e97c3f84e8b8',0,'','Рибља чорба','Рок',6,NULL),(17,'Saxo Club','2015-04-01 17:29:53','цуп цуп цуп','02:02:27','https://soundcloud.com/elyassb/the-saxo-club-presented-by-dj-elyassb',2,'','neki','Електро',6,'3446724');
+INSERT INTO `music_content` VALUES (15,'Рибља чорба - спотови','2015-03-28 23:08:20','спотови..............','02:50:39','https://www.youtube.com/watch?v=Km89WVJlhFU',1,'','Рибља чорба','Рок',6,'Km89WVJlhFU'),(16,'Чивилук','2015-03-28 23:09:54','асодхцаипдсуцгапуидс','01:03:40','00406440-4b70-4568-99e0-e97c3f84e8b8',0,'','Рибља чорба','Рок',6,NULL),(17,'Saxo Club','2015-04-01 17:29:53','цуп цуп цуп','02:02:27','https://soundcloud.com/elyassb/the-saxo-club-presented-by-dj-elyassb',2,'','Scott and Dave','Електро',6,'3446724');
 /*!40000 ALTER TABLE `music_content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +239,7 @@ CREATE TABLE `playlist` (
   PRIMARY KEY (`id`),
   KEY `fk_playlist_1_idx` (`creator_id`),
   CONSTRAINT `fk_playlist_1` FOREIGN KEY (`creator_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +248,7 @@ CREATE TABLE `playlist` (
 
 LOCK TABLES `playlist` WRITE;
 /*!40000 ALTER TABLE `playlist` DISABLE KEYS */;
-INSERT INTO `playlist` VALUES (3,'Прва плејлиста','2015-04-02 21:19:36',6);
+INSERT INTO `playlist` VALUES (3,'Прва плејлиста','2015-04-02 21:19:36',6),(4,'Најновија пл','2015-04-07 23:10:18',6);
 /*!40000 ALTER TABLE `playlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +275,7 @@ CREATE TABLE `playlist_music_content` (
 
 LOCK TABLES `playlist_music_content` WRITE;
 /*!40000 ALTER TABLE `playlist_music_content` DISABLE KEYS */;
-INSERT INTO `playlist_music_content` VALUES (3,16),(3,17);
+INSERT INTO `playlist_music_content` VALUES (3,15),(4,15),(3,16),(4,16),(3,17);
 /*!40000 ALTER TABLE `playlist_music_content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +297,7 @@ CREATE TABLE `rate` (
   KEY `fk_rate_2_idx` (`music_content_id`),
   CONSTRAINT `fk_rate_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_rate_2` FOREIGN KEY (`music_content_id`) REFERENCES `music_content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -306,7 +306,7 @@ CREATE TABLE `rate` (
 
 LOCK TABLES `rate` WRITE;
 /*!40000 ALTER TABLE `rate` DISABLE KEYS */;
-INSERT INTO `rate` VALUES (1,4,'2015-03-31 14:28:43',6,16),(2,2,'2015-04-04 13:18:23',12,16);
+INSERT INTO `rate` VALUES (1,4,'2015-04-09 15:06:52',6,16),(2,2,'2015-04-04 13:18:23',12,16),(3,4,'2015-04-07 23:08:51',6,15);
 /*!40000 ALTER TABLE `rate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,4 +378,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-06  0:05:23
+-- Dump completed on 2015-04-10  9:07:44
