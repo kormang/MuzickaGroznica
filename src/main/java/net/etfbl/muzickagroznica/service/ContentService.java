@@ -917,11 +917,27 @@ public class ContentService {
 	
 	@Transactional
 	public List<MusicContent> findTopNMusicContent(int n){
-		return musicContentDao.findTopNMusicContent(n);
+		return musicContentDao.findNTopRated(n);
+	}
+	
+	@Transactional
+	public List<MusicContent> findNMostFavoredMusicContent(int n){
+		return musicContentDao.findNMostFavored(n);
+	}
+	
+	@Transactional
+	public Integer findNumberOfFavoritesForMusicContent(Integer id) {
+		return musicContentDao.findById(id).getFavorites().size();
+	}
+	
+	@Transactional
+	public List<MusicContent> findMusicContentAddedAfter(java.util.Date date){
+		return musicContentDao.findAddedAfter(date);
 	}
 	
 	private static class DurationAndExtraInfo {
 		public java.util.Date duration;
 		public String extraInfo;
 	}
+
 }

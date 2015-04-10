@@ -51,7 +51,7 @@ $(document).ready(function () {
 			"addToPlaylistUrl": addToPlaylistUrl,
 			"totalRating": totalRating
 	};
-
+	
 	initcl(params);
 });
 </script>

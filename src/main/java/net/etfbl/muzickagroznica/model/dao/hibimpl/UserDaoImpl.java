@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.etfbl.muzickagroznica.model.dao.UserDao;
 import net.etfbl.muzickagroznica.model.entities.User;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -81,6 +82,15 @@ public class UserDaoImpl implements UserDao {
 		
 		return (List<User>) cr.list();
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findRegisteredAfter(Date date) {
+		Criteria cr = sessionFactory.getCurrentSession().createCriteria(User.class);
+		cr.add(Restrictions.ge("registrationTime", date));
+		
+		return (List<User>) cr.list();
 	}
 	
 	

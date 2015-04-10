@@ -12,7 +12,9 @@ public interface MusicContentDao {
 	MusicContent findById(int id);
 	List<MusicContent> findByExample(MusicContent musiccontent);
 	List<MusicContent> search(String name, String artist, String genre);
-	List<MusicContent> findTopNMusicContent(int n);
+	List<MusicContent> findNTopRated(int n);
+	List<MusicContent> findNMostFavored(int n);
+	List<MusicContent> findAddedAfter(java.util.Date date);
 	
 	/**
 	 * 

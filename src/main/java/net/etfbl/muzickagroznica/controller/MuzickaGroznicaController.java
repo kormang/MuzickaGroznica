@@ -1,7 +1,6 @@
 package net.etfbl.muzickagroznica.controller;
 
 import java.beans.PropertyEditorSupport;
-
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -31,5 +30,5 @@ public class MuzickaGroznicaController {
 			}
 		});
 	}
-
+	
 }

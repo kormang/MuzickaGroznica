@@ -225,4 +225,9 @@ public class UserService {
 		return roleDao.findByUserId(userId);
 	}
 	
+	@Transactional
+	public List<User> findRegisteredAfter(java.util.Date date){
+		return userDao.findRegisteredAfter(date);
+	}
+	
 }

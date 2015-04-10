@@ -15,6 +15,7 @@ import net.etfbl.muzickagroznica.model.dao.MusicContentDao;
 import net.etfbl.muzickagroznica.model.entities.MusicContent;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -132,18 +133,44 @@ public class MusicContentDaoImpl implements MusicContentDao {
 		return criteria.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<MusicContent> findTopNMusicContent(int n) {
-		Session session = sessionFactory.getCurrentSession();
+	public List<MusicContent> findNTopRated(int n) {
 		String queryString = 
 				"SELECT mc FROM MusicContent mc INNER JOIN mc.rates rts GROUP BY rts.musicContentId ORDER BY (AVG(rts.rate)) DESC ";
+		return simpleQuery(queryString, n);		
+	}
+
+	@Override
+	public List<MusicContent> findNMostFavored(int n) {
+		String queryString = 
+				"SELECT mc FROM MusicContent mc INNER JOIN mc.favorites favs GROUP BY favs.musicContentId ORDER BY (COUNT(*)) DESC ";
+		return simpleQuery(queryString, n);
+	}
+
+	@Override
+	public List<MusicContent> findAddedAfter(Date date) {
+		String queryString
+			= "SELECT mc FROM MusicContent mc WHERE mc.publishTime >= ? ";
 		
+		return simpleQuery(queryString, null, date);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<MusicContent> simpleQuery(String queryString, Integer maxResults, Object... queryParams){
+		Session session = sessionFactory.getCurrentSession();
+		System.err.println("LENGTH = " + queryParams.length);
 		Query query = session.createQuery(queryString);
-		query.setMaxResults(n);
+		for(int i = 0; i < queryParams.length; i++){
+			System.err.println("["+i+"] = " + queryParams[i]);
+			query.setParameter(i, queryParams[i]);
+		}
+		
+		if(maxResults != null){
+			query.setMaxResults(maxResults);
+		}
+		
 		
 		return (List<MusicContent>) query.list();
-		
 	}
 
 }

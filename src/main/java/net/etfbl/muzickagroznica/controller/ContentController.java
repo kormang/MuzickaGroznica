@@ -531,7 +531,7 @@ public class ContentController extends MuzickaGroznicaController {
 		return "content/view_favorites";
 	}
 	
-	@RequestMapping(value="/content/top.rss")
+	@RequestMapping(value="/content/top_rss_feed", produces="application/xml; charset=UTF-8")
 	public @ResponseBody String rssTopContent(HttpServletRequest request){
 		SyndFeed feed = new SyndFeedImpl();
 		
@@ -581,6 +581,7 @@ public class ContentController extends MuzickaGroznicaController {
 			// TODO Auto-generated catch block
 			throw new RuntimeException("Failed to output feed.", e);
 		}
+		
 		
 	}
 	

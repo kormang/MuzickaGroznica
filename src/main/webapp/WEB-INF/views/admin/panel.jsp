@@ -22,5 +22,9 @@
 	<c:url value='/admin/pending_events' var='adminPendingEventsUrl' />
 	<a href="${adminPendingEventsUrl}"><spring:message code="events.pending.title"/></a>
 
+	<c:url value='/admin/reports' var='adminReportsUrl' />
+	<a href="${adminReportsUrl}"><spring:message code="admin.reports.title"/></a>
+	
+
 </body>
 </html>
