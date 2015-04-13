@@ -49,7 +49,7 @@ public class ArtistsWS {
 	public boolean addArtist(String artist){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+		boolean result = false;
 		try {
 			
 			
@@ -60,8 +60,8 @@ public class ArtistsWS {
 			pstmt.setString(1, artist);
 			
 			pstmt.execute();
-		
-			return true;
+			
+			result = true;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -85,7 +85,7 @@ public class ArtistsWS {
 			}
 			
 		}
-		return false;
+		return result;
 		
 	}
 

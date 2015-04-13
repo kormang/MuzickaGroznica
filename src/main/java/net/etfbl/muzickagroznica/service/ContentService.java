@@ -20,7 +20,6 @@ import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.helper.entities.PlaylistSummaryData;
 import net.etfbl.muzickagroznica.util.StandardUtil;
-import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
@@ -29,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -57,6 +57,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -94,17 +95,18 @@ public class ContentService {
 	PlaylistDao playlistDao;
 	
 	@Autowired
-	StandardUtilsBean standardUtilsBean;
-	
-	@Autowired
 	PlatformTransactionManager transactionManager;
 	
 	
-	protected static String youtubeApiv3RequestTemplate = "https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=<<VIDEO_ID>>&key=AIzaSyBiXLRaheZSITODhyBeCAuzSrEtkyJ19zU";
-	protected static String soundcloudApiRequestTemplate = "https://api.soundcloud.com/resolve.json?url=<<TRACK_URL>>&client_id=95ca80e02ae6b877cf5f986b91b8abce";
+	protected static String youtubeApiv3RequestTemplate = "https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=<<VIDEO_ID>>&key=<<API_KEY>>";
+	protected static String soundcloudApiRequestTemplate = "https://api.soundcloud.com/resolve.json?url=<<TRACK_URL>>&client_id=<<CLIENT_ID>>";
 	protected static int numberOfRecommendedContent = 4;
 	protected static int numberOfLastListenings = 32;
 	
+	static {
+		youtubeApiv3RequestTemplate = youtubeApiv3RequestTemplate.replace("<<API_KEY>>", StandardUtil.getProperties().getProperty("youtube.api_key"));
+		soundcloudApiRequestTemplate = soundcloudApiRequestTemplate.replace("<<CLIENT_ID>>", StandardUtil.getProperties().getProperty("soundcloud.client_id"));
+	}
 	
 	public ContentService() {
 		// TODO Auto-generated constructor stub
@@ -118,12 +120,12 @@ public class ContentService {
 	}
 	
 	@Transactional
-	public void addArtist(String artist){
+	public boolean addArtist(String artist){
 		ArtistsWSServiceLocator locator = new ArtistsWSServiceLocator();
 		try {
 			ArtistsWS aws = locator.getArtistsWS();
 		
-			aws.addArtist(artist);
+			return aws.addArtist(artist);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException("Failed to add artist using SAOP Web service 'ArtistsWS'.", e);
@@ -173,7 +175,7 @@ public class ContentService {
 		return musicContentDao.merge(mc);
 	}
 	
-	@Transactional
+	@Transactional(isolation=Isolation.READ_COMMITTED)
 	public MusicContent addNewContent(
 			String name,
 			String artist,
@@ -186,7 +188,7 @@ public class ContentService {
 		
 		String uufilename = UUID.randomUUID().toString();
 		
-		File outputFile = new File(standardUtilsBean.getContentUploadDir(), uufilename);
+		File outputFile = new File(StandardUtil.getContentUploadDir(), uufilename);
 		
 		try {
 			FileUtils.writeByteArrayToFile(outputFile, bytes);
@@ -272,7 +274,7 @@ public class ContentService {
 		
 	}
 	
-	@Transactional
+	@Transactional(isolation=Isolation.READ_COMMITTED)
 	public MusicContent addNewContent(
 			String name,
 			String artist,
@@ -701,7 +703,7 @@ public class ContentService {
 	
 	/* ############ Helper methods ################ */
 	
-	@Transactional
+	@Transactional(isolation=Isolation.READ_COMMITTED)
 	private MusicContent fillNewContentWithData(
 			String name,
 			String artist,

@@ -18,7 +18,6 @@ import net.etfbl.muzickagroznica.form.bean.UserSettingsForm;
 import net.etfbl.muzickagroznica.model.entities.Role;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.UserService;
-import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -42,9 +41,6 @@ public class UserController extends MuzickaGroznicaController {
 	
 	@Autowired
 	MessageSource messageSource;
-	
-	@Autowired
-	StandardUtilsBean standardUtilsBean;
 	
 	@Autowired
 	RequestParamsFinder paramsFinder;

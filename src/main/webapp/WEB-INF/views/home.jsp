@@ -7,8 +7,23 @@
 <html>
 <head>
 	<title>Home</title>
+	
+	 <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+	 <script type="text/javascript" src="<c:url value="/resources/js/home.js" />"></script>
+	
+
 </head>
 <body>
+<script type="text/javascript">
+	var params = {
+			"newsfeedformatedUrl": "<c:url value='/newsfeedformated'/>"
+	};
+
+	$(document).ready(function(){
+		inithome(params);	
+	});
+</script>
+
 
 <jsp:include page="components/header.jsp" />
 
@@ -55,12 +70,7 @@
 </div>
 
 <div id="newsfeedarea">
-	<c:forEach items="${feeds}" var="feed">
-		<div>
-			<a href="${feed.link}">${feed.title}</a>
-			<div>${feed.description.value}</div>
-		</div>
-	</c:forEach>
+
 </div>
 
 </body>

@@ -23,41 +23,31 @@
 
 <script type="text/javascript">
 
-var mcid = ${musicContentId};
-var favoriteUrl = "<c:url value="/content/favorite" />";
-var rateUrl = "<c:url value="/content/rate" />";
-var rateValue = <c:choose><c:when test="${not empty rateValue}">${rateValue}</c:when><c:otherwise>null</c:otherwise></c:choose>;
-var favorite = ${favorite};
-var addCommentUrl = "<c:url value="/content/add_comment" />";
-var commentTemplate = '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;">${user.username}</span><div>{{COMMENT_TEXT}}</div></div>';
-var commentsUrl  = "<c:url value="/content/comments" />";
-var deleteCommentUrl = "<c:url value="/content/delete_comment"/>";
-var loadPlaylistsUrl = "<c:url value="/content/playlists"/>";
-var addToPlaylistUrl = "<c:url value="/content/add_to_playlist" />";
-var totalRating = ${totalRating};
+var params = {
+		"favoriteUrl" : "<c:url value="/content/favorite" />",
+		"mcid" : <c:out value="${musicContentId}"/>,
+		"rateUrl" : "<c:url value="/content/rate" />",
+		"rateValue" : <c:choose><c:when test="${not empty rateValue}"><c:out value="${rateValue}"/></c:when><c:otherwise>null</c:otherwise></c:choose>,
+		"favorite" : <c:out value="${favorite}"/>,
+		"addCommentUrl" : "<c:url value="/content/add_comment" />",
+		"commentTemplate": '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;">${user.username}</span><div>{{COMMENT_TEXT}}</div></div>',
+		"commentsUrl": "<c:url value="/content/comments" />",
+		"deleteCommentUrl": "<c:url value="/content/delete_comment"/>",
+		"loadPlaylistsUrl": "<c:url value="/content/playlists"/>",
+		"addToPlaylistUrl": "<c:url value="/content/add_to_playlist" />",
+		"totalRating": <c:out value="${totalRating}"/>,
+		"embedCodeUrl": "<c:url value="/content/embedcode"/>"
+};
+
 
 $(document).ready(function () {
-	var params = {
-			"favoriteUrl" : favoriteUrl,
-			"mcid" : mcid,
-			"rateUrl" : rateUrl,
-			"rateValue" : rateValue,
-			"favorite" : favorite,
-			"addCommentUrl" : addCommentUrl,
-			"commentTemplate": commentTemplate,
-			"commentsUrl": commentsUrl,
-			"deleteCommentUrl": deleteCommentUrl,
-			"loadPlaylistsUrl": loadPlaylistsUrl,
-			"addToPlaylistUrl": addToPlaylistUrl,
-			"totalRating": totalRating
-	};
-	
 	initcl(params);
 });
 </script>
 
-	${embeddCode}
-
+	<div id="embedcodearea">
+	
+	</div>
 	<div>
 		<div>
 			<span>

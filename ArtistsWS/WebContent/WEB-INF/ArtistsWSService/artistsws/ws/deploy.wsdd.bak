@@ -20,7 +20,7 @@
       <parameter name="className" value="artistsws.ws.ArtistsWSSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="ArtistsWS"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation name="addArtist" qname="operNS:addArtist" xmlns:operNS="http://ws.artistsws" soapAction="" >
+      <operation name="addArtist" qname="operNS:addArtist" xmlns:operNS="http://ws.artistsws" returnQName="retNS:addArtistReturn" xmlns:retNS="http://ws.artistsws" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:artist" xmlns:pns="http://ws.artistsws" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
       <operation name="findAllArtists" qname="operNS:findAllArtists" xmlns:operNS="http://ws.artistsws" returnQName="retNS:findAllArtistsReturn" xmlns:retNS="http://ws.artistsws" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >

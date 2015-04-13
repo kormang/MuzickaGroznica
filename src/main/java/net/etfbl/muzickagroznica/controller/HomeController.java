@@ -84,8 +84,6 @@ public class HomeController extends MuzickaGroznicaController {
 			model.addAttribute("recommended", recommended);
 		}
 		
-		putNewsFeedInModel(model);
-		
 		return "home";
 	}
 
@@ -100,6 +98,11 @@ public class HomeController extends MuzickaGroznicaController {
 		
 	}
 
+	@RequestMapping(value="/newsfeedformated")
+	public String getNewsfeedformated(Model model) throws IllegalArgumentException, FeedException, IOException{
+		putNewsFeedInModel(model);
+		return "newsfeedformated";
+	}
 	
 	
 }

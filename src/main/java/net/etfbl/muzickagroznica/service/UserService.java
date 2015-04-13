@@ -11,7 +11,6 @@ import net.etfbl.muzickagroznica.model.entities.Role;
 import net.etfbl.muzickagroznica.model.entities.RoleId;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.util.StandardUtil;
-import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,6 @@ public class UserService {
 	
 	@Autowired
 	PasswordEncoder encoder;
-	
-	@Autowired
-	StandardUtilsBean standardUtilsBean;
 	
 	@Autowired
 	PlatformTransactionManager transactionManager;
@@ -125,7 +121,7 @@ public class UserService {
 		
 		String uufilename = UUID.randomUUID().toString();
 		
-		File outputFile = new File(standardUtilsBean.getAvatarUploadDir(), uufilename);
+		File outputFile = new File(StandardUtil.getAvatarUploadDir(), uufilename);
 		
 		try {
 			FileUtils.writeByteArrayToFile(outputFile, image);

@@ -32,7 +32,6 @@ import net.etfbl.muzickagroznica.security.AuthUser;
 import net.etfbl.muzickagroznica.service.ContentService;
 import net.etfbl.muzickagroznica.service.helper.entities.PlaylistSummaryData;
 import net.etfbl.muzickagroznica.util.StandardUtil;
-import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
@@ -71,9 +70,6 @@ public class ContentController extends MuzickaGroznicaController {
 	
 	@Autowired
 	MessageSource messageSource;
-	
-	@Autowired
-	StandardUtilsBean standardUtilsBean;
 	
 	@Autowired
 	RequestParamsFinder paramsFinder;
@@ -273,6 +269,35 @@ public class ContentController extends MuzickaGroznicaController {
 		return "content/my_content";
 	}
 	
+	@RequestMapping(value="/content/embedcode")
+	public String embedCode(
+			Map<String, Object> model,
+			HttpServletRequest request,
+			@RequestParam("mcid") int mcid
+	){
+		MusicContent musicContent = contentService.findMusicContentById(mcid);
+		
+		model.put("contentType", musicContent.getContentType());
+		
+		switch (musicContent.getContentType()) {
+		case 0:
+			String url = request.getContextPath() + "/contents/" + musicContent.getContentPath();
+			model.put("filePath", url);
+			break;
+		case 1:
+			model.put("videoId", musicContent.getExtraInfo());
+			break;
+		case 2:
+			model.put("trackId", musicContent.getExtraInfo());
+			break;
+
+		default:
+			throw new RuntimeException("This should not happen, contentType is not in [0, 2]");
+		}
+		
+		return "content/embed_code";
+	}
+	
 	@RequestMapping(value="/content/listen/{content_id}")
 	public String listen(
 			Map<String, Object> model,
@@ -282,26 +307,8 @@ public class ContentController extends MuzickaGroznicaController {
 			HttpSession session
 	){
 		
-		MusicContent musicContent = contentService.findMusicContentById(contentId);
-		String embeddCode;
+		MusicContent musicContent = contentService.findMusicContentById(contentId);		
 		
-		switch (musicContent.getContentType()) {
-		case 0:
-			String url = request.getContextPath() + "/contents/" + musicContent.getContentPath();
-			embeddCode = audioFileEmbeddTemplate.replace("<<FILE_PATH>>", url).replace("<<CONTEXT_PATH>>", request.getContextPath());
-			break;
-		case 1:
-			embeddCode = youtubeEmbeddTemplate.replace("<<VIDEO_ID>>", musicContent.getExtraInfo());
-			break;
-		case 2:
-			embeddCode = soundcloudEmbeddTemplate.replace("<<TRACK_ID>>", musicContent.getExtraInfo());
-			break;
-
-		default:
-			throw new RuntimeException("This should not happen, contentType is not in [0, 2]");
-		}
-		
-		model.put("embeddCode", embeddCode);
 		model.put("musicContent", musicContent);
 		
 		DateFormat df = new SimpleDateFormat(messageSource.getMessage("muzickagroznica.dateFormat", null, local));
