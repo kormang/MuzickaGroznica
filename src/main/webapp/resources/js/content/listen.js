@@ -101,7 +101,6 @@ function initcl(params){
 			}
 	);
 	
-	
 	//load embed code
 	$("#embedcodearea").load(
 			params.embedCodeUrl,
@@ -109,13 +108,10 @@ function initcl(params){
 	);
 	
 	//comment
-	function load_comments(){
+	var load_comments = function(){
 		$("#commentlist").load(
 				params.commentsUrl,
-				
-				{
-					"mcid": mcid
-				},
+				{ "mcid": params.mcid },
 				function(){
 					$(".deletecomment").click(function(){
 						$.get(
@@ -131,7 +127,7 @@ function initcl(params){
 					});
 				}
 		);
-	}
+	};
 	
 	load_comments();
 	
@@ -151,7 +147,6 @@ function initcl(params){
 
 			return false;
 	});
-	
 	
 
 }
