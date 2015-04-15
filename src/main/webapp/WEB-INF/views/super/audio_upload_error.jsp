@@ -8,6 +8,9 @@
 <title><spring:message code="super.audio_upload.error.title" /></title>
 </head>
 <body>
+
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 	<spring:message code="super.audio_upload.error" />
 </body>
 </html>

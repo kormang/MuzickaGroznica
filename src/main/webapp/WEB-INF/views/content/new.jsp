@@ -35,6 +35,8 @@
 	
 	</script>
 
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 	<c:url value='/content/new' var="contentNewUrl" />
 	
 

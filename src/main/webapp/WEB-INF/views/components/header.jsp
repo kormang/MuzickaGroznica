@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<div style='top:0; right:0; float: right;'>
+<div style='top:0; right:0; float: right; clear: left; display: inline-block'>
 	<c:if test="${not empty user}">
 	
 		<c:choose>

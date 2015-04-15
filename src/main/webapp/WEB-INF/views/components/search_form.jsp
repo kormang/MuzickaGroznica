@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	
+	<div>
 	<c:url value="/content/search" var="searchFormActionUrl"/>
 	<form:form action="${searchFormActionUrl}" method="get" modelAttribute="searchForm">
 	
@@ -22,3 +23,6 @@
 		</table>
 
 	</form:form>
+	</div>
+	
+	

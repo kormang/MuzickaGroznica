@@ -14,7 +14,7 @@
 
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 	
 
 	<span style="display: none;" id="ajax_role_switch_address"><c:url value="/admin/role_switch" /></span>

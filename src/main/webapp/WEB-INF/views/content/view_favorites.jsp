@@ -9,6 +9,7 @@
 <title><spring:message code="content.favorites.title" /></title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 	<div style="font-weight: bold;" id="pl_title"><spring:message code="content.favorites.title" /></div>
 	

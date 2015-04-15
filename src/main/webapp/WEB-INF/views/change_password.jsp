@@ -9,10 +9,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><spring:message code="label.change_password"/></title>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
 	<div>
 	<c:url value="/resources/js/change_password_form.js" var="cpjsscriptUrl" />
 	<script type="text/javascript" src="${cpjsscriptUrl }"></script>
@@ -39,7 +39,7 @@
 			<td id="repeat_password_error_slot"></td>
 		</tr>
 		<tr>
-			<td><input value="<spring:message code='label.submit.general'/>" type="submit" /></td>
+			<td><input value="<spring:message code='label.general.submit'/>" type="submit" /></td>
 		</tr>
 		</table>
 	</form:form>

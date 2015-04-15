@@ -57,6 +57,8 @@
 	
 </script>
 
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 	<div id="ribbon">
 	    <ul>
 	        <li><spring:message code="admin.reports.toprated"/></li>

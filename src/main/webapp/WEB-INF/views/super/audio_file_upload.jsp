@@ -10,6 +10,8 @@
 <title><spring:message code="super.audio_upload.title" /></title> 
 </head>
 <body>
+		<jsp:include page="/WEB-INF/views/components/header.jsp" />
+		
 		<c:url value='/super/audio_file_uploader' var="audioFileUploadUrl"/>
 
 		<a href='<c:url value="/content/new" />'><spring:message code="content.new.title" /></a>

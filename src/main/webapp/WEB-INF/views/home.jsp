@@ -25,7 +25,7 @@
 </script>
 
 
-<jsp:include page="components/header.jsp" />
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 <h1>
 	Hello world!  

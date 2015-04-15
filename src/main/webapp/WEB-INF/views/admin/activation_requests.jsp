@@ -10,6 +10,8 @@
 <title><spring:message code="admin.activate_accounts.requests.title"/></title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 <c:url value="/admin/activate_account" var="activateAccountUrl"/>
 
 	<form:form action="${activateAccountUrl}" method="post">

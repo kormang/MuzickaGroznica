@@ -12,6 +12,8 @@
 <title><spring:message code="user.settings.title"/></title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 	<c:url value="/user/settings/password" var="chpassUrl" />
 	<c:url value="/user/settings/avatar" var="avatarUploadUrl" />
 

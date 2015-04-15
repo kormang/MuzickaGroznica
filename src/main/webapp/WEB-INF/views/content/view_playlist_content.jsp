@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 	<div style="font-weight: bold;" id="pl_title">${playlist.title}</div>
 	<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>

@@ -10,7 +10,7 @@
 <title><spring:message code="avatar_upload.title" /></title>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
 	<div>
 
 	<c:url value="/user/settings/avatar" var="avatarUploadUrl"></c:url>
@@ -24,7 +24,7 @@
 			<td><form:errors path="file"/></td>
 		</tr>
 		<tr>
-			<td><input value="<spring:message code='label.submit.general'/>" type="submit" /></td>
+			<td><input value="<spring:message code='label.general.submit'/>" type="submit" /></td>
 		</tr>
 		</table>
 	</form:form>

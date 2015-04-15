@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
 	<jsp:include page="/WEB-INF/views/components/search_form.jsp" />
 <table>
 <c:choose>

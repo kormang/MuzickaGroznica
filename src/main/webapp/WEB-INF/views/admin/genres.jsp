@@ -13,6 +13,8 @@
 </head>
 <body>
 
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 	<span style="display: none;" id="defaulterrormsg"><spring:message code="ajax.default.error.message"/></span>
 	<span style="display: none;" id="ajax_add_genre_address"><c:url value="/admin/add_genre" /></span>
 

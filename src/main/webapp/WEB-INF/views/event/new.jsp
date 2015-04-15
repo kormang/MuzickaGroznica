@@ -38,6 +38,8 @@
     });
 </script>
 
+  <jsp:include page="/WEB-INF/views/components/header.jsp" />
+
   <c:url value="/super/event/new" var="newEventActionUrl"/>
   <form:form id="form" action="${newEventActionUrl}" method="post" modelAttribute="newEventForm">
 

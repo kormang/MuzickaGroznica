@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
  Ошло све у....
 
 </body>

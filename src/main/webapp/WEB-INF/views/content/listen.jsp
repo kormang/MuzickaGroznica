@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
+ <title>${name} - <spring:message code="muzickagroznica.application_name"/></title>
+
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.arctic.css"/>" type="text/css" />
 
@@ -44,6 +46,9 @@ $(document).ready(function () {
 	initcl(params);
 });
 </script>
+
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
+	<jsp:include page="/WEB-INF/views/components/search_form.jsp" />
 
 	<div id="embedcodearea">
 	

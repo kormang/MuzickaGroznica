@@ -11,6 +11,8 @@
 </head>
 <body>
 
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 	<table>
 		<tr><td>${event.name}</td></tr>
 		<tr><td>${event_dateAndTime}</td></tr>

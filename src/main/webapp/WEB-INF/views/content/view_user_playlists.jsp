@@ -9,6 +9,7 @@
 <title><spring:message code="content.playlists" /></title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 	<div style="font-weight: bold;">
 		<spring:message code="content.playlists" />

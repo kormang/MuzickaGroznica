@@ -10,6 +10,8 @@
 </head>
 <body>
 
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 	<c:url value='/admin/activation_requests' var="adminActivationRequestsUrl"/>
 	<a href="${adminActivationRequestsUrl}"><spring:message code='admin.activate_accounts.requests.title'/></a>
 

@@ -27,6 +27,8 @@ var params = {
 	);
 </script>
 
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 		<c:forEach items="${events}" var="ev">
 			<div>
 				<spring:message code="events.name"/> <span>${ev.name}</span>

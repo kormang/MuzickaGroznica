@@ -314,6 +314,8 @@ public class ContentController extends MuzickaGroznicaController {
 		
 		User user = (User) session.getAttribute("user");
 		
+		model.put("searchForm", new SearchForm());
+		
 		Favorite favorite = contentService.findFavorite(user.getId(), contentId);
 		model.put("favorite", favorite != null);
 		
