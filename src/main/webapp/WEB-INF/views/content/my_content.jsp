@@ -7,21 +7,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="content.my.title" /></title>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
+<div class="container">
+
 <jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-	<div style="font-weight: bold;" id="pl_title"><spring:message code="content.my.title" /></div>
+<div class="jumbotron" style="width: 600px;">
+	<div id="pl_title"><h3><span class="label label-warning"><spring:message code="content.my.title" /></span></h3></div>
 	
 <form action="<c:url value="/content/view_edit" />" method="post">
-<table>
+<table class="table table-striped">
 	<c:forEach items="${contents}" var="ct">
 		<tr>
-			<td><a href="<c:url value="/content/listen/${ct.id}"/>">${ct.name}</a></td>
-			<td><input type="submit" name="_mcid_${ct.id}" value="<spring:message code="label.general.edit" />"/></td>
+			<td><h4><a href="<c:url value="/content/listen/${ct.id}"/>">${ct.name}</a></h4></td>
+			<td><input class="btn btn-primary" type="submit" name="_mcid_${ct.id}" value="<spring:message code="label.general.edit" />"/></td>
 		</tr>
 	</c:forEach>
 </table>
 </form>
+</div>
+</div>
 </body>
 </html>

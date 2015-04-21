@@ -12,8 +12,13 @@
 
  <script type="text/javascript" src="<c:url value="/resources/js/admin/pending_events.js" />"></script>
 
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
+<div class="container">
+
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 <script type="text/javascript">
 var approvalUrl = "<c:url value="/admin/event_approval" />";
@@ -26,9 +31,7 @@ var params = {
 		}
 	);
 </script>
-
-<jsp:include page="/WEB-INF/views/components/header.jsp" />
-
+	<div class="jumbotron" style="width: 600px;">
 		<c:forEach items="${events}" var="ev">
 			<div>
 				<spring:message code="events.name"/> <span>${ev.name}</span>
@@ -47,6 +50,7 @@ var params = {
 			</div>
 				
 		</c:forEach>
-		
+	</div>
+</div>
 </body>
 </html>

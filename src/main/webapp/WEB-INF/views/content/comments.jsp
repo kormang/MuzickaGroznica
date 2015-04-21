@@ -5,25 +5,22 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
-
-	<c:forEach items="${comments}" var="comm">
-	
-	<div>
-		<div style="border: 2px solid blue; display: inline-block;">
+	<ul class="list-group">
+		<c:forEach items="${comments}" var="comm">
 		
-			<span style="float: left;">${comm.user.username}</span>
-			
-			<c:if test="${not empty ROLE_ADMIN}">
-				<span style="float: right; color: red; weight: bold;">
-					<a id="_commid_${comm.id}" class="deletecomment" href="#">X</a>
-				</span>
-			</c:if>
-			
-			<div>
-				${comm.commentText}
-			</div>
-			
-		</div>
-	</div>
+			<li class="list-group-item">
+				<h4><span class="label label-default">${comm.user.username}</span>
 				
-	</c:forEach>
+				<c:if test="${not empty ROLE_ADMIN}">
+					<span style="float: right; color: red; weight: bold;">
+						<a class="deletecomment btn btn-danger" id="_commid_${comm.id}" href="#">X</a>
+					</span>
+				</c:if>
+				</h4>
+				<div>
+					${comm.commentText}
+				</div>
+			</li>
+					
+		</c:forEach>
+	</ul>

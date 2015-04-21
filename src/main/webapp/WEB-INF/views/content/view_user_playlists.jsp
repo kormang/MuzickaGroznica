@@ -7,15 +7,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="content.playlists" /></title>
+
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
+<div class="container">
 <jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-	<div style="font-weight: bold;">
-		<spring:message code="content.playlists" />
-	</div>
+<div class="jumbotron" style="width: 600px;">
+		<h3><span class="label label-warning"><spring:message code="content.playlists" /></span></h3>
 
-<table>
+<table class="table">
 
 	<c:forEach items="${playlists}" var="playlist">
 		<tr>
@@ -27,6 +30,7 @@
 	</c:forEach>
 
 </table>
-
+</div>
+</div>
 </body>
 </html>

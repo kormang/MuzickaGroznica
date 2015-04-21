@@ -10,22 +10,27 @@
 <title><spring:message code="admin.genres.title"/></title>
 <c:url value="/resources/js/admin/genres.js" var="jsUrl" />
 <script type="text/javascript" src="${jsUrl }"></script>
+
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
+<div class="container">
 
 <jsp:include page="/WEB-INF/views/components/header.jsp" />
 
+<div class="jumbotron" style="width: 600px;">
 	<span style="display: none;" id="defaulterrormsg"><spring:message code="ajax.default.error.message"/></span>
 	<span style="display: none;" id="ajax_add_genre_address"><c:url value="/admin/add_genre" /></span>
 
 	<div>
-		<table>
+		<table class="table">
 			<tr>
 				<td>
-					<input id="genreName" type="text" name="name" onkeydown="if(event.keyCode == 13) addGenre()"/>
+					<input id="genreName" class="form-control"type="text" name="name" onkeydown="if(event.keyCode == 13) addGenre()"/>
 				</td>
 				<td>
-					<input type="button" onclick="addGenre()" value="<spring:message code='label.add' />"/>
+					<input type="button" class="btn btn-primary" onclick="addGenre()" value="<spring:message code='label.add' />"/>
 				</td>
 				<td>
 					<span id="msgarea"></span>
@@ -36,10 +41,13 @@
 	</div>
 	
 	<div id="genres">
+	<ul class="list-group">
 		<c:forEach items="${genres}" var="g">
-			<div>${g.name}</div>
+			<li class="list-group-item">${g.name}</li>
 		</c:forEach>
+	</ul>
 	</div>
-
+</div>
+</div>
 </body>
 </html>

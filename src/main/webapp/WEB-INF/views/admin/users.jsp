@@ -12,14 +12,19 @@
 <c:url value="/resources/js/admin/users.js" var="jsUrl" />
 <script type="text/javascript" src="${jsUrl }"></script>
 
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
+
 </head>
 <body>
+<div class="container">
+
 <jsp:include page="/WEB-INF/views/components/header.jsp" />
 	
 
 	<span style="display: none;" id="ajax_role_switch_address"><c:url value="/admin/role_switch" /></span>
 
-	<table>
+	<table class="table table-striped">
 		
 		<c:forEach items="${users}" var="u" varStatus="status">
 		
@@ -47,6 +52,6 @@
 	<div id="messagearea" >
 	
 	</div>
-
+</div>
 </body>
 </html>

@@ -17,10 +17,13 @@ function initnoe(params){
 				if(status == "success"){
 					
 					$("#artist").jqxInput({
-						   source: data.artists
+						   source: data.artists,
+						   theme: "bootstrap"
 					});
 					
 				}
+				
+				$("#artist").className = "form-control";
 				
 			}
 	);

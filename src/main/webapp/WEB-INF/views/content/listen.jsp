@@ -11,7 +11,6 @@
 
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.arctic.css"/>" type="text/css" />
-
  <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
 
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
@@ -20,9 +19,12 @@
 
  <script type="text/javascript" src="<c:url value="/resources/js/content/listen.js" />"></script>
 
+
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
-
+<div class="container">
 <script type="text/javascript">
 
 var params = {
@@ -48,53 +50,64 @@ $(document).ready(function () {
 </script>
 
 	<jsp:include page="/WEB-INF/views/components/header.jsp" />
+	
 	<jsp:include page="/WEB-INF/views/components/search_form.jsp" />
 
-	<div id="embedcodearea">
 	
-	</div>
-	<div>
-		<div>
+	<div style="min-height: 400px;">
+		<div id="embedcodearea" style="float:left;width:  700px;">
+		</div>
+		<ul class="list-group" style="float: left;width: 400px;">
+			<li class="list-group-item">${artistName}<span class="badge"><spring:message code="label.general.artist"/></span></li>
+			<li class="list-group-item">${name}<span class="badge"><spring:message code="label.general.name"/></span></li>
+			<li class="list-group-item">${duration}<span class="badge"><spring:message code="label.general.duration"/></span></li>
+			<li class="list-group-item">${genreName}<span class="badge"><spring:message code="label.general.genre"/></span></li>
+			<li class="list-group-item">${publishDate}<span class="badge"><spring:message code="label.general.publishDate"/></span></li>
+		</ul>
+		<div style="float: right;">
 			<span>
 				<input type="checkbox" id="favorite" name="favorite" <c:if test="${favorite}">checked="checked"</c:if> />
 				<spring:message code="label.general.favorite" />
-			</span>
+			</span><br>
+			<span class="badge"><spring:message code="label.general.lyrics"/></span><pre>${lyrics}</pre>
 			<div style="display: inline;">
 				<div id="rate"></div>
 			</div>
-		</div>
-	
-		<div>
-			<span>${artistName}</span>
-			<span>${name}</span>
-			<span>${duration}</span>
-			<span>${genreName}</span>
-			<span>${publishDate}</span>
-		</div>
-		<div>
-			<input type="button" id="atpl_btn" value="<spring:message code="content.listen.add_to_playlist"/>"/>
-			<div style="background-color: grey; position: absolute; top: 45%; left: 45%;" id="atpl_window">
-				<div id="playlists">
-				</div>
-				<div><input type="radio" name="playlist" value="-1" /><input type="text" id="npl_title" value="<spring:message code="content.listen.playlist.new"/>"/></div>
-				<div>
-					<input type="button" id="atpl_cancel" value="<spring:message code="label.general.cancel" />" />
-					<input type="button" id="atpl_save" value="<spring:message code="label.general.submit" />" />
-				</div>
+			<input type="button"  class="btn btn-primary" id="atpl_btn" value="<spring:message code="content.listen.add_to_playlist"/>"/>
+			<div class="list-group playlist-list" id="atpl_window">
+				<ul id="playlists">
+				</ul>
+				<ul>
+				<li class="list-group-item" style="width: 300px">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" name="playlist" value="-1" style="float: left"/>
+						</span>
+						<input type="text" class="form-control"   id="npl_title"  value="<spring:message code="content.listen.playlist.new"/>"/>
+					</div>
+				</li>
+				</ul>
+				<ul>
+				<li class="list-group-item">
+					<input type="button"  class="btn btn-primary" id="atpl_cancel" value="<spring:message code="label.general.cancel" />" />
+					<input type="button"  class="btn btn-primary" id="atpl_save" value="<spring:message code="label.general.submit" />" />
+				</li>
+				</ul>
 			</div>
 		</div>
-		<div>
-			${lyrics}
+	</div>
+	
+	
+	<div class="jumbotron" style="width: 600px; float: left">
+		<div id="comment">
+			<textarea id="commentarea" class="form-control" maxlength="254" rows="4" cols="50" ></textarea>
+			<a class="btn btn-primary" id="addcomment" href="/" ><spring:message code="content.listen.comment"/></a>
+		</div>
+	
+		<div id="commentlist">
 		</div>
 	</div>
-	
-	<div id="comment">
-		<textarea id="commentarea" maxlength="254" rows="4" cols="50" ></textarea>
-		<a id="addcomment" href="/"><spring:message code="content.listen.comment"/></a>
-	</div>
-	
-	<div id="commentlist">
-	</div>
 
+</div>
 </body>
 </html>

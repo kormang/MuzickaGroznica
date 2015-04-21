@@ -8,14 +8,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="admin.activate_accounts.requests.title"/></title>
+
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
+
+<div class="container">
+
 <jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 <c:url value="/admin/activate_account" var="activateAccountUrl"/>
 
 	<form:form action="${activateAccountUrl}" method="post">
-		<table>
+		<table class="table">
 			<c:forEach items="${users}" var="u">
 			
 				<tr>
@@ -32,6 +38,6 @@
 		</table>
 	
 	</form:form>
-
+</div>
 </body>
 </html>

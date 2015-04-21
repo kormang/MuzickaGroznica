@@ -7,12 +7,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/components/header.jsp" />
+<div class="container">
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-	<div style="font-weight: bold;" id="pl_title">${playlist.title}</div>
-	<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
-
+	<div class="jumbotron" style="width: 600px;">
+		<div class="list-group">
+			<div id="pl_title" class="list-group-item active">${playlist.title}</div>
+			<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
+		</div>
+	</div>
+</div>
 </body>
 </html>

@@ -8,28 +8,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="avatar_upload.title" /></title>
+<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
+
+	<div class="container">
+
 	<jsp:include page="/WEB-INF/views/components/header.jsp" />
-	<div>
+	
+	<div class="jumbotron classic-jumbotron">
 
 	<c:url value="/user/settings/avatar" var="avatarUploadUrl"></c:url>
 	
 	
 	<form:form action="${avatarUploadUrl }" modelAttribute="avatarUploadForm" enctype="multipart/form-data">
-		<table>
+		<table class="table">
 		<tr>
 			<td><spring:message code="avatar_upload.file.label" /></td>
 			<td><input type="file" name="file" id="file" accept="image/*"/></td>
-			<td><form:errors path="file"/></td>
+			<td class="registration-form small error"><form:errors path="file"/></td>
 		</tr>
 		<tr>
-			<td><input value="<spring:message code='label.general.submit'/>" type="submit" /></td>
+			<td><input class="btn btn-primary" value="<spring:message code='label.general.submit'/>" type="submit" /></td>
 		</tr>
 		</table>
 	</form:form>
 
+	</div>
 </div>
-
 </body>
 </html>

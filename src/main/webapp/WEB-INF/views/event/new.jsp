@@ -21,9 +21,12 @@
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxdropdownlist.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/globalization/globalize.js"/>"></script>
 
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 
 </head>
 <body>
+<div class="container">
 <script type="text/javascript">
     $(document).ready(function () {
     	setformdate = function(e){
@@ -41,25 +44,27 @@
   <jsp:include page="/WEB-INF/views/components/header.jsp" />
 
   <c:url value="/super/event/new" var="newEventActionUrl"/>
+  
+ <div class="jumbotron" style="width: 600px;">
   <form:form id="form" action="${newEventActionUrl}" method="post" modelAttribute="newEventForm">
 
-	<table>
+	<table class="table">
 	
 	<tr>
 		<td><spring:message code="event_new.name" /></td>
-		<td><form:input path="name" /></td>
+		<td><form:input class="form-control" path="name" /></td>
 		<td><form:errors path="name" /></td>
 	</tr>
 	
 	<tr>
 		<td><spring:message code="event_new.description" /></td>
-		<td><form:input path="description" /></td>
+		<td><form:input class="form-control" path="description" /></td>
 		<td><form:errors path="description" /></td>
 	</tr>
 	
 	<tr>
 		<td><spring:message code="event_new.location" /></td>
-		<td><form:input path="location" /></td>
+		<td><form:input class="form-control" path="location" /></td>
 		<td><form:errors path="location" /></td>
 	</tr>
 
@@ -76,11 +81,12 @@
  	
  	<tr>
 	 	<td>
-	 		<input type="submit"  value="<spring:message code="label.general.submit"/>"/>
+	 		<input type="submit" class="btn btn-primary" value="<spring:message code="label.general.submit"/>"/>
 	 	</td>
  	</tr>
  	</table>
  </form:form>
- 
+ </div>
+</div>
 </body>
 </html>

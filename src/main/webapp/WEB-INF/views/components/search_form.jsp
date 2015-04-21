@@ -3,26 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	
-	<div>
 	<c:url value="/content/search" var="searchFormActionUrl"/>
 	<form:form action="${searchFormActionUrl}" method="get" modelAttribute="searchForm">
-	
-		<table>
+		<table class="pretraga">
 			<tr>
-				<td><spring:message code="search_form.label.name" /></td>
-				<td><form:input path="name"/></td>
+				<td><div class="input-group-btn"><form:input path="name" class="form-control" placeholder="Назив"/></div></td>
 				
-				<td><spring:message code="label.general.artist" /></td>
-				<td><form:input path="artist"/></td>
+				<td><div class="input-group-btn"><form:input path="artist" class="form-control" placeholder="Извођач"/></div></td>
 				
-				<td><spring:message code="label.general.genre" /></td>
-				<td><form:input path="genre"/></td>
+				<td><div class="input-group-btn"><form:input path="genre"  class="form-control" placeholder="Жанр"/></div></td>
 				
-				<td><input type="submit" value='<spring:message code="label.general.search" />' /></td>
+				<td><input type="submit" class="btn btn-primary" value='<spring:message code="label.general.search" />' /></td>
 			</tr>		
 		</table>
-
 	</form:form>
-	</div>
-	
-	

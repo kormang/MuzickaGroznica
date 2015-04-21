@@ -7,8 +7,8 @@
 <c:choose>
 	<c:when test="${contentType == 0}">
 	
-		<div id="player_holder" style="display: inline-block; width: 658px;">
-		<img id="eqvimg" src="<c:url value="/images/audio-player-header.jpg"/>"></img>
+		<div id="player_holder" style="display: inline-block; width: 500px;">
+		<img id="eqvimg" src="<c:url value="/images/audio-player-header.jpg"/>" style="width: 500px"></img>
 		<audio controls autoplay id="player" style="display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%">
 			<source src="${filePath}">
 		</audio>
@@ -28,7 +28,7 @@
 	
 	<c:when test="${contentType == 2}">
 	
-		<iframe width="50%" height="225" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${trackId}&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true">
+		<iframe width="80%" height="225" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${trackId}&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true">
 		</iframe>
 	
 	</c:when>

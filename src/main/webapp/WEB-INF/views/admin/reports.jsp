@@ -23,10 +23,17 @@
  
  <script type="text/javascript" src="<c:url value="/resources/js/admin/reports.js" />"></script>
 	
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 
 </head>
 <body>
+<div class="container">
+
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 <script>
+
 
 	params = {
 			headers: {
@@ -57,7 +64,6 @@
 	
 </script>
 
-<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 	<div id="ribbon">
 	    <ul>
@@ -81,6 +87,6 @@
 	
 	<div class="log">
 	</div>
-
+</div>
 </body>
 </html>

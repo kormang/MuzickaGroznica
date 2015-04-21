@@ -7,18 +7,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title></title>
+
+<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
+<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
+<div class="container">
 
-	<jsp:include page="/WEB-INF/views/components/header.jsp" />
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-	<table>
+<div class="jumbotron" style="width: 600px;">
+
+	<table class="table">
 		<tr><td>${event.name}</td></tr>
 		<tr><td>${event_dateAndTime}</td></tr>
 		<tr><td>${event.location}</td></tr>
 		<tr><td>${event.description}</td></tr>
 	</table>
-
+</div>
+</div>
 </body>
 </html>
