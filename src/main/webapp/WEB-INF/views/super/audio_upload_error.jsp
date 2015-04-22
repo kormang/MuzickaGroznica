@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="super.audio_upload.error.title" /></title>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
 

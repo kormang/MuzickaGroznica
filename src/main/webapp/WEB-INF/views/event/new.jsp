@@ -7,10 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title></title>
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.bootstrap.css"/>" type="text/css" />
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxdatetimeinput.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcalendar.js"/>"></script>
@@ -21,8 +22,6 @@
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxdropdownlist.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/globalization/globalize.js"/>"></script>
 
-<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 
 </head>
 <body>
@@ -34,7 +33,7 @@
     		var hd = $("#hd").val(jsDate.getTime());
     	}
     	
-        $("#dti").jqxDateTimeInput({ width: '250px', height: '25px', formatString: 'dd.MM.yyyy. HH:mm:ss', min: new Date() });
+        $("#dti").jqxDateTimeInput({ theme: "bootstrap", width: '250px', height: '25px', formatString: 'dd.MM.yyyy. HH:mm:ss', min: new Date() });
         $("#dti").on('valueChanged', setformdate);
         $('#dti').jqxDateTimeInput('setDate', new Date());
 

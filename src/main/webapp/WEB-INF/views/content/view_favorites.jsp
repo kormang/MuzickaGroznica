@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="content.favorites.title" /></title>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/components/header.jsp" />

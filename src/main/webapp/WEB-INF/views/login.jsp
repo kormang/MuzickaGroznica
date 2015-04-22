@@ -10,13 +10,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
+<title></title>
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
 <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body onload='document.loginForm.username.focus();'>
 <div class="container">
 	<div align="center" style="margin-top:100px;">
+	<h1 class="error small">
 	<c:choose>
 		<c:when test="${badCredentials }">
 			<spring:message code="spring.security.authenticationfailure.badCredentials"/>
@@ -25,7 +26,7 @@
 			<spring:message code="spring.security.authenticationfailure.accountDisabled"/>
 		</c:when>
 	</c:choose>
-	
+	</h1>
 	<div class="jumbotron" style="width: 400px;">
 	<form name="loginForm" action="<c:url value='/j_spring_security_check'/>" method="post">
 		

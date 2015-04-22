@@ -6,11 +6,10 @@
 <html>
 <head>
 	<title>Home</title>
-	
-	 <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+	<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
+	 
 	 <script type="text/javascript" src="<c:url value="/resources/js/home.js" />"></script>
-	 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-	 <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
+
 
 </head>
 <body>

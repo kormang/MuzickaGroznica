@@ -5,11 +5,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.bootstrap.css"/>" type="text/css" />
 
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxinput.js"/>"></script>
 
@@ -17,10 +17,7 @@
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-
-<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
+<title></title>
 </head>
 <body>
 <script type="text/javascript">

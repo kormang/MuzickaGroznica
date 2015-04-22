@@ -31,7 +31,7 @@ function initcl(params){
 
 	//rate:
 	
-	$("#rate").jqxRating({ width: 350, height: 35, theme: 'classic'});
+	$("#rate").jqxRating({ width: 350, height: 35, theme: 'bootstrap'});
 //	if(rateValue != null){
 //			$("#rate").val(rateValue);
 //	}

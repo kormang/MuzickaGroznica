@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Јојкс</title>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/components/header.jsp" />

@@ -8,8 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="label.change_password"/></title>
-<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-<link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
 	<div class="container">

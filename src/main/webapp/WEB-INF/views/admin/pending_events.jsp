@@ -7,13 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="events.pending.title"/></title>
-
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
  <script type="text/javascript" src="<c:url value="/resources/js/admin/pending_events.js" />"></script>
 
-<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
 <div class="container">

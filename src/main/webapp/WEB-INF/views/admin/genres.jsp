@@ -8,11 +8,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="admin.genres.title"/></title>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 <c:url value="/resources/js/admin/genres.js" var="jsUrl" />
 <script type="text/javascript" src="${jsUrl }"></script>
 
-<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
 <div class="container">

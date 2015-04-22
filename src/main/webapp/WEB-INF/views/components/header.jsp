@@ -6,6 +6,7 @@
 
 <div id="header" >
 
+
 <h1 class="mg-app-title">
 	<kbd><a style="color: #fff" href="<c:url value='/home'/>" ><spring:message code="muzickagroznica.application_name" /></a></kbd>
 </h1>
@@ -22,8 +23,20 @@
 				<c:url value="/images/avatars/no-face.gif" var="avatarUrl" />
 			</c:otherwise>
 		</c:choose>
-		<c:url value="/j_spring_security_logout" var="logoutUrl" />
-		<c:url value="/user/settings" var="userSettingsUrl" />
+
+		<div class="btn-group">
+			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+			  	O <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu">
+			  	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+				<c:url value="/user/settings" var="userSettingsUrl" />
+			  	<li><a href="${userSettingsUrl }"><spring:message code="user.settings.title"/></a></li>
+			  	<li class="divider"></li>
+			  	<li><a href="${logoutUrl}"><spring:message code="label.general.logout"/></a></li>
+			  </ul>
+			  
+		</div>
 		
 		<img src="${avatarUrl }" class="img-circle img-profile" />
 
@@ -44,29 +57,6 @@
 
 </div>
 
-		<div class="btn-group">
-			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			  	O <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu">
-			  	<li><a href="${userSettingsUrl }"><spring:message code="user.settings.title"/></a></li>
-			  	<li><a href="${logoutUrl}"><spring:message code="label.general.logout"/></a></li>
-			  </ul>
-			  
-		</div>
-		
-				<div class="btn-group">
-		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-		    Action <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu">
-		    <li><a href="#">Action</a></li>
-		    <li><a href="#">Another action</a></li>
-		    <li><a href="#">Something else here</a></li>
-		    <li class="divider"></li>
-		    <li><a href="#">Separated link</a></li>
-		  </ul>
-		</div>
 
 </div>
     

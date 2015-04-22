@@ -8,12 +8,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Insert title here</title>
+<title></title>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
 	<c:url value="/home" var="homeUrl" />
-	<a href='${homeUrl }'>>></a>
+	<a class="btn" href='${homeUrl }'>>></a>
 
 </body>
 </html>

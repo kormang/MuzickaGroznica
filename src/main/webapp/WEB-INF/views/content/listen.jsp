@@ -9,9 +9,10 @@
 
  <title>${name} - <spring:message code="muzickagroznica.application_name"/></title>
 
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
+
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
- <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.arctic.css"/>" type="text/css" />
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.bootstrap.css"/>" type="text/css" />
 
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxrating.js"/>"></script>
@@ -19,9 +20,6 @@
 
  <script type="text/javascript" src="<c:url value="/resources/js/content/listen.js" />"></script>
 
-
-<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
 <body>
 <div class="container">

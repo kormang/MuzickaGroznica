@@ -8,8 +8,7 @@
 <head>
 <title><spring:message code="admin.panel.title" /></title>
 
-<LINK rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
-<LINK rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
 <div class="container">

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -10,8 +8,7 @@
 <head>
 <title><spring:message code="registration.title"/></title>
 
- <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
- <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
 </head>
 <body>
