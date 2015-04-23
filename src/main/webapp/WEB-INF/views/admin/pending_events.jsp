@@ -31,19 +31,19 @@ var params = {
 	<div class="jumbotron" style="width: 600px;">
 		<c:forEach items="${events}" var="ev">
 			<div>
-				<spring:message code="events.name"/> <span>${ev.name}</span>
-				<spring:message code="events.location"/> <span>${ev.location}</span>
-				<spring:message code="events.publishTime"/> <span>${ev.publishTime}</span>
-				<spring:message code="events.eventTime"/> <span>${ev.eventTime}</span>
+				<spring:message code="events.name"/>: <span>${ev.name}</span>.
+				<spring:message code="events.location"/>: <span>${ev.location}</span>.
+				<spring:message code="events.publishTime"/>: <span>${ev.publishTime}</span>.
+				<spring:message code="events.eventTime"/>: <span>${ev.eventTime}</span>.
 				<div>
-					<spring:message code="events.description"/> <br/>
+					<spring:message code="events.description"/>: <br/>
 					<div>
 						${ev.description}
 					</div>
 					<br/>
 				</div>
-				<input type="button" class="approvebutton" name="_eid_${ev.id}" value="<spring:message code="events.approve" />" />
-				<input type="button" class="disapprovebutton" name="_eid_${ev.id}" value="<spring:message code="events.disapprove" />" />
+				<input type="button" class="btn btn-primary approvebutton" name="_eid_${ev.id}" value="<spring:message code="events.approve" />" />
+				<input type="button" class="btn btn-primary disapprovebutton" name="_eid_${ev.id}" value="<spring:message code="events.disapprove" />" />
 			</div>
 				
 		</c:forEach>

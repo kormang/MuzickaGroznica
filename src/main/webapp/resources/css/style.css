@@ -18,7 +18,6 @@
 .user{
 	float:right;
 	display: block;
-	border: solid blue 2px;
 }
 
 .user img{ 
@@ -27,7 +26,6 @@
 }
 
 #header {
-	border: solid red 2px;
 	height: 120px;
 }
 
@@ -63,6 +61,7 @@
 	width: 700px;
 	float: left;
 }
+
 .marg5{
 	margin: 5px;
 }

@@ -10,24 +10,26 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import net.etfbl.muzickagroznica.model.entities.User;
+import net.etfbl.muzickagroznica.util.StandardUtil;
 
 public class EmailGateway {
-
 
 	private Properties properties;
 	private String password;
 	private String userEmail;
-	private String defualtFrom;
+	private String defaultFrom;
 
 
-	public String getDefualtFrom() {
-		return defualtFrom;
+	public String getDefaultFrom() {
+		return defaultFrom;
 	}
 
 
-	public void setDefualtFrom(String defualtFrom) {
-		this.defualtFrom = defualtFrom;
+	public void setDefaultFrom(String defaultFrom) {
+		this.defaultFrom = defaultFrom;
 	}
 
 
@@ -62,12 +64,11 @@ public class EmailGateway {
 
 
 	public EmailGateway() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	
 	public void sendEmail(String to, String subject, String text){
-		
+	
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
@@ -77,7 +78,7 @@ public class EmailGateway {
 		
 		try{
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(defualtFrom));
+			message.setFrom(new InternetAddress(defaultFrom));
 			message.addRecipient(RecipientType.TO, new InternetAddress(to));
 			
 			message.setSubject(subject);

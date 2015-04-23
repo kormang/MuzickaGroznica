@@ -29,7 +29,7 @@
 					<td>${u.firstName}</td>
 					<td>${u.jmb}</td>
 					<td>${u.registrationTime}</td>
-					<td><input type="submit" name="_aid_${u.id}" value="<spring:message code='admin.activate_accounts.activate' />" /></td>
+					<td><input class="btn btn-primary" type="submit" name="_aid_${u.id}" value="<spring:message code='admin.activate_accounts.activate' />" /></td>
 				</tr>
 			
 			</c:forEach>

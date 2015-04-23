@@ -37,7 +37,7 @@
 			<tr>
 				<td><spring:message code="label.password"/></td><td><input class="form-control  marg5" type="password" name="password"/></td>
 			</tr>
-			<tr><td><input class="btn btn-primary" type="submit" value="Login" /></td></tr>
+			<tr><td><input class="btn btn-primary" type="submit" value="<spring:message code="label.general.login"/>" /></td></tr>
 		</table>
 
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
