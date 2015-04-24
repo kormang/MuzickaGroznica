@@ -1,10 +1,16 @@
 package net.etfbl.muzickagroznica.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javassist.bytecode.ByteArray;
+
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +25,7 @@ import net.etfbl.muzickagroznica.model.entities.Role;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.service.UserService;
 
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -46,7 +53,7 @@ public class UserController extends MuzickaGroznicaController {
 	RequestParamsFinder paramsFinder;
 	
 	private static String[] roleNamesForChange = new String[] { "ROLE_SUPER", "ROLE_ADMIN" };
-	
+	private static int AVATAR_SIZE = 100;
 	
 	public UserController() {
 		// TODO Auto-generated constructor stub
@@ -231,7 +238,7 @@ public class UserController extends MuzickaGroznicaController {
 			@Valid @ModelAttribute("avatarUploadForm") AvatarUploadForm avatarUploadForm,
 			BindingResult result,
 			HttpSession session
-			){
+			) throws IOException{
 		
 		if(result.hasErrors()){
 			return "avatar_upload";
@@ -249,6 +256,13 @@ public class UserController extends MuzickaGroznicaController {
 			e.printStackTrace();
 			return "error";
 		}
+		
+		//scale image to max AVATAR_SIZE x AVATAR_SIZE and output to jpg format
+		BufferedImage bi = ImageIO.read(new ByteArrayInputStream(binary));
+		bi = Scalr.resize(bi, AVATAR_SIZE);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(bi, "jpg", baos);
+		binary = baos.toByteArray();
 		
 		User merged = userService.changeAvatarForUser(user.getId(), binary);
 		if(merged == null){

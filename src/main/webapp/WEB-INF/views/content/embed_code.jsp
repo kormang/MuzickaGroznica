@@ -12,8 +12,11 @@
 		<audio controls autoplay id="player" style="display: block; margin-left: auto; margin-right: auto; margin: 0 auto; width: 100%">
 			<source src="${filePath}">
 		</audio>
-		</div>
+		
+				<div><a class="btn btn-info" download="${downloadName}" href="${filePath}"><spring:message code="content.listen.download"/></a></div>
 	
+		</div>
+
 	</c:when>
 	
 	

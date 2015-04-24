@@ -54,7 +54,7 @@
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.artist" /></td>
-				<td><form:input  class="form-control" id="artist" path="artist"/></td>
+				<td><form:input id="artist" path="artist" class="form-control"/></td>
 				<td><form:errors path="artist" /></td>
 			</tr>
 			<tr>

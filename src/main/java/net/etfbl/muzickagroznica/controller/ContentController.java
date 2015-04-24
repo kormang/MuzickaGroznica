@@ -273,6 +273,18 @@ public class ContentController extends MuzickaGroznicaController {
 		case 0:
 			String url = request.getContextPath() + "/contents/" + musicContent.getContentPath();
 			model.put("filePath", url);
+			
+			//use content path as download name if it does not have file extension
+			//that was introduced later. If content path has file extension than
+			//download name will be name of music content + extension
+			String downloadName = musicContent.getContentPath();
+			int idx;
+			if((idx = downloadName.lastIndexOf('.')) != -1){
+				downloadName = musicContent.getName() + downloadName.substring(idx);
+			}
+			
+			model.put("downloadName", downloadName);
+			
 			break;
 		case 1:
 			model.put("videoId", musicContent.getExtraInfo());

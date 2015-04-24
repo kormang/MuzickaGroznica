@@ -43,7 +43,7 @@
 	
 	<form:form action="${contentEditUrl}" modelAttribute="changeContentInfoForm" method="post">
 	
-		<table>
+		<table class="table">
 			<tr>
 				<td><spring:message code="content.new.label.name" /></td>
 				<td><form:input path="name" class="form-control"/></td>
@@ -51,7 +51,7 @@
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.artist" /></td>
-				<td><form:input id="artist" path="artist" /></td>
+				<td><form:input id="artist" path="artist" class="form-control"/></td>
 				<td><form:errors path="artist" /></td>
 			</tr>
 			<tr>
@@ -69,7 +69,7 @@
 				<td><form:errors path="lyrics" /></td>
 			</tr>
 			<tr>
-				<td><input class="btn btn-info" value="<spring:message code="label.general.submit" />" type="submit" /></td>
+				<td><input class="btn btn-primary" value="<spring:message code="label.general.submit" />" type="submit" /></td>
 				<td><form:hidden path="id"/></td>
 			</tr>
 		</table>
@@ -78,8 +78,8 @@
 	
 	<div>
 		<form action="<c:url value="/content/delete" />" method="post">
-			<input class="btn btn-info" type="hidden" name="mcid" value="${changeContentInfoForm.id}"/>
-			<input class="btn btn-info" type="submit" value="<spring:message code="label.general.delete" />"/>
+			<input type="hidden" name="mcid" value="${changeContentInfoForm.id}"/>
+			<input class="btn btn-danger" type="submit" value="<spring:message code="label.general.delete" />"/>
 		</form>
 	</div>
 </div>

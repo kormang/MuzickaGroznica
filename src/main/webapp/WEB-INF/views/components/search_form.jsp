@@ -5,13 +5,13 @@
 	
 	<c:url value="/content/search" var="searchFormActionUrl"/>
 	<form:form action="${searchFormActionUrl}" method="get" modelAttribute="searchForm">
-		<table class="pretraga">
+		<table class="search">
 			<tr>
-				<td><div class="input-group-btn"><form:input path="name" class="form-control" placeholder="Назив"/></div></td>
+				<td><div class="input-group-btn"><input type="text" name="name" class="form-control" placeholder="<spring:message code="label.general.name" />"/></div></td>
 				
-				<td><div class="input-group-btn"><form:input path="artist" class="form-control" placeholder="Извођач"/></div></td>
+				<td><div class="input-group-btn"><input type="text" name="artist" class="form-control" placeholder="<spring:message code="label.general.artist" />"/></div></td>
 				
-				<td><div class="input-group-btn"><form:input path="genre"  class="form-control" placeholder="Жанр"/></div></td>
+				<td><div class="input-group-btn"><input type="text" name="genre"  class="form-control" placeholder="<spring:message code="label.general.genre" />"/></div></td>
 				
 				<td><input type="submit" class="btn btn-primary" value='<spring:message code="label.general.search" />' /></td>
 			</tr>		

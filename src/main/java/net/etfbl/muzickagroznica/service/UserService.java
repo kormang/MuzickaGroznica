@@ -119,7 +119,7 @@ public class UserService {
 	
 	public User changeAvatarForUser(int userId, byte[] image){
 		
-		String uufilename = UUID.randomUUID().toString();
+		String uufilename = UUID.randomUUID().toString() + ".jpg";
 		
 		File outputFile = new File(StandardUtil.getAvatarUploadDir(), uufilename);
 		
@@ -135,12 +135,19 @@ public class UserService {
 		TransactionDefinition def = new DefaultTransactionDefinition();
 		TransactionStatus txstat = null;
 		
+		File oldAvatar = null;
 		
 		try {
 		
 			txstat = transactionManager.getTransaction(def);
 			
 			ret = userDao.findById(userId);
+			String oldAvatarPath = ret.getAvatarPath();
+			
+			if(oldAvatarPath != null & !oldAvatarPath.isEmpty()){
+				oldAvatar = new File(StandardUtil.getAvatarUploadDir(), oldAvatarPath);
+			}
+
 			ret.setAvatarPath(uufilename);
 			
 			transactionManager.commit(txstat);
@@ -153,6 +160,11 @@ public class UserService {
 				e.printStackTrace();
 			}
 			return null;
+		}
+		
+		//all went well, we can delete old one
+		if(oldAvatar != null){
+			oldAvatar.delete();
 		}
 		
 		return ret;	

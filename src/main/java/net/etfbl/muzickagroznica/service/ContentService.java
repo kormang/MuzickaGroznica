@@ -182,11 +182,12 @@ public class ContentService {
 			String genre,
 			String lyrics,
 			byte[] bytes,
+			String originalFileName,
 			int publisherId
 	){
 		MusicContent newContent = new MusicContent();
-		
-		String uufilename = UUID.randomUUID().toString();
+		String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
+		String uufilename = UUID.randomUUID().toString()+ extension;
 		
 		File outputFile = new File(StandardUtil.getContentUploadDir(), uufilename);
 		

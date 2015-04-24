@@ -6,7 +6,7 @@ function initnoe(params){
 	
 	$("#artist").jqxInput({
 	    minLength: 1,
-	    theme:'energyblue'
+	    theme:'bootstrap'
 	});
 
 	$.get(
@@ -23,7 +23,8 @@ function initnoe(params){
 					
 				}
 				
-				$("#artist").className = "form-control";
+				var node = document.getElementById("artist");
+				node.className = "form-control";
 				
 			}
 	);

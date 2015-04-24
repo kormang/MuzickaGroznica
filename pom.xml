@@ -266,6 +266,15 @@
 			<artifactId>rome</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<!-- Image scaling -->
+		  <dependency>
+		    <groupId>org.imgscalr</groupId>
+		    <artifactId>imgscalr-lib</artifactId>
+		    <version>4.2</version>
+		    <type>jar</type>
+		    <scope>compile</scope>
+		  </dependency>
 				
 	</dependencies>
     <build>

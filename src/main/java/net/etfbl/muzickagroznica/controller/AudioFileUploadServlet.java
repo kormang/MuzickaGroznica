@@ -70,6 +70,7 @@ public class AudioFileUploadServlet extends HttpServlet {
 			String name = null;
 			String lyrics = null;
 			byte[] bytes = null;
+			String originFileName = null;
 			
 			for(FileItem i : items){
 				
@@ -97,6 +98,7 @@ public class AudioFileUploadServlet extends HttpServlet {
 					
 				} else {
 					bytes = i.get();
+					originFileName = i.getName();
 				}
 				
 			}
@@ -107,7 +109,7 @@ public class AudioFileUploadServlet extends HttpServlet {
 			
 			int publisherId =  ((User)request.getSession().getAttribute("user")).getId();
 			
-			MusicContent mc = contentService.addNewContent(name, artist, genre, lyrics, bytes, publisherId);
+			MusicContent mc = contentService.addNewContent(name, artist, genre, lyrics, bytes, originFileName, publisherId);
 			
 			response.sendRedirect(request.getContextPath() + "/content/listen/"+mc.getId());
 		} catch (FileUploadException e) {
