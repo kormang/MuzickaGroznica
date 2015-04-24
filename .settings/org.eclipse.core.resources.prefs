@@ -6,6 +6,7 @@ encoding//src/main/java/artistsws/ws/ArtistsWSServiceLocator.java=UTF-8
 encoding//src/main/java/artistsws/ws/ArtistsWSSoapBindingStub.java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/messages.properties=UTF-8
+encoding//src/main/resources/messages_en.properties=UTF-8
 encoding//src/main/resources/messages_sr.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
 encoding//src/test/java=UTF-8

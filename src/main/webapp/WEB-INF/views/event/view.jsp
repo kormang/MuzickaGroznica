@@ -18,10 +18,10 @@
 <div class="jumbotron" style="width: 600px;">
 
 	<table class="table">
-		<tr><td>${event.name}</td></tr>
-		<tr><td>${event_dateAndTime}</td></tr>
-		<tr><td>${event.location}</td></tr>
-		<tr><td>${event.description}</td></tr>
+		<tr><td><spring:message code="events.name"/>:</td><td>${event.name}</td></tr>
+		<tr><td><spring:message code="events.eventTime"/>:</td><td>${event_dateAndTime}</td></tr>
+		<tr><td><spring:message code="events.location"/>:</td><td>${event.location}</td></tr>
+		<tr><td><spring:message code="events.description"/>:</td><td>${event.description}</td></tr>
 	</table>
 </div>
 </div>

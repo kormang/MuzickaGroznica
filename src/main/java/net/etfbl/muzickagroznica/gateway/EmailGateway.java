@@ -2,6 +2,8 @@ package net.etfbl.muzickagroznica.gateway;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -21,6 +23,19 @@ public class EmailGateway {
 	private String password;
 	private String userEmail;
 	private String defaultFrom;
+	
+	protected ExecutorService asyncExecutor;
+	
+	
+
+	public ExecutorService getAsyncExecutor() {
+		return asyncExecutor;
+	}
+
+
+	public void setAsyncExecutor(ExecutorService asyncExecutor) {
+		this.asyncExecutor = asyncExecutor;
+	}
 
 
 	public String getDefaultFrom() {
@@ -66,10 +81,8 @@ public class EmailGateway {
 	public EmailGateway() {
 	}
 	
-	
-	public void sendEmail(String to, String subject, String text){
-	
-        Session session = Session.getInstance(properties,
+	protected void doSendEmail(String to, String subject, String text){
+		Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                   protected PasswordAuthentication getPasswordAuthentication() {
                       return new PasswordAuthentication(userEmail, password);
@@ -90,13 +103,34 @@ public class EmailGateway {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	public void sendEmail(final String to, final String subject, final String text){
+	
+        asyncExecutor.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				EmailGateway.this.doSendEmail(to, subject, text);
+				
+			}
+		});
 		
 	}
 	
 	public void sendEmailsToUsers(List<User> users, String subject, String text){
-		for(User u : users){
-			sendEmail(u.getEmail(), subject, text);
-		}
+		
+        asyncExecutor.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				for(User u : users){
+					doSendEmail(u.getEmail(), subject, text);
+				}
+			}
+		});
+		
+
 	}
 
 }

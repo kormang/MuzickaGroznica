@@ -1,6 +1,8 @@
 package net.etfbl.muzickagroznica.gateway;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import net.etfbl.muzickagroznica.util.StandardUtil;
 
@@ -31,6 +33,9 @@ public class GatewayConfiguration {
 		properties.setProperty("mail.smtp.starttls.enable", StandardUtil.getProperties().getProperty("gateway.email.props.mail.smtp.starttls.enable"));
 		
 		eg.setProperties(properties);
+		
+		eg.setAsyncExecutor(Executors.newCachedThreadPool());
+		
 		
 		return eg;
 	}
