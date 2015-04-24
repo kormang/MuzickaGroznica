@@ -5,7 +5,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title><spring:message code="muzickagroznica.application_name"/></title>
 	<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 	 
 	 <script type="text/javascript" src="<c:url value="/resources/js/home.js" />"></script>
@@ -26,7 +26,6 @@
 
 
 <jsp:include page="/WEB-INF/views/components/header.jsp" />
-
 <c:if test="${not empty user }">
 
 	<nav class="navbar navbar-inverse">

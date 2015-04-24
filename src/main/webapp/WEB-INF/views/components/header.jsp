@@ -6,11 +6,11 @@
 
 <div id="header" >
 
+<a href="<c:url value="/content/top_rss_feed" />" target="_blank"><img src="<c:url value="/images/rss.png" />"/></a>
 
 <h1 class="mg-app-title">
 	<kbd><a style="color: #fff" href="<c:url value='/home'/>" ><spring:message code="muzickagroznica.application_name" /></a></kbd>
 </h1>
-
 
 <div class="user" >
 	<c:if test="${not empty user}">
