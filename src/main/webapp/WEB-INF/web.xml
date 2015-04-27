@@ -57,6 +57,8 @@
     <filter-name>springSecurityFilterChain</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <!-- Could be used in extrame case if we want no cache, but there is also spring's solution -->
+  <!--  
   <filter>
     <display-name>NoCacheFilter</display-name>
     <filter-name>NoCacheFilter</filter-name>
@@ -66,5 +68,6 @@
     <filter-name>NoCacheFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  -->
   
   </web-app>

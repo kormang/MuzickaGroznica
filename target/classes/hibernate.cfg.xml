@@ -8,7 +8,12 @@
         <property name="hibernate.format_sql">false</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>   	
 
-    	
+
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</property>
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<property name="hibernate.generate_statistics">true</property> 
+ 	
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/User.hbm.xml"/>
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/Role.hbm.xml"/>
     	<mapping resource="net/etfbl/muzickagroznica/model/entities/Rate.hbm.xml"/>

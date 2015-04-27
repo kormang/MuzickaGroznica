@@ -296,7 +296,7 @@ public class ContentController extends MuzickaGroznicaController {
 		default:
 			throw new RuntimeException("This should not happen, contentType is not in [0, 2]");
 		}
-		
+
 		return "content/embed_code";
 	}
 	
