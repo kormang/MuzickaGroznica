@@ -6,17 +6,15 @@
  
 	<diskStore path="java.io.tmpdir" />
  
-	<cache name="movieFindCache" 
-		maxEntriesLocalHeap="10000"
-		maxEntriesLocalDisk="1000" 
-		eternal="false" 
+	<defaultCache
+		maxElementsInMemory="100"
+		eternal="true" 
 		diskSpoolBufferSizeMB="20"
 		timeToIdleSeconds="300" timeToLiveSeconds="600"
 		memoryStoreEvictionPolicy="LFU" 
 		transactionalMode="off">
-		<persistence strategy="localTempSwap" />
-	</cache>
+	</defaultCache>
 
-<cache name="net.etfbl.muzickagroznica.model.entities.User" maxElementsInMemory="100" eternal="true" timeToIdleSeconds="300" timeToLiveSeconds="600" />
+	<cache name="net.etfbl.muzickagroznica.model.entities.User" maxElementsInMemory="100" eternal="true" timeToIdleSeconds="300" timeToLiveSeconds="600" />
  
 </ehcache>
