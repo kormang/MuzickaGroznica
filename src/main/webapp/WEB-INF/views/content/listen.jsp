@@ -67,7 +67,7 @@ $(document).ready(function () {
 				<input type="checkbox" id="favorite" name="favorite" <c:if test="${favorite}">checked="checked"</c:if> />
 				<spring:message code="label.general.favorite" />
 			</span><br>
-			<span class="badge"><spring:message code="label.general.lyrics"/></span><pre>${lyrics}</pre>
+			
 			<div style="display: inline;">
 				<div id="rate"></div>
 			</div>
@@ -92,7 +92,9 @@ $(document).ready(function () {
 				</li>
 				</ul>
 			</div>
+			<div><span class="badge"><spring:message code="label.general.lyrics"/></span><pre>${lyrics}</pre></div>
 		</div>
+		
 	</div>
 	
 	

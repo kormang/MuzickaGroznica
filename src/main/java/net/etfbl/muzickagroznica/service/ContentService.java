@@ -168,7 +168,12 @@ public class ContentService {
 	public MusicContent editMusicContent(int id, String name, String artist, String genre, String lyrics){
 		MusicContent mc = musicContentDao.findById(id);
 		mc.setName(name);
-		mc.setArtist(artistDao.findById(artist));
+		Artist a = artistDao.findById(artist);
+		if(a == null){
+			addArtist(artist);
+			a = artistDao.findById(artist);
+		}
+		mc.setArtist(a);
 		mc.setGenre(genreDao.findById(genre));
 		mc.setLyrics(lyrics);
 		

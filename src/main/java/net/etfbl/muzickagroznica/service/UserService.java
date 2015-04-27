@@ -144,7 +144,7 @@ public class UserService {
 			ret = userDao.findById(userId);
 			String oldAvatarPath = ret.getAvatarPath();
 			
-			if(oldAvatarPath != null & !oldAvatarPath.isEmpty()){
+			if(oldAvatarPath != null && !oldAvatarPath.isEmpty()){
 				oldAvatar = new File(StandardUtil.getAvatarUploadDir(), oldAvatarPath);
 			}
 

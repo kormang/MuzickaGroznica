@@ -18,7 +18,7 @@
 
 <jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-<div class="jumbotron" style="width: 600px;">
+<div class="jumbotron classic-jumbotron">
 	<span style="display: none;" id="defaulterrormsg"><spring:message code="ajax.default.error.message"/></span>
 	<span style="display: none;" id="ajax_add_genre_address"><c:url value="/admin/add_genre" /></span>
 

@@ -50,12 +50,12 @@
 			<tr>
 				<td><spring:message code="content.new.label.name" /></td>
 				<td><form:input class="form-control" path="name"/></td>
-				<td><form:errors path="name" /></td>
+				<td><form:errors path="name" cssClass="error"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.artist" /></td>
 				<td><form:input id="artist" path="artist" class="form-control"/></td>
-				<td><form:errors path="artist" /></td>
+				<td><form:errors path="artist" cssClass="error"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.genre" /></td>
@@ -64,17 +64,17 @@
 						<form:options items="${genres}"/>						
 					</form:select>
 				</td>
-				<td><form:errors path="genre" /></td>
+				<td><form:errors path="genre" cssClass="error"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.contentPath" /></td>
 				<td><form:input class="form-control" path="contentPath"/></td>
-				<td><form:errors path="contentPath" /></td>
+				<td><form:errors path="contentPath" cssClass="error"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.lyrics" /></td>
 				<td><form:textarea class="form-control" path="lyrics" /></td>
-				<td><form:errors path="lyrics" /></td>
+				<td><form:errors path="lyrics" cssClass="error"/></td>
 			</tr>
 			<tr>
 				<td><input class="btn btn-primary" value="<spring:message code="label.general.submit" />" type="submit" /></td>

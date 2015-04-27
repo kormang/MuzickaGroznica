@@ -9,7 +9,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/components/header.jsp" />
- Ошло све у....
+ Десила се грешка
 
 </body>
 </html>

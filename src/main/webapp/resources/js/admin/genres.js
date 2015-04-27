@@ -24,10 +24,10 @@ function addGenre(){
 	request.onreadystatechange = function () {
 		if(request.readyState == 4 && request.status == 200){
 			var jsonObj = JSON.parse(request.responseText);
-			var genres = document.getElementById("genres");
+			var genres = document.getElementById("genres").children[0];
 			
 			if(jsonObj.result){
-				genres.innerHTML += "<div>" + genre + "</div>";
+				genres.innerHTML += '<li class="list-group-item">' + genre + '</li>';
 			}
 			
 			msgarea.innerHTML = jsonObj.message;
