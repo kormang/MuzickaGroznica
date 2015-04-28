@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	<c:forEach items="${feeds}" var="feed">
 		<div>
-			<a href="${feed.link}">${feed.title}</a>
-			<div>${feed.description.value}</div>
+			<a href="${feed.link}"><c:out value="${feed.title}"/></a>
+			<div><c:out value="${feed.description.value}"/></div>
 		</div>
 	</c:forEach>

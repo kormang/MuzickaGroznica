@@ -34,7 +34,7 @@
 		<table class="table">
 		<tr>
 			<td><spring:message code="label.username" /></td>
-			<td>${userSettingsForm.username}</td>
+			<td><c:out value="${userSettingsForm.username}"/></td>
 		</tr>
 		<tr>
 			<td><spring:message code="label.old_password"/></td>

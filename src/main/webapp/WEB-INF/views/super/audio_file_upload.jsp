@@ -34,7 +34,7 @@
 				<td><spring:message code="content.new.label.genre" /></td>
 				<td>
 					<select class="btn btn-default" name="genre">
-						<c:forEach items="${genres}" var="i"><option value="${i}">${i}</option></c:forEach>						
+						<c:forEach items="${genres}" var="i"><option value="${i}"><c:out value="${i}"/></option></c:forEach>						
 					</select>
 				</td>
 			</tr>

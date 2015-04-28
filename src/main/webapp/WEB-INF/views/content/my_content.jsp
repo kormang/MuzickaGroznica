@@ -21,7 +21,7 @@
 <table class="table table-striped">
 	<c:forEach items="${contents}" var="ct">
 		<tr>
-			<td><h4><a href="<c:url value="/content/listen/${ct.id}"/>">${ct.name}</a></h4></td>
+			<td><h4><a href="<c:url value="/content/listen/${ct.id}"/>"><c:out value="${ct.name}"/></a></h4></td>
 			<td><input class="btn btn-primary" type="submit" name="_mcid_${ct.id}" value="<spring:message code="label.general.edit" />"/></td>
 		</tr>
 	</c:forEach>

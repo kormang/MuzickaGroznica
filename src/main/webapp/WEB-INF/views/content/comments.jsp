@@ -9,7 +9,7 @@
 		<c:forEach items="${comments}" var="comm">
 		
 			<li class="list-group-item">
-				<h4><span class="label label-default">${comm.user.username}</span>
+				<h4><span class="label label-default"><c:out value="${comm.user.username}"/></span>
 				
 				<c:if test="${not empty ROLE_ADMIN}">
 					<span style="float: right; color: red; weight: bold;">
@@ -18,7 +18,7 @@
 				</c:if>
 				</h4>
 				<div>
-					${comm.commentText}
+					<c:out value="${comm.commentText}" />
 				</div>
 			</li>
 					

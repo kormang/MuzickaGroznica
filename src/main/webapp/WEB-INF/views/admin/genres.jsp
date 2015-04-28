@@ -42,7 +42,7 @@
 	<div id="genres">
 	<ul class="list-group">
 		<c:forEach items="${genres}" var="g">
-			<li class="list-group-item">${g.name}</li>
+			<li class="list-group-item"><c:out value="${g.name}"/></li>
 		</c:forEach>
 	</ul>
 	</div>

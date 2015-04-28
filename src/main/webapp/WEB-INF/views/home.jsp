@@ -59,7 +59,7 @@
 	<div class="panel-body">
 	<div class="list-group">
 	<c:forEach items="${recommended}" var="ct">
-		<a class="list-group-item" href="<c:url value="/content/listen/${ct.id}"/>">${ct.name}</a>
+		<a class="list-group-item" href="<c:url value="/content/listen/${ct.id}"/>"><c:out value="${ct.name}"/></a>
 	</c:forEach>
 	</div>
 	</div>

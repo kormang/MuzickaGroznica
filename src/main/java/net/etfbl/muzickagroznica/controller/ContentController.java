@@ -428,7 +428,8 @@ public class ContentController extends MuzickaGroznicaController {
 		boolean result = true;
 		User user = (User)session.getAttribute("user");
 		
-		commentText = StringEscapeUtils.escapeHtml4(commentText);
+		//this is transfered to presentation layer now
+		//commentText = StringEscapeUtils.escapeHtml4(commentText);
 		
 		contentService.addComment(user.getId(), musicContentId, commentText);
 		

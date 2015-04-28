@@ -21,9 +21,9 @@
 	<c:forEach items="${playlists}" var="playlist">
 		<tr>
 			<c:url value="/content/view_playlist_content?plid=${playlist.id}" var="viewurl"/>
-			<td><a href="${viewurl}" >${playlist.title}</a></td>
-			<td>${playlist.creationTime}</td>
-			<td>${playlist.numberOfContents}</td>
+			<td><a href="${viewurl}" ><c:out value="${playlist.title}"/></a></td>
+			<td><c:out value="${playlist.creationTime}"/></td>
+			<td><c:out value="${playlist.numberOfContents}"/></td>
 		</tr>
 	</c:forEach>
 

@@ -32,7 +32,7 @@ var params = {
 		"rateValue" : <c:choose><c:when test="${not empty rateValue}"><c:out value="${rateValue}"/></c:when><c:otherwise>null</c:otherwise></c:choose>,
 		"favorite" : <c:out value="${favorite}"/>,
 		"addCommentUrl" : "<c:url value="/content/add_comment" />",
-		"commentTemplate": '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;">${user.username}</span><div>{{COMMENT_TEXT}}</div></div>',
+		"commentTemplate": '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;"><c:out value="${user.username}</span><div>{{COMMENT_TEXT}}"/></div></div>',
 		"commentsUrl": "<c:url value="/content/comments" />",
 		"deleteCommentUrl": "<c:url value="/content/delete_comment"/>",
 		"loadPlaylistsUrl": "<c:url value="/content/playlists"/>",
@@ -56,11 +56,11 @@ $(document).ready(function () {
 		<div id="embedcodearea" style="float:left;width:  700px;">
 		</div>
 		<ul class="list-group" style="float: left;width: 400px;">
-			<li class="list-group-item">${artistName}<span class="badge"><spring:message code="label.general.artist"/></span></li>
-			<li class="list-group-item">${name}<span class="badge"><spring:message code="label.general.name"/></span></li>
-			<li class="list-group-item">${duration}<span class="badge"><spring:message code="label.general.duration"/></span></li>
-			<li class="list-group-item">${genreName}<span class="badge"><spring:message code="label.general.genre"/></span></li>
-			<li class="list-group-item">${publishDate}<span class="badge"><spring:message code="label.general.publishDate"/></span></li>
+			<li class="list-group-item"><c:out value="${artistName}"/><span class="badge"><spring:message code="label.general.artist"/></span></li>
+			<li class="list-group-item"><c:out value="${name}"/><span class="badge"><spring:message code="label.general.name"/></span></li>
+			<li class="list-group-item"><c:out value="${duration}"/><span class="badge"><spring:message code="label.general.duration"/></span></li>
+			<li class="list-group-item"><c:out value="${genreName}"/><span class="badge"><spring:message code="label.general.genre"/></span></li>
+			<li class="list-group-item"><c:out value="${publishDate}"/><span class="badge"><spring:message code="label.general.publishDate"/></span></li>
 		</ul>
 		<div style="float: right;">
 			<span>
@@ -92,7 +92,7 @@ $(document).ready(function () {
 				</li>
 				</ul>
 			</div>
-			<div><span class="badge"><spring:message code="label.general.lyrics"/></span><pre>${lyrics}</pre></div>
+			<div><span class="badge"><spring:message code="label.general.lyrics"/></span><pre><c:out value="${lyrics}"/></pre></div>
 		</div>
 		
 	</div>

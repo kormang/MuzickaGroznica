@@ -15,7 +15,7 @@
 
 	<div class="jumbotron" style="width: 600px;">
 		<div class="list-group">
-			<div id="pl_title" class="list-group-item active">${playlist.title}</div>
+			<div id="pl_title" class="list-group-item active"><c:out value="${playlist.title}"/></div>
 			<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
 		</div>
 	</div>

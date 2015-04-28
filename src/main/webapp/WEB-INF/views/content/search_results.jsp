@@ -24,8 +24,8 @@
 	
 		<c:forEach items="${searchResults}" var="i" varStatus="status">
 			<tr>
-				<td>${i.name}</td>
-				<td>${formattedDates[status.count-1]}</td>
+				<td><c:out value="${i.name}"/></td>
+				<td><c:out value="${formattedDates[status.count-1]}"/></td>
 			</tr>
 		</c:forEach>
 		
@@ -37,8 +37,8 @@
 		
 			<c:forEach items="${searchResults}" var="i" varStatus="status">
 				<tr>
-					<td><a href='<c:url value="/content/listen/${i.id}" />'>${i.name}</a></td>
-					<td>${formattedDates[status.count-1]}</td>
+					<td><a href='<c:url value="/content/listen/${i.id}" />'><c:out value="${i.name}"/></a></td>
+					<td><c:out value="${formattedDates[status.count-1]}"/></td>
 				</tr>
 			</c:forEach>
 		

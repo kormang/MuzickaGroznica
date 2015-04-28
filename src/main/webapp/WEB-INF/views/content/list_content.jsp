@@ -4,5 +4,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 	<c:forEach items="${contents}" var="ct">
-		<a class="list-group-item" href="<c:url value="/content/listen/${ct.id}"/>">${ct.name}</a>
+		<a class="list-group-item" href="<c:url value="/content/listen/${ct.id}"/>"><c:out value="${ct.name}"/></a>
 	</c:forEach>

@@ -27,13 +27,13 @@
 		<c:forEach items="${users}" var="u" varStatus="status">
 		
 			<tr>
-				<td>${u.username}</td>
-				<td>${u.lastName}</td>
-				<td>${u.firstName}</td>
-				<td>${u.email}</td>
-				<td>${u.username}</td>
-				<td>${u.registrationTime}</td>
-				<td>${u.activationTime}</td>
+				<td><c:out value="${u.username}"/></td>
+				<td><c:out value="${u.lastName}"/></td>
+				<td><c:out value="${u.firstName}"/></td>
+				<td><c:out value="${u.email}"/></td>
+				<td><c:out value="${u.username}"/></td>
+				<td><c:out value="${u.registrationTime}"/></td>
+				<td><c:out value="${u.activationTime}"/></td>
 				<td>
 					<input type="checkbox" onchange="switchRole(this, 0, ${u.id})" <c:if test="${superFlags[status.count -1]}">checked="checked"</c:if>  /><spring:message code="roles.role_super" />
 				</td>

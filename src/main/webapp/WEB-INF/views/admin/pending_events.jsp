@@ -31,10 +31,10 @@ var params = {
 	<div class="jumbotron" style="width: 600px;">
 		<c:forEach items="${events}" var="ev">
 			<div>
-				<spring:message code="events.name"/>: <span>${ev.name}</span>.
-				<spring:message code="events.location"/>: <span>${ev.location}</span>.
-				<spring:message code="events.publishTime"/>: <span>${ev.publishTime}</span>.
-				<spring:message code="events.eventTime"/>: <span>${ev.eventTime}</span>.
+				<spring:message code="events.name"/>: <span><c:out value="${ev.name}"/></span>.
+				<spring:message code="events.location"/>: <span><c:out value="${ev.location}"/></span>.
+				<spring:message code="events.publishTime"/>: <span><c:out value="${ev.publishTime}"/></span>.
+				<spring:message code="events.eventTime"/>: <span><c:out value="${ev.eventTime}"/></span>.
 				<div>
 					<spring:message code="events.description"/>: <br/>
 					<div>

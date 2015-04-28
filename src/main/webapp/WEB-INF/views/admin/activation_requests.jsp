@@ -24,11 +24,11 @@
 			<c:forEach items="${users}" var="u">
 			
 				<tr>
-					<td>${u.username}</td>
-					<td>${u.lastName}</td>
-					<td>${u.firstName}</td>
-					<td>${u.jmb}</td>
-					<td>${u.registrationTime}</td>
+					<td><c:out value="${u.username}"/></td>
+					<td><c:out value="${u.lastName}"/></td>
+					<td><c:out value="${u.firstName}"/></td>
+					<td><c:out value="${u.jmb}"/></td>
+					<td><c:out value="${u.registrationTime}"/></td>
 					<td><input class="btn btn-primary" type="submit" name="_aid_${u.id}" value="<spring:message code='admin.activate_accounts.activate' />" /></td>
 				</tr>
 			
