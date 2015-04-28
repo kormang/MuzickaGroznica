@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
 	<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>

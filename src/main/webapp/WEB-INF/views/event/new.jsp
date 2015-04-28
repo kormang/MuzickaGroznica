@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
  <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />

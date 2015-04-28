@@ -17,7 +17,7 @@
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
 </head>
 <body>
 <script type="text/javascript">

@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title></title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />"/>
 <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 </head>
