@@ -158,10 +158,8 @@ public class MusicContentDaoImpl implements MusicContentDao {
 	@SuppressWarnings("unchecked")
 	private List<MusicContent> simpleQuery(String queryString, Integer maxResults, Object... queryParams){
 		Session session = sessionFactory.getCurrentSession();
-		System.err.println("LENGTH = " + queryParams.length);
 		Query query = session.createQuery(queryString);
 		for(int i = 0; i < queryParams.length; i++){
-			System.err.println("["+i+"] = " + queryParams[i]);
 			query.setParameter(i, queryParams[i]);
 		}
 		

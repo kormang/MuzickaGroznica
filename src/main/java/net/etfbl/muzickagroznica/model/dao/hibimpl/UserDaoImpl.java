@@ -26,13 +26,11 @@ public class UserDaoImpl implements UserDao {
 	
 	public UserDaoImpl() {
 		// TODO Auto-generated constructor stub
-		System.err.println("------>>> KONSTRUISAN DAO!!!");
 	}
 
 	@Override
 	public void persist(User user) {
 		sessionFactory.getCurrentSession().persist(user);
-
 	}
 
 	@Override

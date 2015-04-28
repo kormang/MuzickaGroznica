@@ -39,7 +39,6 @@ public class UserService {
 	
 	public UserService() {
 		// TODO Auto-generated constructor stub
-		System.err.println("------>>> KONSTRUISAN SERVIS!!!");
 	}
 
 	/**

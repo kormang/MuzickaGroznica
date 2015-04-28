@@ -53,11 +53,6 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
 			authorites.add(new SimpleGrantedAuthority(r.getId().getRoleName()));
 		}
 		
-		System.err.println(user.getUsername() + " is " + (user.isActive() ? "" : "not") + " active.");
-		
-		for(GrantedAuthority ga : authorites){
-			System.err.println(ga.getAuthority());
-		}
 		
 		return new AuthUser(user.getUsername(), user.getPassword(), user.isActive(),
 				true, true, true,

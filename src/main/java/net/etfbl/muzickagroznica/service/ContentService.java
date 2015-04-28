@@ -245,7 +245,6 @@ public class ContentService {
 			
 			Genre genreEntity = genreDao.findById(genre);
 			if(genreEntity == null){
-				System.err.println("NO SUCH GENRE");
 				throw new RuntimeException("No such genre");
 			}
 
@@ -266,7 +265,6 @@ public class ContentService {
 
 		} catch(Exception ex) {
 			ex.printStackTrace();
-			System.err.println("DELETE FILE");
 			outputFile.delete();
 			try {
 				transactionManager.rollback(txstat);

@@ -57,7 +57,6 @@ public class UserController extends MuzickaGroznicaController {
 	
 	public UserController() {
 		// TODO Auto-generated constructor stub
-		System.err.println("------>>> KONSTRUISAN KONTROLER!!!");
 	}
 	
 	@RequestMapping(value = "/reg_success", method=RequestMethod.GET)
@@ -346,10 +345,8 @@ public class UserController extends MuzickaGroznicaController {
 				
 				if(role.getId().getRoleName().equals("ROLE_SUPER")){
 					superFlags[i] = true;
-					System.err.println("superFlags["+i+"]="+true);
 				} else if (role.getId().getRoleName().equals("ROLE_ADMIN")){
 					adminFlags[i] = true;
-					System.err.println("adminFlags["+i+"]="+true);
 				}
 			}
 			

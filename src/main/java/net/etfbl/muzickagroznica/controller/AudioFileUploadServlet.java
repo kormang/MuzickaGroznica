@@ -92,8 +92,7 @@ public class AudioFileUploadServlet extends HttpServlet {
 						lyrics = new String(fieldValue.getBytes("ISO-8859-1"), "UTF-8");
 						break;
 					default:
-						System.err.println(fieldName + "=" + fieldValue);
-						
+
 					}
 					
 				} else {

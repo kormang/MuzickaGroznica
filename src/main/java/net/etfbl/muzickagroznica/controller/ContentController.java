@@ -332,7 +332,6 @@ public class ContentController extends MuzickaGroznicaController {
 		model.put("favorite", favorite != null);
 		
 		Rate rate = contentService.findRate(user.getId(), contentId);
-		System.err.println("rate: " + rate);
 		if(rate != null){
 			model.put("rateValue", rate.getRate());
 		}
@@ -385,8 +384,6 @@ public class ContentController extends MuzickaGroznicaController {
 			@RequestParam("mcid") int musicContentId,
 			HttpSession session
 	){
-		System.err.println(onoff);
-		System.err.println(musicContentId);
 		int userId = ((User)session.getAttribute("user")).getId();
 		
 		Favorite favorite;
@@ -473,7 +470,6 @@ public class ContentController extends MuzickaGroznicaController {
 		boolean result;
 		
 		if(playlistId < 0){
-			System.err.println("TITLE: " + newPlaylistTitle);
 			result = null != contentService.createPlaylist(user.getId(), newPlaylistTitle, musicContentId);
 		} else {
 			result = null != contentService.addToPlaylist(playlistId, musicContentId);
@@ -567,7 +563,6 @@ public class ContentController extends MuzickaGroznicaController {
 		List<SyndEntry> entries = new ArrayList<>(5);
 		
 		for(MusicContent mc : tops){
-			System.err.println(mc.getName());
 			SyndEntry entry = new SyndEntryImpl();
 			SyndContent description = new SyndContentImpl();
 			
