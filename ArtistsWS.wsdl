@@ -137,7 +137,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:ArtistsWSSoapBinding" name="ArtistsWS">
 
-         <wsdlsoap:address location="http://localhost:10080/ArtistsWS/services/ArtistsWS"/>
+         <wsdlsoap:address location="http://www.muzickagroznica.com/ArtistsWS/services/ArtistsWS"/>
 
       </wsdl:port>
 

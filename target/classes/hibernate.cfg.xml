@@ -4,7 +4,7 @@
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory name="sessionFactory">
-    	<property name="hibernate.show_sql">true</property>
+    	<property name="hibernate.show_sql">false</property>
         <property name="hibernate.format_sql">false</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>   	
 

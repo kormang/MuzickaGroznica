@@ -47,6 +47,7 @@ public class GenreDaoImpl implements GenreDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Genre WHERE name = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (Genre) q.uniqueResult();
 	}
 	
@@ -57,7 +58,9 @@ public class GenreDaoImpl implements GenreDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Genre")
-				.add(Example.create(genre)).list();
+				.add(Example.create(genre))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}
@@ -68,6 +71,7 @@ public class GenreDaoImpl implements GenreDao {
 		 return (List<Genre>) sessionFactory
 				 .getCurrentSession()
 				 .createQuery("SELECT g FROM Genre g")
+				 .setCacheable(true)
 				 .list();
 	}
 

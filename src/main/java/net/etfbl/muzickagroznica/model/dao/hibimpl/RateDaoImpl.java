@@ -47,6 +47,7 @@ public class RateDaoImpl implements RateDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Rate WHERE id = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (Rate) q.uniqueResult();
 	}
 	
@@ -57,7 +58,9 @@ public class RateDaoImpl implements RateDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Rate")
-				.add(Example.create(rate)).list();
+				.add(Example.create(rate))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}

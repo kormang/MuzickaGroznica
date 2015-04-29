@@ -57,7 +57,9 @@ public class RoleDaoImpl implements RoleDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Role")
-				.add(Example.create(role)).list();
+				.add(Example.create(role))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}
@@ -68,6 +70,7 @@ public class RoleDaoImpl implements RoleDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("SELECT r FROM Role r WHERE r.id.userId = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (List<Role>) q.list();
 	}
 

@@ -47,6 +47,7 @@ public class ListeningDaoImpl implements ListeningDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Listening WHERE id = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (Listening) q.uniqueResult();
 	}
 	
@@ -57,7 +58,9 @@ public class ListeningDaoImpl implements ListeningDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Listening")
-				.add(Example.create(listening)).list();
+				.add(Example.create(listening))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}

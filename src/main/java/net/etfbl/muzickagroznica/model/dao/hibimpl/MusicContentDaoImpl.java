@@ -51,6 +51,7 @@ public class MusicContentDaoImpl implements MusicContentDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM MusicContent WHERE id = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (MusicContent) q.uniqueResult();
 	}
 	
@@ -61,7 +62,9 @@ public class MusicContentDaoImpl implements MusicContentDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.MusicContent")
-				.add(Example.create(musiccontent)).list();
+				.add(Example.create(musiccontent))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}
@@ -110,7 +113,7 @@ public class MusicContentDaoImpl implements MusicContentDao {
 		if(genre != null){
 			query.setParameter("genreq", '%'+genre+'%');
 		}
-		
+		query.setCacheable(true);
 		return (List<MusicContent>) query.list();
 	}
 
