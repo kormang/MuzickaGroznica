@@ -60,7 +60,7 @@ public class UserService {
 		user.setPassword(encoder.encode(rawPassword));
 		
 		userDao.persist(user);
-		
+
 		Role registered = new Role();
 		registered.setId(new RoleId(user.getId(), "ROLE_REGISTERED"));
 		roleDao.persist(registered);

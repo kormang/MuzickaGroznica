@@ -7,14 +7,15 @@
 	<diskStore path="java.io.tmpdir" />
  
 	<defaultCache
-		maxElementsInMemory="100"
-		eternal="true" 
-		diskSpoolBufferSizeMB="20"
-		timeToIdleSeconds="300" timeToLiveSeconds="600"
+		maxElementsInMemory="10000"
+		eternal="false" 
+		diskSpoolBufferSizeMB="0"
+		timeToIdleSeconds="600" timeToLiveSeconds="1200"
 		memoryStoreEvictionPolicy="LFU" 
-		transactionalMode="off">
+		transactionalMode="off"> <!-- Be cautions with this! -->
 	</defaultCache>
 
-	<cache name="net.etfbl.muzickagroznica.model.entities.User" maxElementsInMemory="100" eternal="true" timeToIdleSeconds="300" timeToLiveSeconds="600" />
+	<!-- this has no effect any way since we're not using caching for artist anyway -->
+	<cache name="net.etfbl.muzickagroznica.model.entities.Artist" maxElementsInMemory="0" eternal="false" timeToIdleSeconds="0" timeToLiveSeconds="0" />
  
 </ehcache>

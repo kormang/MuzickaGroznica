@@ -47,7 +47,7 @@ public class ArtistDaoImpl implements ArtistDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Artist WHERE name = :id");
 		q.setParameter("id", id);
-		q.setCacheable(true);
+		q.setCacheable(false);
 		return (Artist) q.uniqueResult();
 	}
 	
@@ -59,7 +59,7 @@ public class ArtistDaoImpl implements ArtistDao {
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Artist")
 				.add(Example.create(artist))
-				.setCacheable(true)
+				.setCacheable(false)
 				.list();
 
 		return results;
@@ -71,7 +71,7 @@ public class ArtistDaoImpl implements ArtistDao {
 		Query query = sessionFactory
 				.getCurrentSession()
 				.createQuery("SELECT a FROM Artist ");
-		query.setCacheable(true);
+		query.setCacheable(false);
 		
 		return query.list();
 	}
