@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.commons.dbcp.BasicDataSource;
+
 import com.mysql.jdbc.Statement;
 
 
@@ -20,10 +22,11 @@ public class ArtistsWS {
 	static String password;
 	static int maxIdle;
 	
+	private BasicDataSource dataSource;
 	
 	static {
-		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+		//try {
+			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			
 			ResourceBundle rb = ResourceBundle.getBundle("artistsws.ws.DbProperties");
 			
@@ -32,24 +35,31 @@ public class ArtistsWS {
 			password = rb.getString("password");
 			maxIdle = Integer.parseInt(rb.getString("maxIdle"));
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	public ArtistsWS() {
-		// TODO Auto-generated constructor stub
+		dataSource = new BasicDataSource();
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setMaxIdle(maxIdle);
+		dataSource.setUrl(dburl);
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
 	}
 
 	private Connection getConnection() throws SQLException{
-		return DriverManager.getConnection(dburl,username, password);
+		//return DriverManager.getConnection(dburl,username, password);
+		return dataSource.getConnection();
 	}
 	
 	public boolean addArtist(String artist){
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+		boolean result = false;
 		try {
 			
 			
@@ -60,8 +70,8 @@ public class ArtistsWS {
 			pstmt.setString(1, artist);
 			
 			pstmt.execute();
-		
-			return true;
+			
+			result = true;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -85,7 +95,7 @@ public class ArtistsWS {
 			}
 			
 		}
-		return false;
+		return result;
 		
 	}
 

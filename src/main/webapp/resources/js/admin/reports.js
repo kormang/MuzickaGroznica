@@ -25,6 +25,7 @@ function initreports(params){
 			
 			var dataAdapter = new $.jqx.dataAdapter(source);
 			$(gridSelector).jqxGrid({
+				theme: "bootstap",
 				width: '99%',
 	            autoheight: true,
 	            source: dataAdapter,
@@ -84,6 +85,6 @@ function initreports(params){
 	};
 	
 
-	$("#ribbon").jqxRibbon({ width: 900, height: 200, mode: "default", position: "top", selectionMode: "click", animationType: "fade", initContent: initRibbonContent });
+	$("#ribbon").jqxRibbon({ theme: "bootstrap", width: 900, height: 200, mode: "default", position: "top", selectionMode: "click", animationType: "fade", initContent: initRibbonContent });
 
 };

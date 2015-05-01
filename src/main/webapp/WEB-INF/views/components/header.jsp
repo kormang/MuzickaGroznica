@@ -4,7 +4,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<div style='top:0; right:0; float: right;'>
+<div id="header" >
+
+<a href="<c:url value="/content/top_rss_feed" />" target="_blank"><img src="<c:url value="/images/rss.png" />"/></a>
+
+<h1 class="mg-app-title">
+	<kbd><a style="color: #fff" href="<c:url value='/home'/>" ><spring:message code="muzickagroznica.application_name" /></a></kbd>
+</h1>
+
+<div class="user" >
 	<c:if test="${not empty user}">
 	
 		<c:choose>
@@ -15,40 +23,40 @@
 				<c:url value="/images/avatars/no-face.gif" var="avatarUrl" />
 			</c:otherwise>
 		</c:choose>
+
+		<div class="btn-group">
+			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+			  	O <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu">
+			  	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+				<c:url value="/user/settings" var="userSettingsUrl" />
+			  	<li><a href="${userSettingsUrl }"><spring:message code="user.settings.title"/></a></li>
+			  	<li class="divider"></li>
+			  	<li><a href="${logoutUrl}"><spring:message code="label.general.logout"/></a></li>
+			  </ul>
+			  
+		</div>
 		
-		<img src="${avatarUrl }"></img>
-	
-			<c:url value="/j_spring_security_logout" var="logoutUrl" />
-			<a href="${logoutUrl}"><spring:message code="label.general.logout"/></a>
-			
+		<img src="${avatarUrl }" class="img-circle img-profile" />
+
+
 	</c:if>
 
 	<c:if test="${empty user }">
 		<form name="loginForm" action="<c:url value='/j_spring_security_check'/>" method="post">
-			<table>
+			<table  class="pretraga">
 				<tr>
-					<td>Корисничко име:</td>
-					<td> <input type="text" name="username" /></td>
-					<td>Лозинка: </td>
-					<td> <input type="password" name="password" /> </td>
-					<td> <input type="submit" name="command" value="<spring:message code="label.general.login"/>" /></td>
+					<td> <div class="input-group-btn"><input type="text" name="username" class="form-control" placeholder="Корисничко име"/></div></td>
+					<td> <div class="input-group-btn"><input type="password" name="password" class="form-control" placeholder="Лозинка"/> </div></td>
+					<td> <input type="submit" name="command" class="btn btn-info"value="<spring:message code="label.general.login"/>" /></td>
 				</tr>
 			</table>
 		</form>
 	</c:if>
 
-	
-	<span style="float: right">
-		<c:url value="/user/settings" var="userSettingsUrl" />
-		<a href="${userSettingsUrl }"><spring:message code="user.settings.title"/></a>
-		|
-		&nbsp;
-		|
-	    <a href="?lang=sr">sr</a>
-	    |
-	    <a href="?lang=en">en</a>
-	</span>
-
 </div>
 
+
+</div>
     

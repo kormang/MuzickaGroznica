@@ -7,10 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
  <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.bootstrap.css"/>" type="text/css" />
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxdatetimeinput.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcalendar.js"/>"></script>
@@ -24,6 +25,7 @@
 
 </head>
 <body>
+<div class="container">
 <script type="text/javascript">
     $(document).ready(function () {
     	setformdate = function(e){
@@ -31,33 +33,37 @@
     		var hd = $("#hd").val(jsDate.getTime());
     	}
     	
-        $("#dti").jqxDateTimeInput({ width: '250px', height: '25px', formatString: 'dd.MM.yyyy. HH:mm:ss', min: new Date() });
+        $("#dti").jqxDateTimeInput({ theme: "bootstrap", width: '250px', height: '25px', formatString: 'dd.MM.yyyy. HH:mm:ss', min: new Date() });
         $("#dti").on('valueChanged', setformdate);
         $('#dti').jqxDateTimeInput('setDate', new Date());
 
     });
 </script>
 
+  <jsp:include page="/WEB-INF/views/components/header.jsp" />
+
   <c:url value="/super/event/new" var="newEventActionUrl"/>
+  
+ <div class="jumbotron" style="width: 600px;">
   <form:form id="form" action="${newEventActionUrl}" method="post" modelAttribute="newEventForm">
 
-	<table>
+	<table class="table">
 	
 	<tr>
 		<td><spring:message code="event_new.name" /></td>
-		<td><form:input path="name" /></td>
+		<td><form:input class="form-control" path="name" /></td>
 		<td><form:errors path="name" /></td>
 	</tr>
 	
 	<tr>
 		<td><spring:message code="event_new.description" /></td>
-		<td><form:input path="description" /></td>
+		<td><form:input class="form-control" path="description" /></td>
 		<td><form:errors path="description" /></td>
 	</tr>
 	
 	<tr>
 		<td><spring:message code="event_new.location" /></td>
-		<td><form:input path="location" /></td>
+		<td><form:input class="form-control" path="location" /></td>
 		<td><form:errors path="location" /></td>
 	</tr>
 
@@ -74,11 +80,12 @@
  	
  	<tr>
 	 	<td>
-	 		<input type="submit"  value="<spring:message code="label.general.submit"/>"/>
+	 		<input type="submit" class="btn btn-primary" value="<spring:message code="label.general.submit"/>"/>
 	 	</td>
  	</tr>
  	</table>
  </form:form>
- 
+ </div>
+</div>
 </body>
 </html>

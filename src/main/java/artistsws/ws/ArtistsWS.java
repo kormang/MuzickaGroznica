@@ -8,6 +8,6 @@
 package artistsws.ws;
 
 public interface ArtistsWS extends java.rmi.Remote {
-    public void addArtist(java.lang.String artist) throws java.rmi.RemoteException;
+    public boolean addArtist(java.lang.String artist) throws java.rmi.RemoteException;
     public java.lang.String[] findAllArtists() throws java.rmi.RemoteException;
 }

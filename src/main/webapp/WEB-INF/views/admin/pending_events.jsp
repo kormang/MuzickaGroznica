@@ -7,13 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="events.pending.title"/></title>
-
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
  <script type="text/javascript" src="<c:url value="/resources/js/admin/pending_events.js" />"></script>
 
 </head>
 <body>
+<div class="container">
+
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
 <script type="text/javascript">
 var approvalUrl = "<c:url value="/admin/event_approval" />";
@@ -26,25 +28,26 @@ var params = {
 		}
 	);
 </script>
-
+	<div class="jumbotron" style="width: 600px;">
 		<c:forEach items="${events}" var="ev">
 			<div>
-				<spring:message code="events.name"/> <span>${ev.name}</span>
-				<spring:message code="events.location"/> <span>${ev.location}</span>
-				<spring:message code="events.publishTime"/> <span>${ev.publishTime}</span>
-				<spring:message code="events.eventTime"/> <span>${ev.eventTime}</span>
+				<spring:message code="events.name"/>: <span><c:out value="${ev.name}"/></span>.
+				<spring:message code="events.location"/>: <span><c:out value="${ev.location}"/></span>.
+				<spring:message code="events.publishTime"/>: <span><c:out value="${ev.publishTime}"/></span>.
+				<spring:message code="events.eventTime"/>: <span><c:out value="${ev.eventTime}"/></span>.
 				<div>
-					<spring:message code="events.description"/> <br/>
+					<spring:message code="events.description"/>: <br/>
 					<div>
 						${ev.description}
 					</div>
 					<br/>
 				</div>
-				<input type="button" class="approvebutton" name="_eid_${ev.id}" value="<spring:message code="events.approve" />" />
-				<input type="button" class="disapprovebutton" name="_eid_${ev.id}" value="<spring:message code="events.disapprove" />" />
+				<input type="button" class="btn btn-primary approvebutton" name="_eid_${ev.id}" value="<spring:message code="events.approve" />" />
+				<input type="button" class="btn btn-primary disapprovebutton" name="_eid_${ev.id}" value="<spring:message code="events.disapprove" />" />
 			</div>
 				
 		</c:forEach>
-		
+	</div>
+</div>
 </body>
 </html>

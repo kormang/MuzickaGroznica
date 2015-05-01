@@ -7,13 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="content.favorites.title" /></title>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
+<div class="container">
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-	<div style="font-weight: bold;" id="pl_title"><spring:message code="content.favorites.title" /></div>
-	
-	<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
+	<div class="jumbotron classic-jumbotron">
+		<div style="font-weight: bold;" id="pl_title"><h3><span class="label label-warning"><spring:message code="content.favorites.title"/></span></h3></div>
 
-
+		<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
+	</div>
+</div>
 </body>
 </html>

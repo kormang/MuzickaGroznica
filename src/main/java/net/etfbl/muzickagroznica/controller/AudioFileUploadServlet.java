@@ -49,7 +49,6 @@ public class AudioFileUploadServlet extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 				
 		if(!isMultipart){
@@ -71,6 +70,7 @@ public class AudioFileUploadServlet extends HttpServlet {
 			String name = null;
 			String lyrics = null;
 			byte[] bytes = null;
+			String originFileName = null;
 			
 			for(FileItem i : items){
 				
@@ -92,12 +92,12 @@ public class AudioFileUploadServlet extends HttpServlet {
 						lyrics = new String(fieldValue.getBytes("ISO-8859-1"), "UTF-8");
 						break;
 					default:
-						System.err.println(fieldName + "=" + fieldValue);
-						
+
 					}
 					
 				} else {
 					bytes = i.get();
+					originFileName = i.getName();
 				}
 				
 			}
@@ -108,7 +108,7 @@ public class AudioFileUploadServlet extends HttpServlet {
 			
 			int publisherId =  ((User)request.getSession().getAttribute("user")).getId();
 			
-			MusicContent mc = contentService.addNewContent(name, artist, genre, lyrics, bytes, publisherId);
+			MusicContent mc = contentService.addNewContent(name, artist, genre, lyrics, bytes, originFileName, publisherId);
 			
 			response.sendRedirect(request.getContextPath() + "/content/listen/"+mc.getId());
 		} catch (FileUploadException e) {

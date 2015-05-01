@@ -34,8 +34,6 @@ public class AuthenticationSuccessHandler 	extends SavedRequestAwareAuthenticati
         	session.setAttribute(ga.getAuthority(), ga.getAuthority());
         }
         
-        System.err.println("authed: " + authUser.getUsername());
-        
     }
 
 }

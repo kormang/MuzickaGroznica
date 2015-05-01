@@ -39,22 +39,20 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
 			throws UsernameNotFoundException {
 		
 		net.etfbl.muzickagroznica.model.entities.User user = userDao.findByUsername(username);
-		if(user == null){
-			return null;
-		}
 		
 		List<GrantedAuthority> authorites = new ArrayList<GrantedAuthority>();
+		
+		if(user == null){
+			return new AuthUser("__wrong__", "__wrong__", authorites, user);
+		}
+		
+		
 		
 		
 		for(Role r : user.getRoles()){
 			authorites.add(new SimpleGrantedAuthority(r.getId().getRoleName()));
 		}
 		
-		System.err.println(user.getUsername() + " is " + (user.isActive() ? "" : "not") + " active.");
-		
-		for(GrantedAuthority ga : authorites){
-			System.err.println(ga.getAuthority());
-		}
 		
 		return new AuthUser(user.getUsername(), user.getPassword(), user.isActive(),
 				true, true, true,

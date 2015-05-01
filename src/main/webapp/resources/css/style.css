@@ -1,0 +1,71 @@
+.btn{
+	margin: 5px;
+}
+.search{
+	float: left;
+}
+.search td{
+	padding: 5px;
+}
+
+.registration{
+	float: left;
+}
+.registration-form{
+	padding: 1px;
+	width:300px;
+}
+.user{
+	float:right;
+	display: block;
+}
+
+.user img{ 
+	float: right;
+	padding: 5px;
+}
+
+#header {
+	height: 120px;
+}
+
+.role{
+	  width: 300px;
+	  float:right;
+	  margin: 20px;
+}
+.newsf{
+	width: 650px;
+	margin:15px;
+	height:400px;
+	float:left;
+	overflow:auto;
+}
+
+.mg-app-title{
+	float: left;
+}
+
+.playlist-list{
+	background-color: #eee;
+	padding:20px;
+	border-radius: 6px
+}
+
+.list-group-input-text-item {
+	float: left;
+	width: 90%;
+}
+
+.classic-jumbotron{
+	width: 700px;
+	float: left;
+}
+
+.marg5{
+	margin: 5px;
+}
+
+.error {
+	color: red;
+}

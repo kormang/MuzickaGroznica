@@ -6,7 +6,7 @@ function initnoe(params){
 	
 	$("#artist").jqxInput({
 	    minLength: 1,
-	    theme:'energyblue'
+	    theme:'bootstrap'
 	});
 
 	$.get(
@@ -17,10 +17,14 @@ function initnoe(params){
 				if(status == "success"){
 					
 					$("#artist").jqxInput({
-						   source: data.artists
+						   source: data.artists,
+						   theme: "bootstrap"
 					});
 					
 				}
+				
+				var node = document.getElementById("artist");
+				node.className = "form-control";
 				
 			}
 	);

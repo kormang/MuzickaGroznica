@@ -26,13 +26,11 @@ public class UserDaoImpl implements UserDao {
 	
 	public UserDaoImpl() {
 		// TODO Auto-generated constructor stub
-		System.err.println("------>>> KONSTRUISAN DAO!!!");
 	}
 
 	@Override
 	public void persist(User user) {
 		sessionFactory.getCurrentSession().persist(user);
-
 	}
 
 	@Override
@@ -51,6 +49,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM User WHERE id = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (User) q.uniqueResult();
 	}
 	
@@ -61,7 +60,9 @@ public class UserDaoImpl implements UserDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.User")
-				.add(Example.create(user)).list();
+				.add(Example.create(user))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}

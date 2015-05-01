@@ -8,21 +8,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="admin.activate_accounts.requests.title"/></title>
+
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
+
+<div class="container">
+
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 <c:url value="/admin/activate_account" var="activateAccountUrl"/>
 
 	<form:form action="${activateAccountUrl}" method="post">
-		<table>
+		<table class="table">
 			<c:forEach items="${users}" var="u">
 			
 				<tr>
-					<td>${u.username}</td>
-					<td>${u.lastName}</td>
-					<td>${u.firstName}</td>
-					<td>${u.jmb}</td>
-					<td>${u.registrationTime}</td>
-					<td><input type="submit" name="_aid_${u.id}" value="<spring:message code='admin.activate_accounts.activate' />" /></td>
+					<td><c:out value="${u.username}"/></td>
+					<td><c:out value="${u.lastName}"/></td>
+					<td><c:out value="${u.firstName}"/></td>
+					<td><c:out value="${u.jmb}"/></td>
+					<td><c:out value="${u.registrationTime}"/></td>
+					<td><input class="btn btn-primary" type="submit" name="_aid_${u.id}" value="<spring:message code='admin.activate_accounts.activate' />" /></td>
 				</tr>
 			
 			</c:forEach>
@@ -30,6 +37,6 @@
 		</table>
 	
 	</form:form>
-
+</div>
 </body>
 </html>

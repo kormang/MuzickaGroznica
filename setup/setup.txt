@@ -1,0 +1,13 @@
+Configuration (works for Tomcat 7 at least):
+
+Take propeties file "muzickagroznica.properties" and set it's properties to correct values.
+Place it where ever you want.
+
+Find file "catalina.properties" in server's configuration directory. Find property "shared.loader", and add one more comma seperated value to it, and that is path to a folder where you places "muzickagroznica.properties" file. This will add that directory to classpath of every application on server, and make it available to MuzickaGroznica to load this properties file as it's part of it.
+
+Also, in deployment directory (it's in workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0 in case that you're running server from eclispe), create subdirectories conf/Catalina/localhost ("localhost" is for server host named "localhost"), if it doesn't exists.
+Place "muzickagroznica#contents.xml", and "muzickagroznica#images.xml" to that folder. Notice that here, muzickagroznica is context path, so change it if needed (if app is running as ROOT then remove muzickagroznica# part completely).
+
+
+Change contents of these files to match your case. This will map these folders to application path.
+Important is to make sure that values are compatible with properties "avatarUploadDir" and "contentUploadDir" in "muzickagroznica.properties" file.

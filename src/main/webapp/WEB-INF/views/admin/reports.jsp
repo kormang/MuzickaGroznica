@@ -8,10 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="admin.reports.title"/></title>
 
- <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
- <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.arctic.css"/>" type="text/css" />
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.bootstrap.css"/>" type="text/css" />
 
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxdata.js"/>"></script>
@@ -22,11 +22,15 @@
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxribbon.js"/>"></script>
  
  <script type="text/javascript" src="<c:url value="/resources/js/admin/reports.js" />"></script>
-	
 
 </head>
 <body>
+<div class="container">
+
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
 <script>
+
 
 	params = {
 			headers: {
@@ -57,6 +61,7 @@
 	
 </script>
 
+
 	<div id="ribbon">
 	    <ul>
 	        <li><spring:message code="admin.reports.toprated"/></li>
@@ -79,6 +84,6 @@
 	
 	<div class="log">
 	</div>
-
+</div>
 </body>
 </html>

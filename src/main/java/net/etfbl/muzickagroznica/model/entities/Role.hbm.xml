@@ -4,6 +4,7 @@
 <!-- Generated Mar 18, 2015 12:34:37 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="net.etfbl.muzickagroznica.model.entities.Role" table="role" catalog="muzickagroznicadb" optimistic-lock="version">
+        <cache usage="read-write" />
         <composite-id name="id" class="net.etfbl.muzickagroznica.model.entities.RoleId">
             <key-property name="userId" type="int">
                 <column name="user_id" />

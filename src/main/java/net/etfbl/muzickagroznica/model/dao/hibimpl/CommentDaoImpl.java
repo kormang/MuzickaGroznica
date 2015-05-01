@@ -47,6 +47,7 @@ public class CommentDaoImpl implements CommentDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Comment WHERE id = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (Comment) q.uniqueResult();
 	}
 	
@@ -57,7 +58,9 @@ public class CommentDaoImpl implements CommentDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Comment")
-				.add(Example.create(comment)).list();
+				.add(Example.create(comment))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}
@@ -68,6 +71,8 @@ public class CommentDaoImpl implements CommentDao {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("SELECT c FROM Comment c WHERE c.musicContentId = :mcid ORDER BY c.commentingTime DESC ");
 		query.setParameter("mcid", musicContentId);
+		query.setCacheRegion("comments");
+		query.setCacheable(true);
 		return (List<Comment>) query.list();
 	}
 

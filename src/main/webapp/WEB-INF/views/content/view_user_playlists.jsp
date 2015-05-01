@@ -7,25 +7,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="content.playlists" /></title>
+	<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
+<div class="container">
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-	<div style="font-weight: bold;">
-		<spring:message code="content.playlists" />
-	</div>
+<div class="jumbotron" style="width: 600px;">
+		<h3><span class="label label-warning"><spring:message code="content.playlists" /></span></h3>
 
-<table>
+<table class="table">
 
 	<c:forEach items="${playlists}" var="playlist">
 		<tr>
 			<c:url value="/content/view_playlist_content?plid=${playlist.id}" var="viewurl"/>
-			<td><a href="${viewurl}" >${playlist.title}</a></td>
-			<td>${playlist.creationTime}</td>
-			<td>${playlist.numberOfContents}</td>
+			<td><a href="${viewurl}" ><c:out value="${playlist.title}"/></a></td>
+			<td><c:out value="${playlist.creationTime}"/></td>
+			<td><c:out value="${playlist.numberOfContents}"/></td>
 		</tr>
 	</c:forEach>
 
 </table>
-
+</div>
+</div>
 </body>
 </html>

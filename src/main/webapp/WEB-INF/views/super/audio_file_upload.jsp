@@ -7,29 +7,34 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><spring:message code="super.audio_upload.title" /></title> 
+<title><spring:message code="super.audio_upload.title" /></title>
+	<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
+	
 </head>
 <body>
-		<c:url value='/super/audio_file_uploader' var="audioFileUploadUrl"/>
-
-		<a href='<c:url value="/content/new" />'><spring:message code="content.new.title" /></a>
-	
+<div class="container">
+		<jsp:include page="/WEB-INF/views/components/header.jsp" />
+		
+		<div class="jumbotron classic-jumbotron">
+			<c:url value='/super/audio_file_uploader' var="audioFileUploadUrl"/>
+			<h4><a href='<c:url value="/content/new" />'><spring:message code="content.new.title" /></a>
+			</h4>
 		<form:form action="${audioFileUploadUrl}" method="post" enctype="multipart/form-data">
-	
-		<table>
+		
+		<table class="table">
 			<tr>
 				<td><spring:message code="content.new.label.name" /></td>
-				<td><input type="text" name="name"/></td>
+				<td><input class="form-control" type="text" name="name"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.artist" /></td>
-				<td><input type="text" name="artist"/></td>
+				<td><input class="form-control" type="text" name="artist"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.genre" /></td>
 				<td>
-					<select name="genre">
-						<c:forEach items="${genres}" var="i"><option value="${i}">${i}</option></c:forEach>						
+					<select class="btn btn-default" name="genre">
+						<c:forEach items="${genres}" var="i"><option value="${i}"><c:out value="${i}"/></option></c:forEach>						
 					</select>
 				</td>
 			</tr>
@@ -39,16 +44,17 @@
 			</tr>
 			<tr>
 				<td><spring:message code="content.new.label.lyrics" /></td>
-				<td><textarea name="lyrics" ></textarea></td>
+				<td><textarea class="form-control" name="lyrics" ></textarea></td>
 			</tr>
 			<tr>
-				<td><input value="<spring:message code="label.general.submit" />" type="submit" /></td>
+				<td><input class="btn btn-primary" value="<spring:message code="label.general.submit" />" type="submit" /></td>
 			</tr>
 		
 		
 		</table>
 	
 	</form:form>
-
+	</div>
+</div>
 </body>
 </html>

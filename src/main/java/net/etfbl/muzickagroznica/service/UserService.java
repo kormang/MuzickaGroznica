@@ -11,7 +11,6 @@ import net.etfbl.muzickagroznica.model.entities.Role;
 import net.etfbl.muzickagroznica.model.entities.RoleId;
 import net.etfbl.muzickagroznica.model.entities.User;
 import net.etfbl.muzickagroznica.util.StandardUtil;
-import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +35,10 @@ public class UserService {
 	PasswordEncoder encoder;
 	
 	@Autowired
-	StandardUtilsBean standardUtilsBean;
-	
-	@Autowired
 	PlatformTransactionManager transactionManager;
 	
 	public UserService() {
 		// TODO Auto-generated constructor stub
-		System.err.println("------>>> KONSTRUISAN SERVIS!!!");
 	}
 
 	/**
@@ -65,7 +60,7 @@ public class UserService {
 		user.setPassword(encoder.encode(rawPassword));
 		
 		userDao.persist(user);
-		
+
 		Role registered = new Role();
 		registered.setId(new RoleId(user.getId(), "ROLE_REGISTERED"));
 		roleDao.persist(registered);
@@ -123,9 +118,9 @@ public class UserService {
 	
 	public User changeAvatarForUser(int userId, byte[] image){
 		
-		String uufilename = UUID.randomUUID().toString();
+		String uufilename = UUID.randomUUID().toString() + ".jpg";
 		
-		File outputFile = new File(standardUtilsBean.getAvatarUploadDir(), uufilename);
+		File outputFile = new File(StandardUtil.getAvatarUploadDir(), uufilename);
 		
 		try {
 			FileUtils.writeByteArrayToFile(outputFile, image);
@@ -139,12 +134,19 @@ public class UserService {
 		TransactionDefinition def = new DefaultTransactionDefinition();
 		TransactionStatus txstat = null;
 		
+		File oldAvatar = null;
 		
 		try {
 		
 			txstat = transactionManager.getTransaction(def);
 			
 			ret = userDao.findById(userId);
+			String oldAvatarPath = ret.getAvatarPath();
+			
+			if(oldAvatarPath != null && !oldAvatarPath.isEmpty()){
+				oldAvatar = new File(StandardUtil.getAvatarUploadDir(), oldAvatarPath);
+			}
+
 			ret.setAvatarPath(uufilename);
 			
 			transactionManager.commit(txstat);
@@ -157,6 +159,11 @@ public class UserService {
 				e.printStackTrace();
 			}
 			return null;
+		}
+		
+		//all went well, we can delete old one
+		if(oldAvatar != null){
+			oldAvatar.delete();
 		}
 		
 		return ret;	

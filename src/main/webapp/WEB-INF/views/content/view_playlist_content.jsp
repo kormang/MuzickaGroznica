@@ -6,12 +6,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
+	<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
+<div class="container">
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
 
-	<div style="font-weight: bold;" id="pl_title">${playlist.title}</div>
-	<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
-
+	<div class="jumbotron" style="width: 600px;">
+		<div class="list-group">
+			<div id="pl_title" class="list-group-item active"><c:out value="${playlist.title}"/></div>
+			<jsp:include page="/WEB-INF/views/content/list_content.jsp"></jsp:include>
+		</div>
+	</div>
+</div>
 </body>
 </html>

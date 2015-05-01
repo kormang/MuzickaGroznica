@@ -47,6 +47,7 @@ public class PlaylistDaoImpl implements PlaylistDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Playlist WHERE id = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (Playlist) q.uniqueResult();
 	}
 	
@@ -57,7 +58,9 @@ public class PlaylistDaoImpl implements PlaylistDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Playlist")
-				.add(Example.create(playlist)).list();
+				.add(Example.create(playlist))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}

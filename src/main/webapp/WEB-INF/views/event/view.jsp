@@ -7,16 +7,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
+<div class="container">
 
-	<table>
-		<tr><td>${event.name}</td></tr>
-		<tr><td>${event_dateAndTime}</td></tr>
-		<tr><td>${event.location}</td></tr>
-		<tr><td>${event.description}</td></tr>
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
+
+<div class="jumbotron" style="width: 600px;">
+
+	<table class="table">
+		<tr><td><spring:message code="events.name"/>:</td><td><c:out value="${event.name}"/></td></tr>
+		<tr><td><spring:message code="events.eventTime"/>:</td><td><c:out value="${event_dateAndTime}"/></td></tr>
+		<tr><td><spring:message code="events.location"/>:</td><td><c:out value="${event.location}"/></td></tr>
+		<tr><td><spring:message code="events.description"/>:</td><td><c:out value="${event.description}"/></td></tr>
 	</table>
-
+</div>
+</div>
 </body>
 </html>

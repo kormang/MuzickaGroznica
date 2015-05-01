@@ -7,41 +7,47 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><spring:message code="muzickagroznica.application_name"/></title>
+	<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 </head>
 <body>
-
+<div class="container">
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
 	<jsp:include page="/WEB-INF/views/components/search_form.jsp" />
-<table>
-<c:choose>
-
-	<c:when test="${empty user}">
-
-
-	<c:forEach items="${searchResults}" var="i" varStatus="status">
-		<tr>
-			<td>${i.name}</td>
-			<td>${formattedDates[status.count-1]}</td>
-		</tr>
-	</c:forEach>
 	
+	<div class="jumbotron classic-jumbotron">
+	<table class="table">
+	<c:choose>
 	
-	</c:when>
+		<c:when test="${empty user}">
 	
-	
-	<c:otherwise>
 	
 		<c:forEach items="${searchResults}" var="i" varStatus="status">
 			<tr>
-				<td><a href='<c:url value="/content/listen/${i.id}" />'>${i.name}</a></td>
-				<td>${formattedDates[status.count-1]}</td>
+				<td><c:out value="${i.name}"/></td>
+				<td><c:out value="${formattedDates[status.count-1]}"/></td>
 			</tr>
 		</c:forEach>
+		
+		
+		</c:when>
+		
+		
+		<c:otherwise>
+		
+			<c:forEach items="${searchResults}" var="i" varStatus="status">
+				<tr>
+					<td><a href='<c:url value="/content/listen/${i.id}" />'><c:out value="${i.name}"/></a></td>
+					<td><c:out value="${formattedDates[status.count-1]}"/></td>
+				</tr>
+			</c:forEach>
+		
+		</c:otherwise>
 	
-	</c:otherwise>
-
-	
-</c:choose>
-</table>
+		
+	</c:choose>
+	</table>
+	</div>
+ </div>
 </body>
 </html>

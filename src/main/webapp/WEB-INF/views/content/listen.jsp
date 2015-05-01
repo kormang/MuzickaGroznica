@@ -6,11 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
- <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
- <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.arctic.css"/>" type="text/css" />
 
- <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+ <title>${name} - <spring:message code="muzickagroznica.application_name"/></title>
+
+ <%@ include file="/WEB-INF/views/common_includes.jsp"  %>
+
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.base.css"/>" type="text/css" />
+ <link rel="stylesheet" href="<c:url value="/resources/jqwidgets/styles/jqx.bootstrap.css"/>" type="text/css" />
 
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxcore.js"/>"></script>
  <script type="text/javascript" src="<c:url value="/resources/jqwidgets/jqxrating.js"/>"></script>
@@ -20,86 +22,92 @@
 
 </head>
 <body>
-
+<div class="container">
 <script type="text/javascript">
 
-var mcid = ${musicContentId};
-var favoriteUrl = "<c:url value="/content/favorite" />";
-var rateUrl = "<c:url value="/content/rate" />";
-var rateValue = <c:choose><c:when test="${not empty rateValue}">${rateValue}</c:when><c:otherwise>null</c:otherwise></c:choose>;
-var favorite = ${favorite};
-var addCommentUrl = "<c:url value="/content/add_comment" />";
-var commentTemplate = '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;">${user.username}</span><div>{{COMMENT_TEXT}}</div></div>';
-var commentsUrl  = "<c:url value="/content/comments" />";
-var deleteCommentUrl = "<c:url value="/content/delete_comment"/>";
-var loadPlaylistsUrl = "<c:url value="/content/playlists"/>";
-var addToPlaylistUrl = "<c:url value="/content/add_to_playlist" />";
-var totalRating = ${totalRating};
+var params = {
+		"favoriteUrl" : "<c:url value="/content/favorite" />",
+		"mcid" : <c:out value="${musicContentId}"/>,
+		"rateUrl" : "<c:url value="/content/rate" />",
+		"rateValue" : <c:choose><c:when test="${not empty rateValue}"><c:out value="${rateValue}"/></c:when><c:otherwise>null</c:otherwise></c:choose>,
+		"favorite" : <c:out value="${favorite}"/>,
+		"addCommentUrl" : "<c:url value="/content/add_comment" />",
+		"commentTemplate": '<div style="border: 2px solid blue; display: inline-block;"><span style="float: left;"><c:out value="${user.username}</span><div>{{COMMENT_TEXT}}"/></div></div>',
+		"commentsUrl": "<c:url value="/content/comments" />",
+		"deleteCommentUrl": "<c:url value="/content/delete_comment"/>",
+		"loadPlaylistsUrl": "<c:url value="/content/playlists"/>",
+		"addToPlaylistUrl": "<c:url value="/content/add_to_playlist" />",
+		"totalRating": <c:out value="${totalRating}"/>,
+		"embedCodeUrl": "<c:url value="/content/embedcode"/>"
+};
+
 
 $(document).ready(function () {
-	var params = {
-			"favoriteUrl" : favoriteUrl,
-			"mcid" : mcid,
-			"rateUrl" : rateUrl,
-			"rateValue" : rateValue,
-			"favorite" : favorite,
-			"addCommentUrl" : addCommentUrl,
-			"commentTemplate": commentTemplate,
-			"commentsUrl": commentsUrl,
-			"deleteCommentUrl": deleteCommentUrl,
-			"loadPlaylistsUrl": loadPlaylistsUrl,
-			"addToPlaylistUrl": addToPlaylistUrl,
-			"totalRating": totalRating
-	};
-	
 	initcl(params);
 });
 </script>
 
-	${embeddCode}
+	<jsp:include page="/WEB-INF/views/components/header.jsp" />
+	
+	<jsp:include page="/WEB-INF/views/components/search_form.jsp" />
 
-	<div>
-		<div>
+	
+	<div style="min-height: 400px;">
+		<div id="embedcodearea" style="float:left;width:  700px;">
+		</div>
+		<ul class="list-group" style="float: left;width: 400px;">
+			<li class="list-group-item"><c:out value="${artistName}"/><span class="badge"><spring:message code="label.general.artist"/></span></li>
+			<li class="list-group-item"><c:out value="${name}"/><span class="badge"><spring:message code="label.general.name"/></span></li>
+			<li class="list-group-item"><c:out value="${duration}"/><span class="badge"><spring:message code="label.general.duration"/></span></li>
+			<li class="list-group-item"><c:out value="${genreName}"/><span class="badge"><spring:message code="label.general.genre"/></span></li>
+			<li class="list-group-item"><c:out value="${publishDate}"/><span class="badge"><spring:message code="label.general.publishDate"/></span></li>
+		</ul>
+		<div style="float: right;">
 			<span>
 				<input type="checkbox" id="favorite" name="favorite" <c:if test="${favorite}">checked="checked"</c:if> />
 				<spring:message code="label.general.favorite" />
-			</span>
+			</span><br>
+			
 			<div style="display: inline;">
 				<div id="rate"></div>
 			</div>
-		</div>
-	
-		<div>
-			<span>${artistName}</span>
-			<span>${name}</span>
-			<span>${duration}</span>
-			<span>${genreName}</span>
-			<span>${publishDate}</span>
-		</div>
-		<div>
-			<input type="button" id="atpl_btn" value="<spring:message code="content.listen.add_to_playlist"/>"/>
-			<div style="background-color: grey; position: absolute; top: 45%; left: 45%;" id="atpl_window">
-				<div id="playlists">
-				</div>
-				<div><input type="radio" name="playlist" value="-1" /><input type="text" id="npl_title" value="<spring:message code="content.listen.playlist.new"/>"/></div>
-				<div>
-					<input type="button" id="atpl_cancel" value="<spring:message code="label.general.cancel" />" />
-					<input type="button" id="atpl_save" value="<spring:message code="label.general.submit" />" />
-				</div>
+			<input type="button"  class="btn btn-primary" id="atpl_btn" value="<spring:message code="content.listen.add_to_playlist"/>"/>
+			<div class="list-group playlist-list" id="atpl_window">
+				<ul id="playlists">
+				</ul>
+				<ul>
+				<li class="list-group-item" style="width: 300px">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" name="playlist" value="-1" style="float: left"/>
+						</span>
+						<input type="text" class="form-control"   id="npl_title"  value="<spring:message code="content.listen.playlist.new"/>"/>
+					</div>
+				</li>
+				</ul>
+				<ul>
+				<li class="list-group-item">
+					<input type="button"  class="btn btn-primary" id="atpl_cancel" value="<spring:message code="label.general.cancel" />" />
+					<input type="button"  class="btn btn-primary" id="atpl_save" value="<spring:message code="label.general.submit" />" />
+				</li>
+				</ul>
 			</div>
+			<div><span class="badge"><spring:message code="label.general.lyrics"/></span><pre><c:out value="${lyrics}"/></pre></div>
 		</div>
-		<div>
-			${lyrics}
-		</div>
+		
 	</div>
 	
-	<div id="comment">
-		<textarea id="commentarea" maxlength="254" rows="4" cols="50" ></textarea>
-		<a id="addcomment" href="/"><spring:message code="content.listen.comment"/></a>
-	</div>
 	
-	<div id="commentlist">
+	<div class="jumbotron" style="width: 600px; float: left">
+		<div id="comment">
+			<textarea id="commentarea" class="form-control" maxlength="254" rows="4" cols="50" ></textarea>
+			<a class="btn btn-primary" id="addcomment" href="/" ><spring:message code="content.listen.comment"/></a>
+		</div>
+	
+		<div id="commentlist">
+		</div>
 	</div>
 
+</div>
 </body>
 </html>

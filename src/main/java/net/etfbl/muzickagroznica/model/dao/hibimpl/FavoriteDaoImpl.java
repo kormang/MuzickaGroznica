@@ -47,6 +47,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Favorite WHERE id = :id");
 		q.setParameter("id", id);
+		q.setCacheable(true);
 		return (Favorite) q.uniqueResult();
 	}
 	
@@ -57,8 +58,10 @@ public class FavoriteDaoImpl implements FavoriteDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Favorite")
-				.add(Example.create(favorite)).list();
-
+				.add(Example.create(favorite))
+				.setCacheable(true)
+				.list();
+		
 		return results;
 	}
 

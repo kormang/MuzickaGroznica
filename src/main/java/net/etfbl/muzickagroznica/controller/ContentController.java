@@ -3,13 +3,11 @@ package net.etfbl.muzickagroznica.controller;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +18,6 @@ import net.etfbl.muzickagroznica.controller.utils.RequestParamsFinder;
 import net.etfbl.muzickagroznica.form.bean.ChangeContentInfoForm;
 import net.etfbl.muzickagroznica.form.bean.ContentNewForm;
 import net.etfbl.muzickagroznica.form.bean.SearchForm;
-import net.etfbl.muzickagroznica.model.dao.RateDao;
 import net.etfbl.muzickagroznica.model.entities.Comment;
 import net.etfbl.muzickagroznica.model.entities.Favorite;
 import net.etfbl.muzickagroznica.model.entities.Genre;
@@ -28,18 +25,14 @@ import net.etfbl.muzickagroznica.model.entities.MusicContent;
 import net.etfbl.muzickagroznica.model.entities.Playlist;
 import net.etfbl.muzickagroznica.model.entities.Rate;
 import net.etfbl.muzickagroznica.model.entities.User;
-import net.etfbl.muzickagroznica.security.AuthUser;
 import net.etfbl.muzickagroznica.service.ContentService;
 import net.etfbl.muzickagroznica.service.helper.entities.PlaylistSummaryData;
 import net.etfbl.muzickagroznica.util.StandardUtil;
-import net.etfbl.muzickagroznica.util.StandardUtilsBean;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.jdom.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -71,9 +64,6 @@ public class ContentController extends MuzickaGroznicaController {
 	
 	@Autowired
 	MessageSource messageSource;
-	
-	@Autowired
-	StandardUtilsBean standardUtilsBean;
 	
 	@Autowired
 	RequestParamsFinder paramsFinder;
@@ -150,10 +140,6 @@ public class ContentController extends MuzickaGroznicaController {
 	@RequestMapping(value="/super/audio_upload_error")
 	public String viewAudioUploadError(){
 		return "super/audio_upload_error";
-	}
-	
-	private void putArtistsInModel(Map<String, Object> model){
-		model.put("artists", contentService.findAllArtists());
 	}
 	
 	private void putGenresInModel(Map<String, Object> model){
@@ -273,6 +259,47 @@ public class ContentController extends MuzickaGroznicaController {
 		return "content/my_content";
 	}
 	
+	@RequestMapping(value="/content/embedcode")
+	public String embedCode(
+			Map<String, Object> model,
+			HttpServletRequest request,
+			@RequestParam("mcid") int mcid
+	){
+		MusicContent musicContent = contentService.findMusicContentById(mcid);
+		
+		model.put("contentType", musicContent.getContentType());
+		
+		switch (musicContent.getContentType()) {
+		case 0:
+			String url = request.getContextPath() + "/contents/" + musicContent.getContentPath();
+			model.put("filePath", url);
+			
+			//use content path as download name if it does not have file extension
+			//that was introduced later. If content path has file extension than
+			//download name will be name of music content + extension
+			String downloadName = musicContent.getContentPath();
+			int idx;
+			if((idx = downloadName.lastIndexOf('.')) != -1){
+				downloadName = musicContent.getName() + downloadName.substring(idx);
+			}
+			
+			model.put("downloadName", downloadName);
+			
+			break;
+		case 1:
+			model.put("videoId", musicContent.getExtraInfo());
+			break;
+		case 2:
+			model.put("trackId", musicContent.getExtraInfo());
+			break;
+
+		default:
+			throw new RuntimeException("This should not happen, contentType is not in [0, 2]");
+		}
+
+		return "content/embed_code";
+	}
+	
 	@RequestMapping(value="/content/listen/{content_id}")
 	public String listen(
 			Map<String, Object> model,
@@ -282,26 +309,8 @@ public class ContentController extends MuzickaGroznicaController {
 			HttpSession session
 	){
 		
-		MusicContent musicContent = contentService.findMusicContentById(contentId);
-		String embeddCode;
+		MusicContent musicContent = contentService.findMusicContentById(contentId);		
 		
-		switch (musicContent.getContentType()) {
-		case 0:
-			String url = request.getContextPath() + "/contents/" + musicContent.getContentPath();
-			embeddCode = audioFileEmbeddTemplate.replace("<<FILE_PATH>>", url).replace("<<CONTEXT_PATH>>", request.getContextPath());
-			break;
-		case 1:
-			embeddCode = youtubeEmbeddTemplate.replace("<<VIDEO_ID>>", musicContent.getExtraInfo());
-			break;
-		case 2:
-			embeddCode = soundcloudEmbeddTemplate.replace("<<TRACK_ID>>", musicContent.getExtraInfo());
-			break;
-
-		default:
-			throw new RuntimeException("This should not happen, contentType is not in [0, 2]");
-		}
-		
-		model.put("embeddCode", embeddCode);
 		model.put("musicContent", musicContent);
 		
 		DateFormat df = new SimpleDateFormat(messageSource.getMessage("muzickagroznica.dateFormat", null, local));
@@ -317,11 +326,12 @@ public class ContentController extends MuzickaGroznicaController {
 		
 		User user = (User) session.getAttribute("user");
 		
+		model.put("searchForm", new SearchForm());
+		
 		Favorite favorite = contentService.findFavorite(user.getId(), contentId);
 		model.put("favorite", favorite != null);
 		
 		Rate rate = contentService.findRate(user.getId(), contentId);
-		System.err.println("rate: " + rate);
 		if(rate != null){
 			model.put("rateValue", rate.getRate());
 		}
@@ -374,8 +384,6 @@ public class ContentController extends MuzickaGroznicaController {
 			@RequestParam("mcid") int musicContentId,
 			HttpSession session
 	){
-		System.err.println(onoff);
-		System.err.println(musicContentId);
 		int userId = ((User)session.getAttribute("user")).getId();
 		
 		Favorite favorite;
@@ -417,7 +425,8 @@ public class ContentController extends MuzickaGroznicaController {
 		boolean result = true;
 		User user = (User)session.getAttribute("user");
 		
-		commentText = StringEscapeUtils.escapeHtml4(commentText);
+		//this is transfered to presentation layer now
+		//commentText = StringEscapeUtils.escapeHtml4(commentText);
 		
 		contentService.addComment(user.getId(), musicContentId, commentText);
 		
@@ -461,7 +470,6 @@ public class ContentController extends MuzickaGroznicaController {
 		boolean result;
 		
 		if(playlistId < 0){
-			System.err.println("TITLE: " + newPlaylistTitle);
 			result = null != contentService.createPlaylist(user.getId(), newPlaylistTitle, musicContentId);
 		} else {
 			result = null != contentService.addToPlaylist(playlistId, musicContentId);
@@ -555,7 +563,6 @@ public class ContentController extends MuzickaGroznicaController {
 		List<SyndEntry> entries = new ArrayList<>(5);
 		
 		for(MusicContent mc : tops){
-			System.err.println(mc.getName());
 			SyndEntry entry = new SyndEntryImpl();
 			SyndContent description = new SyndContentImpl();
 			

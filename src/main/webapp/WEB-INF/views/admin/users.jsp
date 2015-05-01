@@ -8,29 +8,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="admin.users.title" /></title>
+<%@ include file="/WEB-INF/views/common_includes.jsp"  %>
 
 <c:url value="/resources/js/admin/users.js" var="jsUrl" />
 <script type="text/javascript" src="${jsUrl }"></script>
 
 </head>
 <body>
+<div class="container">
 
+<jsp:include page="/WEB-INF/views/components/header.jsp" />
 	
 
 	<span style="display: none;" id="ajax_role_switch_address"><c:url value="/admin/role_switch" /></span>
 
-	<table>
+	<table class="table table-striped">
 		
 		<c:forEach items="${users}" var="u" varStatus="status">
 		
 			<tr>
-				<td>${u.username}</td>
-				<td>${u.lastName}</td>
-				<td>${u.firstName}</td>
-				<td>${u.email}</td>
-				<td>${u.username}</td>
-				<td>${u.registrationTime}</td>
-				<td>${u.activationTime}</td>
+				<td><c:out value="${u.username}"/></td>
+				<td><c:out value="${u.lastName}"/></td>
+				<td><c:out value="${u.firstName}"/></td>
+				<td><c:out value="${u.email}"/></td>
+				<td><c:out value="${u.username}"/></td>
+				<td><c:out value="${u.registrationTime}"/></td>
+				<td><c:out value="${u.activationTime}"/></td>
 				<td>
 					<input type="checkbox" onchange="switchRole(this, 0, ${u.id})" <c:if test="${superFlags[status.count -1]}">checked="checked"</c:if>  /><spring:message code="roles.role_super" />
 				</td>
@@ -47,6 +50,6 @@
 	<div id="messagearea" >
 	
 	</div>
-
+</div>
 </body>
 </html>

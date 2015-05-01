@@ -44,10 +44,10 @@ public class ArtistsWSProxy implements artistsws.ws.ArtistsWS {
     return artistsWS;
   }
   
-  public void addArtist(java.lang.String artist) throws java.rmi.RemoteException{
+  public boolean addArtist(java.lang.String artist) throws java.rmi.RemoteException{
     if (artistsWS == null)
       _initArtistsWSProxy();
-    artistsWS.addArtist(artist);
+    return artistsWS.addArtist(artist);
   }
   
   public java.lang.String[] findAllArtists() throws java.rmi.RemoteException{

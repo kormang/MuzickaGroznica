@@ -47,6 +47,9 @@ public class EventDaoImpl implements EventDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query q = session.createQuery("FROM Event WHERE id = :id");
 		q.setParameter("id", id);
+		
+		q.setCacheable(true);
+		
 		return (Event) q.uniqueResult();
 	}
 	
@@ -57,7 +60,9 @@ public class EventDaoImpl implements EventDao {
 				.getCurrentSession()
 				.createCriteria(
 						"net.etfbl.muzickagroznica.model.entities.Event")
-				.add(Example.create(event)).list();
+				.add(Example.create(event))
+				.setCacheable(true)
+				.list();
 
 		return results;
 	}

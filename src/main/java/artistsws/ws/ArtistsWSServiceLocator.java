@@ -22,7 +22,7 @@ public class ArtistsWSServiceLocator extends org.apache.axis.client.Service impl
     }
 
     // Use to get a proxy class for ArtistsWS
-    private java.lang.String ArtistsWS_address = "http://localhost:10080/ArtistsWS/services/ArtistsWS";
+    private java.lang.String ArtistsWS_address = "http://www.muzickagroznica.com/ArtistsWS/services/ArtistsWS";
 
     public java.lang.String getArtistsWSAddress() {
         return ArtistsWS_address;

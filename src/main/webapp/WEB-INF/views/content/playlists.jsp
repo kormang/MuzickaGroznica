@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<c:forEach items="${playlists}" var="playlist">
-	<div><input type="radio" name="playlist" value="${playlist.id}"/>${playlist.title}</div>
-</c:forEach>	
-	
+	<c:forEach items="${playlists}" var="playlist">
+		<li class="list-group-item">
+				<input type="radio" name="playlist" value="${playlist.id}"/>
+				${playlist.title}
+		</li>
+	</c:forEach>	
