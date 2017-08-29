@@ -1,5 +1,12 @@
 Configuration (works for Tomcat 7 at least):
 
+Dependencies to CSS and JavaScript libraries should be provided.
+1. There is jqwidgets.tar.gz archive in src/main/webapp/resources/, unpack it or download jqwidgets from official site.
+2. There is bootstrap.css.tar.gz archive in src/main/webapp/resources/css, unpack it or download bootstrap.css from official site.
+3. There is bootstrap.js.tar.gz archive in src/main/webapp/resources/js, unpack it or download bootstrap.js from official site.
+4. There is jquery-1.11.2.js.tar.gz archive in src/main/webapp/resources/js, unpack it or download jquery-1.11.2.js from official site, or other compatible version.
+
+
 Take propeties file "muzickagroznica.properties" and set it's properties to correct values.
 Place it where ever you want.
 
